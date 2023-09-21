@@ -1,0 +1,19 @@
+@startuml
+!pragma layout smetana
+
+!include diagram.styles.puml
+
+autonumber
+
+participant "Client" as C
+participant "Secure Token Service" as STS
+participant "Verifier" as V
+participant "Credential Service" as CS
+
+C -> STS: SI token request
+STS -> C: Token response w/ access token
+
+C-> V: Request w/ si token and access token
+V-> CS: request w/ access token
+CS ->V: VP response
+@enduml
