@@ -5,10 +5,15 @@
 
 autonumber
 
+box "Client Entity"
 participant "Client" as C
-participant "Client \nCredential Service" as CS
-participant "Client \nSecure Token Service" as STS
+participant "Credential Service" as CS
+participant "Secure Token Service" as STS
+end box
+
+box "Issuer Entity"
 participant "Issuer Service(s)" as IS #FFF4B3
+end box
 
 group #F3F7FF Base Identity Protocol
 C -> STS: Self-Issued ID token request

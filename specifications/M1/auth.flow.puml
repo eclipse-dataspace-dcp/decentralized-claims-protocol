@@ -5,10 +5,15 @@
 
 autonumber
 
+box "Client Entity"
 participant "Client" as C
 participant "Secure Token Service" as STS
-participant "Verifier" as V
 participant "Credential Service" as CS
+end box
+
+box "Verifier Entity"
+participant "Verifier" as V
+end box
 
 C -> STS: SI token request
 STS -> C: Token response w/ access token
