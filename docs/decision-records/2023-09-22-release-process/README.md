@@ -2,7 +2,7 @@
 
 ## Decision
 
-The release process for the specification should be simple and easy to understand. We will not follow GitFlow, but
+The release process for the specifications should be simple and easy to understand. We will not follow GitFlow, but
 employ a simple tag-based approach.
 
 ## Rationale
@@ -13,9 +13,9 @@ be kept fairly simple and linear.
 
 ## Approach
 
-At a minimum, every release should be tagged on the `main` branch using semantic versioning, starting at `0.1.0`. Then,
+Every release will be tagged on the `main` branch using semantic versioning, starting at `0.1.0`. Then,
 using that tag, a GitHub Release is to be created, for example using the `ncipollo/release-action` GitHub action.
-Finally, a compressed archive containing the current specification documents should be uploaded as artefact to the
+Finally, a compressed archive containing the current specification documents will be uploaded as artefact to the
 GitHub release.
 
 ## Further notes
