@@ -22,7 +22,7 @@ associated with manual workflows that are best modelled using asynchronous messa
 
 ## 1.2 Terms
 
-TBD
+- ***DID*** - A decentralized identifier as defined by the [DID specification](https://github.com/w3c/did-core).
 
 # 2. Overview
 
