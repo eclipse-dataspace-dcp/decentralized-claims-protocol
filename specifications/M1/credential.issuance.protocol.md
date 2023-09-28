@@ -316,7 +316,7 @@ The `serviceEndpoint` URL is the base URL for the Issuer Service.
 
 > TODO: Add `IssuerService` namespace
 
-10. ODRL Profile
+10.  ODRL (Open Digital Rights Language) Profile
 
 An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
 a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
