@@ -212,8 +212,7 @@ The following is a non-normative example of a `credentials object`:
 }
 ```
 
-> TODO: Define SSI context and include term alias that are shown above. Also, need to define a way to
-> associate `issuancePolicy` to an ODRL policy so that Json-Ld expansion is performed properly on sub-nodes.
+> TODO: Define SSI context and include term alias that are shown above.
 
 # 5. Issuer Metadata endpoint
 
@@ -317,4 +316,67 @@ The `serviceEndpoint` URL is the base URL for the Issuer Service.
 
 > TODO: Add `IssuerService` namespace
 
+10.  ODRL (Open Digital Rights Language) Profile
 
+An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
+a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
+
+This specification defines two ODRL attributes for the [Policy class](https://www.w3.org/TR/odrl-model/#policy) under
+the `trust` namespace:
+
+- **scope** - Either a single `string` or an `array` of strings containing `scope` values
+- **presentation_definition** - Either an object containing an `@id` attribute with a URI value referencing
+  a `presentation definition`, or a `presentation definition` object.
+
+It is an error to specify both attributes. The value of these attributes identify `Verifiable Presentations` required
+for issuance or re-issuance.
+
+The following are non-normative examples of the `scope` attribute:
+
+```json
+{
+  "issuancePolicy": {
+    "trust:scope": [
+      "example_scope1",
+      "example_scope2"
+    ]
+  }
+}
+```
+
+and
+
+```json
+{
+  "issuancePolicy": {
+    "trust:scope": "example_scope1"
+  }
+}
+```
+
+The following is a non-normative examples of the `presentation_definitiion` attribute:
+
+```json
+{
+  "issuancePolicy": {
+    "trust:presentation_definition": {
+      "@id": "https://expample.com/example_definition"
+    }
+  }
+}
+```
+
+and
+
+```json
+{
+  "issuancePolicy": {
+    "trust:presentation_definition": {
+      "id": "example_presentation_definition",
+      "input_descriptors": [
+        "..."
+      ]
+    }
+  }
+}
+```
