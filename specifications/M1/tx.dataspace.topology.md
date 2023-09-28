@@ -27,8 +27,8 @@ The DSP specifications are based on the concept that all participants have a sta
 typically a number assigned to the participant business entity. In this scheme, participant agent identities may be
 ephemeral since all operations such as signing `contract agreements`are associated with the participant identity.
 
-This specification will also make use of DIDs, which can be employed to cryptographically verify a participant identity.
-These are related as follows:
+This specification will also make use of [DIDs](https://github.com/w3c/did-core), which can be employed to
+cryptographically verify a participant identity. These are related as follows:
 
 ```
 ID  ------ Can resolve to -----> DID

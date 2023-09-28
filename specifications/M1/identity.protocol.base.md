@@ -32,7 +32,7 @@ Decentralization is achieved in the following ways:
 # 3. Identities and Identifiers
 
 Each participant MUST have a unique, immutable **_identity_** provided by the `Registration Service` and
-a [Web DID](https://w3c-ccg.github.io/did-method-web/) that it chooses. This relationship is expressed as:
+a [DID](https://github.com/w3c/did-core) that it chooses. This relationship is expressed as:
 
 ```
 ID  ------ Can resolve to -----> DID
@@ -47,8 +47,8 @@ This immutable identity is termed the `participant id`.
 
 Dataspaces which implement the TX identity protocol MUST define a VC that adheres to
 the [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/) and cryptographically binds the
-`participant id` to its `Web DID`. This VC is termed the `Membership VC`. The VC verifier's cryptographic material MUST
-be resolvable as a `Web DID`.
+`participant id` to its `DID`. This VC is termed the `Membership VC`. The VC verifier's cryptographic material MUST
+be resolvable via a `DID`.
 
 > TODO: do we want to define the subject material of the Membership VC or should we leave it dataspace specific?
 
@@ -70,7 +70,7 @@ The Self-Issued ID Token MUST adhere
 to [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068) and MUST
 include the following claims:
 
-- The `iss` and `sub` claims MUST be equal and set to the bearer's (participant's) web DID.
+- The `iss` and `sub` claims MUST be equal and set to the bearer's (participant's) DID.
 - The `sub_jwk` claim is not used
 - The `aud` set to the `participant_id` of the relying party (RP)
 - The `client_id` set to the `participant_id` of the consumer

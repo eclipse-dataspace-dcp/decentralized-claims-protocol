@@ -30,6 +30,7 @@ issued credentials.
 - **Subject** - The target of a set of claims contained in a VC as defined by
   the [W3C VC Data Model](https://www.w3.org/TR/vc-data-model/#dfn-subjects). In a dataspace, a subject will be a
   participant.
+- ***DID*** - A decentralized identifier as defined by the [DID specification](https://github.com/w3c/did-core).
 
 ## 1.3. Json-Ld Context
 
@@ -174,9 +175,9 @@ If successful, credentials will be created or updated and a `200 OK` returned.
 
 # 6. CS Endpoint Resolution through DID Documents
 
-Different methods may be used by a Relying Party (as defined by the OAuth2 specification, link TBD) to resolve the Credential Service for a client. One way is
-through DID documents. If a DID document is used, the client `DID document` MUST contain at least
-one [service entry](https://www.w3.org/TR/did-core/#services) of type `CredentialService`:
+Different methods may be used by a Relying Party (as defined by the OAuth2 specification, link TBD) to resolve the
+Credential Service for a client. One way is through DID documents. If a DID document is used, the client `DID document`
+MUST contain at least one [service entry](https://www.w3.org/TR/did-core/#services) of type `CredentialService`:
 
 ```
 {
