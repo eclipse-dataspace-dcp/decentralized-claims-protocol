@@ -173,14 +173,14 @@ The following is a non-normative example of a `credentials object`:
 {
   "format": "ldp_vc",
   "@context": {
-    "ssi": "https://w3id.org/edc/v0.8/",
+    "iatp": "https://w3id.org/tractusx-trust/v0.8",
     "odrl": "https://www.w3.org/ns/odrl.jsonld/",
-    "bindingMethods": "ssi:bindingMethods",
-    "cryptographicSuites": "ssi:cryptographicSuites",
-    "issuancePolicy": "ssi:issuancePolicy",
-    "offerReason": "ssi:offerReason",
-    "credentialSubject": "ssi:credentialSubject",
-    "types": "ssi:types"
+    "bindingMethods": "iatp:bindingMethods",
+    "cryptographicSuites": "iatp:cryptographicSuites",
+    "issuancePolicy": "iatp:issuancePolicy",
+    "offerReason": "iatp:offerReason",
+    "credentialSubject": "iatp:credentialSubject",
+    "types": "iatp:types"
   },
   "types": [
     "VerifiableCredential",
@@ -200,7 +200,7 @@ The following is a non-normative example of a `credentials object`:
         "constraint": {
           "and": [
             {
-              "leftOperand": "ssi:CredentialPrereq",
+              "leftOperand": "iatp:CredentialPrereq",
               "operator": "eq",
               "rightOperand": "active"
             }
@@ -211,8 +211,6 @@ The following is a non-normative example of a `credentials object`:
   }
 }
 ```
-
-> TODO: Define SSI context and include term alias that are shown above.
 
 # 5. Issuer Metadata endpoint
 
@@ -248,7 +246,7 @@ The response is a JSON object with the following properties:
             "constraint": {
               "and": [
                 {
-                  "leftOperand": "ssi:CredentialPrereq",
+                  "leftOperand": "iatp:CredentialPrereq",
                   "operator": "eq",
                   "rightOperand": "active"
                 }
