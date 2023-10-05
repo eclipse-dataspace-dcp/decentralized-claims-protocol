@@ -58,7 +58,9 @@ A Self-Issued ID Token is defined in
 the [Self-Issued OpenID Provider v2 specification](https://openid.net/specs/openid-connect-self-issued-v2-1_0.html#section-1.1) :
 
 > In the Self-Issued OP case, the ID Token is self-signed with a private key under the user's control, identified by the
-> sub-claim.
+> *sub* claim.
+
+> NOTE: This specification does NOT require a complete implementation of the SIOPv2 specification
 
 A client may obtain a Self-Issued ID Token using a variety or OAuth grant types. If the OAuth 2.0 Client Credential
 Grant
@@ -106,6 +108,8 @@ A Self-Issued ID Token MAY be obtained by a participant agent executing
 an [OAuth 2.0 Client Credential Grant](https://www.rfc-editor.org/rfc/rfc6749.html#section-4.4) against a Secure Token
 Service (STS) Endpoint. How the participant agent obtains the endpoint address is participant-specific and beyond the
 scope of this specification.
+
+> TODO: following section needs rework. e.g. bearer_access_scope is newly defined in this spec, VP Access Token here and in in its own subsection above, is not clearly described, e.g. why "VP" access token?
 
 The Self-Issued ID Token request MAY contain the `bearer_access_scope` authorization request parameter which is set to a
 list of space-delimited scopes the response `VP Access Token` set in the `access_token` claim will be enabled for. If
