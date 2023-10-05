@@ -174,7 +174,7 @@ The following is a non-normative example of a `credentials object`:
   "format": "ldp_vc",
   "@context": {
     "iatp": "https://w3id.org/tractusx-trust/v0.8",
-    "odrl": "https://www.w3.org/ns/odrl.jsonld/",
+    "odrl": "https://www.w3.org/ns/odrl/2/",
     "bindingMethods": "iatp:bindingMethods",
     "cryptographicSuites": "iatp:cryptographicSuites",
     "issuancePolicy": "iatp:issuancePolicy",
