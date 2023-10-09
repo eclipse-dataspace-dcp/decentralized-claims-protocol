@@ -60,7 +60,8 @@ the [Self-Issued OpenID Provider v2 specification](https://openid.net/specs/open
 > In the Self-Issued OP case, the ID Token is self-signed with a private key under the user's control, identified by the
 > sub-claim.
 
-A client may obtain a Self-Issued ID Token using a variety or OAuth grant types. If the OAuth 2.0 Client Credential Grant
+A client may obtain a Self-Issued ID Token using a variety or OAuth grant types. If the OAuth 2.0 Client Credential
+Grant
 type is used, the client MUST conform
 to [Section 6](#6-using-the-oauth-2-client-credential-grant-to-obtain-access-tokens-from-an-sts).
 
@@ -109,3 +110,14 @@ scope of this specification.
 The Self-Issued ID Token request MAY contain the `bearer_access_scope` authorization request parameter which is set to a
 list of space-delimited scopes the response `VP Access Token` set in the `access_token` claim will be enabled for. If
 no `bearer_access_scope` parameter is present, the `access_token` claim MUST not be included.
+
+# 7. The Identity and Trust Protocol Context
+
+The `Json-ld context` URI for the all identity and trust specifications is:
+
+`https://w3id.org/tractusx-trust/v[version]`
+
+Where version indicates a [Semantic Versioning](https://semver.org/) `MAJOR.MINOR` number. The current specifications
+use `0.8` version and the following context URI:
+
+`https://w3id.org/tractusx-trust/v0.8`
