@@ -199,7 +199,7 @@ The following is a non-normative example of the JSON body:
 
 ## The `Credential` Object
 
-The credentials property contains a single Json `Credential` object or an Array of `Credential` objects.
+The `credentials` property contains an array of `credential` objects.
 The `Credential` object contains the following properties:
 
 - `format`: REQUIRED. Specifies a valid credential format, for example, `ldp_vc` or `jwt_vc_json`.
