@@ -171,7 +171,7 @@ the `credentials` endpoint
 
 `POST /credentials`
 
-If the POST is successful, credentials will be created and a `201 Created` returned.
+If the POST is successful, credentials will be created and a HTTP `2XX` is returned.
 
 The POST body is a JSON object with the following properties:
 
