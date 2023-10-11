@@ -47,7 +47,7 @@ This immutable identity is termed the `participant id`.
 
 Dataspaces which implement the TX identity protocol MUST define a VC that adheres to
 the [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/) and cryptographically binds the
-`participant id` to its `DID`. This VC is termed the `Membership VC`. The VC verifier's cryptographic material MUST
+`participant id` to its `DID`. This VC is termed the `Membership VC`. The VC issuer's cryptographic material MUST
 be resolvable via a `DID`.
 
 > TODO: do we want to define the subject material of the Membership VC or should we leave it dataspace specific?
