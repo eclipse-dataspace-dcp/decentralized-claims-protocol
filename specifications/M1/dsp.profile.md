@@ -26,7 +26,7 @@ A non-normative example is:
         "CompanyCredential"
       ],
       "bindingMethod": "did:web",
-      "cryptographicSuite": "JsonWebKey2020"
+      "cryptographicSuite": "JsonWebSignature2020"
     }
   ]
 }
