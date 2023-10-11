@@ -76,11 +76,6 @@ include the following claims:
 - The `aud` set to the `participant_id` of the relying party (RP)
 - The `client_id` set to the `participant_id` of the consumer
 - The `jti` claim that is used to mitigate against replay attacks
-- All VPs in the `vp` claim MUST be in the format specified by
-  the [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/)
-
-> Note implementations should consider HTTP header restriction sizes when including a `vp` claim. If the claim size
-> exceeds 3-4K, a separate protocol should be used that allows the RP to resolve VPs out-of-band.
 
 ## 4.1.1. VP Access Token
 
@@ -110,6 +105,10 @@ scope of this specification.
 The Self-Issued ID Token request MAY contain the `bearer_access_scope` authorization request parameter which is set to a
 list of space-delimited scopes the response `VP Access Token` set in the `access_token` claim will be enabled for. If
 no `bearer_access_scope` parameter is present, the `access_token` claim MUST not be included.
+
+An STS implementation MAY use endpoint parameters as defined by
+the [OAuth 2 specification](https://www.rfc-editor.org/rfc/rfc6749.html#section-8.2) to convey metadata necessary for the
+creation of the `access_token` claim.
 
 # 7. The Identity and Trust Protocol Context
 
