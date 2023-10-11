@@ -171,7 +171,40 @@ the `credentials` endpoint
 
 `POST /credentials`
 
-If successful, credentials will be created or updated and a `200 OK` returned.
+If the POST is successful, credentials will be created and a HTTP `2XX` is returned.
+
+The POST body is a JSON object with the following properties:
+
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the credential type.
+- `credentials`: REQUIRED. A Json structure corresponding to the schema
+  specified [below](#the-credential-object).
+
+The following is a non-normative example of the JSON body:
+
+```json
+{
+  "@context": [
+    "https://w3id.org/tractusx-trust/v0.8"
+  ],
+  "@type": "Credentials",
+  "credentials": [
+    {
+      "format": "",
+      "payload": ""
+    }
+  ]
+}
+```
+
+## The `Credential` Object
+
+The `credentials` property contains an array of `credential` objects.
+The `Credential` object contains the following properties:
+
+- `format`: REQUIRED. Specifies a valid credential format, for example, `ldp_vc` or `jwt_vc_json`.
+- `payload`: REQUIRED. A [Json Literal](https://www.w3.org/TR/json-ld11/#json-literals) containing the verifiable
+  credential (VC).
 
 # 6. CS Endpoint Resolution through DID Documents
 
