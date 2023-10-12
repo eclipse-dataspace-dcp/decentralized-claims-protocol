@@ -39,7 +39,7 @@ The credentials supported contains a single Json Object or an Array of each veri
 catalog. The `CredentialsSupported` object contains the following properties:
 
 - `types`: REQUIRED. An array of verifiable credential type strings the credential corresponds to
-- `bindingMethods`: REQUIRED. Array of strings that identify how the credential is bound to the identifier of the
+- `bindingMethod`: REQUIRED. String that identifies how the credential is bound to the identifier of the
   credential holder.
 - `cryptographicSuites` REQUIRED. An array of strings that identify the cryptographic suites supported for verifying
   proofs. Values should either use those defined
