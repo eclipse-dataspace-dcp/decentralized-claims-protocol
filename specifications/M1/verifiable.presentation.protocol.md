@@ -25,8 +25,7 @@ issued credentials.
   the [W3C VC Data Model](https://www.w3.org/TR/vc-data-model/#dfn-holders). The holder will typically be the subject of
   a VC.
 - **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
-  VC) or Verifiable
-  Presentation (VP).
+  VC) or Verifiable Presentation (VP).
 - **Subject** - The target of a set of claims contained in a VC as defined by
   the [W3C VC Data Model](https://www.w3.org/TR/vc-data-model/#dfn-subjects). In a dataspace, a subject will be a
   participant.
@@ -36,7 +35,7 @@ issued credentials.
 
 The VPP is based on Json-Ld message types. The CS Json-Ld context is:
 
-`https://w3id.org/tractusx/2023/cs/v1`
+`https://w3id.org/tractusx-trust/v0.8`
 
 ## 1.4. The Base URL
 
@@ -122,9 +121,22 @@ return `4xx Client Error`. The exact error code is implementation-specific.
 
 ### 4.1.1. Query For Presentations
 
-Presentations can be queried by POSTing a message to the query endpoint:
+Presentations can be queried by POSTing a `PresentationQueryMessage` message to the query endpoint:
 
 `POST /presentations/query`
+
+The POST body is a `CredentialMessage` JSON object with the following properties:
+
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.
+- `presentationDefinition`: OPTIONAL. A valid `Presentation Definition` according to
+  the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
+- `scope`: OPTIONAL. An array of scopes.
+
+A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
+contain both.
+
+The following is a non-normative example of the JSON body:
 
 ```json
 {
@@ -132,18 +144,16 @@ Presentations can be queried by POSTing a message to the query endpoint:
     "https://w3id.org/catenax/2023/cs/v1",
     "https://identity.foundation/presentation-exchange/submission/v1"
   ],
-  "@type": "Query",
-  "presentation_definition": "...",
+  "@type": "PresentationQueryMessage",
+  "presentationDefinition": "...",
   "scope": []
 }
 ```
 
-A `Query` MUST contain either a `presentation_definition` or a `scope` parameter. It is an error to contain both.
-
 ### 4.1.1.1. Presentation Definitions
 
-Implementations MAY support the `presentation_definition` parameter. If they do not, they MUST
-return `501 Not Implemented`. The `presentation_definition` parameter contains a valid `Presentation Definition`
+Implementations MAY support the `presentationDefinition` parameter. If they do not, they MUST
+return `501 Not Implemented`. The `presentationDefinition` parameter contains a valid `Presentation Definition`
 according to
 the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
 The CS may require an authorization token to authorize the request and uses the presentation definition to return a set
@@ -166,19 +176,19 @@ the [OpenID for Verifiable Presentations specifications](https://openid.net/spec
 
 # 5. Storage API
 
-VCs can be written to the Credential Service by POSTing an array of [Verifiable Credentials]() to
-the `credentials` endpoint
+VCs can be written to the Credential Service by POSTing a `CredentialMessage` containing an array
+of [Verifiable Credentials]() to the `credentials` endpoint:
 
 `POST /credentials`
 
 If the POST is successful, credentials will be created and a HTTP `2XX` is returned.
 
-The POST body is a JSON object with the following properties:
+The POST body is a `CredentialMessage` JSON object with the following properties:
 
 - `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
-- `@type`: REQUIRED. A string specifying the credential type.
-- `credentials`: REQUIRED. A Json structure corresponding to the schema
-  specified [below](#the-credential-object).
+- `@type`: REQUIRED. A string specifying the `CredentialMessage` type.
+- `credentials`: REQUIRED. An array of `CredentialContainer` Json objects corresponding to the schema
+  specified [below](#the-credentialcontainer-object).
 
 The following is a non-normative example of the JSON body:
 
@@ -187,22 +197,22 @@ The following is a non-normative example of the JSON body:
   "@context": [
     "https://w3id.org/tractusx-trust/v0.8"
   ],
-  "@type": "Credentials",
+  "@type": "CredentialMessage",
   "credentials": [
     {
-      "format": "",
+      "@type": "CredentialContainer",
       "payload": ""
     }
   ]
 }
 ```
 
-## The `Credential` Object
+## The `CredentialContainer` Object
 
-The `credentials` property contains an array of `credential` objects.
-The `Credential` object contains the following properties:
+The `credentials` property contains an array of `CredentialContainer` objects. The `CredentialContainer` object contains
+the following properties:
 
-- `format`: REQUIRED. Specifies a valid credential format, for example, `ldp_vc` or `jwt_vc_json`.
+- `@type`: REQUIRED. A string specifying the `CredentialContainer` type.
 - `payload`: REQUIRED. A [Json Literal](https://www.w3.org/TR/json-ld11/#json-literals) containing the verifiable
   credential (VC).
 
@@ -212,19 +222,21 @@ Different methods may be used by a Relying Party (as defined by the OAuth2 speci
 Credential Service for a client. One way is through DID documents. If a DID document is used, the client `DID document`
 MUST contain at least one [service entry](https://www.w3.org/TR/did-core/#services) of type `CredentialService`:
 
-```
+```json
 {
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/tractusx-trust/v0.8"
+  ],
   "service": [
     {
-      "id":"did:example:123#identity-hub",
-      "type": "CredentialService", 
+      "id": "did:example:123#identity-hub",
+      "type": "CredentialService",
       "serviceEndpoint": "https://cs.example.com"
     }
   ]
 }
 ```
-
-> TODO: Add `CredentialService` namespace
 
 # 7. Profiles
 
@@ -232,10 +244,9 @@ MUST contain at least one [service entry](https://www.w3.org/TR/did-core/#servic
 
 Things we need to restrict outside of this spec:
 
-1. Implementations only need to support the `scope` parameter and not `presentation_definition`
-2. Limit the VP formats
+1. Limit the VP formats
    to `ldp_vp` [here](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#appendix-A.1.2)
-3. Define Scope to Presentation Definition mappings
+2. Define Scope to Presentation Definition mappings
 
 
 
