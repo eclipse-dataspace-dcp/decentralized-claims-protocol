@@ -79,15 +79,17 @@ Token to provide the pre-authorization code to the issuer.
 
 ### 3.1.1. Credential Request Parameters
 
-The Credential Request `POST` body MUST be a JSON object with the following properties:
+The Credential Request `POST` body MUST be a `CredentialRequestMessage` JSON object with the following properties:
 
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the `CredentialRequestMessage` type.
 - `format`: REQUIRED. A JSON string that describes the format of the credential to be issued. Implementations MUST
   support the `ldp_vc` format as defined by
   the [OpenID for Verifiable Credential Issuance specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#section-e.1.3).
   Implementations MAY support other VC formats.
-- `types`: REQUIRED. A JSON array of strings that specifies the VC type being requested.
+- `type`: REQUIRED. A JSON array of strings that specifies the VC type being requested.
 
-The following is a non-normative example of a credential request:
+The following is a non-normative example of a `CredentialRequestMessage`:
 
 ```
 POST /credential HTTP/1.1
@@ -96,8 +98,13 @@ Content-Type: application/json
 Authorization: Bearer ......
 
 {
+   "@context": [
+    "https://w3id.org/tractusx-trust/v0.8",
+     "https://www.w3.org/2018/credentials/v1"
+   ],
+   "@type": "CredentialRequestMessage",
    "format":"ldp_vd",
-   "types":[
+   "type":[
       "VerifiableCredential",
       "EntityCredential"
    ],
@@ -117,11 +124,9 @@ the Storage API defined in the [Verifiable Presentation Protocol](./verifiable.p
 # 4. Credential Offer Flow
 
 Some scenarios involve the Credential Issuer making an initial offer. For example, an out-of-band process may result in
-a
-credential offer. Or, a Credential Issuer may start a key rotation process which involves sending updated credentials to
-holders signed with the issuer's new key. In this case, the issuer can proactively prompt holders to request a new
-credential
-during the key rotation period.
+a credential offer. Or, a Credential Issuer may start a key rotation process which involves sending updated credentials
+to holders signed with the issuer's new key. In this case, the issuer can proactively prompt holders to request a new
+credential during the key rotation period.
 
 ## 4.1. Credential Offer Endpoint
 
@@ -133,26 +138,45 @@ its `CredentialService` service entry.
 
 ### 4.1.1. Credential Offer Parameters
 
-The Credential Offer `POST` body MUST be a JSON object with the following properties:
+The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object with the following properties:
 
-- `credential_issuer`: REQUIRED. The URL of the Credential Issuer, the `Credential Service` is requested to obtain one
-  or more credentials from.
-- `credentials`: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string. If the entry is an object,
-- `credentials`: REQUIRED. ...
-    - entry type object: data MUST adhere to [the Credentials Object Parameters](#the-credentials-object-parameters)
-    - entry type string: value MUST be one of the id values in one of the objects in the `credentials_supported`
-      string, the string value MUST be one of the id values in one of the objects in the `credentials_supported`
-      Credential
-      Issuer metadata parameter. When processing, the `Credential Service` MUST resolve this string value to the
-      respective
-      object.
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the `CredentialOfferMessage` type.
+- `credentialIssuer`: REQUIRED. The identifier of the Credential Issuer, the `Credential Service` is requested to obtain
+  one or more credentials from.
+- `credentials`: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string.
+    - entry type object: data MUST adhere to the [Credentials Object](#412-the-credentialobject)
+    - entry type string: value MUST be one of the id values in one of the objects in the `credentials_supported`.
+    - When processing, the `Credential Service` MUST resolve this string value to the respective object.
 
-#### 4.1.2. The `credentials` Object Parameters
+The following is a non-normative example of a credential offer request:
 
-The `credentials` object defines the following properties:
+```
+POST /credential HTTP/1.1
+Host: server.example.com
+Content-Type: application/json
+Authorization: Bearer ......
 
+{
+   "@context": [
+    "https://w3id.org/tractusx-trust/v0.8",
+     "https://www.w3.org/2018/credentials/v1"
+   ],
+   "@type": "CredentialOfferMessage",
+   "credentialIssuer" :"...",
+   "credentials: [...]
+   
+}
+```                        
+
+#### 4.1.2. The `CredentialObject`
+
+The `CredentialObject` defines the following properties:
+
+- `@type`: REQUIRED. A string specifying the `CredentialObject` type.
 - `format`: REQUIRED. The format of the credential to be requested as defined by
   the [OpenID for Verifiable Credential Issuance specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#format_profiles).
+- `credentialType`: REQUIRED. An array defining the type of credential being offered.
 - `bindingMethods`: OPTIONAL. Binding methods supported as defined by `cryptographic_binding_methods_supported` in the
   _Open ID for Verifiable Credential Issuance_ specification.
 - `cryptographicSuites`: OPTIONAL. Binding methods supported as defined by `cryptographic_suites_supported` in the
@@ -167,25 +191,20 @@ The `credentials` object defines the following properties:
 the [Credential Issuer Metadata](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#section-10.2.3.1)
 > section.
 
-The following is a non-normative example of a `credentials object`:
+The following is a non-normative example of a `CredentialObject`:
 
 ```json
 {
-  "format": "ldp_vc",
   "@context": {
     "iatp": "https://w3id.org/tractusx-trust/v0.8",
-    "odrl": "https://www.w3.org/ns/odrl/2/",
-    "bindingMethods": "iatp:bindingMethods",
-    "cryptographicSuites": "iatp:cryptographicSuites",
-    "issuancePolicy": "iatp:issuancePolicy",
-    "offerReason": "iatp:offerReason",
-    "credentialSubject": "iatp:credentialSubject",
-    "types": "iatp:types"
+    "odrl": "https://www.w3.org/ns/odrl.jsonld"
   },
-  "types": [
+  "@type": "CredentialObject",
+  "credentialType": [
     "VerifiableCredential",
     "CompanyCredential"
   ],
+  "format": "ldp_vc",
   "offerReason": "reissue",
   "bindingMethods": [
     "did:web"
@@ -217,18 +236,27 @@ The following is a non-normative example of a `credentials object`:
 A credential issuer MUST support the Issuer Metadata endpoint using the HTTPS scheme and the `GET method`. The URL of
 the endpoint is the base issuer url with the appended path `/.well-known/vci`.
 
-The response is a JSON object with the following properties:
+The response is a `IssuerMetadata` JSON object with the following properties:
 
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the `IssuerMetadata` type.
 - `credentialIssuer`: REQUIRED. A unique identifier of the issuer, for example, a DID.
-- `credentialsSupported`: OPTIONAL. A Json Array containing a list of Json Objects with properties corresponding
-  to [Credential Offer Parameters](#credential-offer-parameters).
+- `credentialsSupported`: OPTIONAL. A Json Array containing a list of `CredentialObject` JSON objects with properties
+  corresponding to [Credential Objects](#412-the-credentialobject).
+
+The following is a non-normative example of a `IssuerMetadata` response object:
 
 ```json
 {
+  "@context": {
+    "iatp": "https://w3id.org/tractusx-trust/v0.8",
+    "odrl": "https://www.w3.org/ns/odrl.jsonld"
+  },
+  "@type": "IssuerMetadata",
   "credentialIssuer": "did:web:issuer-url",
   "credentialsSupported": [
     {
-      "types": [
+      "credentialType": [
         "VerifiableCredential",
         "CompanyCredential"
       ],
@@ -258,7 +286,6 @@ The response is a JSON object with the following properties:
     }
   ]
 }
-
 ```
 
 # 6. Credential Request Status Endpoint
@@ -267,8 +294,28 @@ The issuer MUST provide an `HTTPS GET` endpoint for retrieving the status of a c
 the appended path `/requests/<request id>`. The issuer SHOULD implement access control such that only the client that
 made the request may access a particualr request status.
 
-If accepted, a Json object with a `status` property set to one of the following
+If accepted, a `CredentialStatus` Json object with a `status` property set to one of the following
 values: `RECEIVED` | `REJECTED` | `ISSUED` will be returned.
+
+The response is a `CredentialStatus` JSON object with the following properties:
+
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the `CredentialStatus` type.
+- `requestId`: REQUIRED. A string corresponding to the request id 
+- `status`: REQUIRED. A string equal to the one of the values: `RECEIVED`, `REJECTED`, or `ISSUED`.
+
+The following is a non-normative example of a `CredentialStatus` response object:
+
+```json
+{
+  "@context": {
+    "iatp": "https://w3id.org/tractusx-trust/v0.8"
+  },
+  "@type": "CredentialStatus",
+  "requestId": "...",
+  "status": "RECEIVED"
+}
+```
 
 # 7. Key Rotation and Revocation
 
@@ -314,16 +361,16 @@ The `serviceEndpoint` URL is the base URL for the Issuer Service.
 
 > TODO: Add `IssuerService` namespace
 
-10.  ODRL (Open Digital Rights Language) Profile
+10. ODRL (Open Digital Rights Language) Profile
 
 An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
 a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
 
 This specification defines two ODRL attributes for the [Policy class](https://www.w3.org/TR/odrl-model/#policy) under
-the `trust` namespace:
+the `iatp` namespace:
 
 - **scope** - Either a single `string` or an `array` of strings containing `scope` values
-- **presentation_definition** - Either an object containing an `@id` attribute with a URI value referencing
+- **presentationDefinition** - Either an object containing an `@id` attribute with a URI value referencing
   a `presentation definition`, or a `presentation definition` object.
 
 It is an error to specify both attributes. The value of these attributes identify `Verifiable Presentations` required
@@ -333,8 +380,8 @@ The following are non-normative examples of the `scope` attribute:
 
 ```json
 {
-  "issuancePolicy": {
-    "trust:scope": [
+  "iatp:issuancePolicy": {
+    "iatp:scope": [
       "example_scope1",
       "example_scope2"
     ]
@@ -346,18 +393,18 @@ and
 
 ```json
 {
-  "issuancePolicy": {
-    "trust:scope": "example_scope1"
+  "iatp:issuancePolicy": {
+    "iatp:scope": "example_scope1"
   }
 }
 ```
 
-The following is a non-normative examples of the `presentation_definitiion` attribute:
+The following is a non-normative examples of the `presentationDefinitiion` attribute:
 
 ```json
 {
-  "issuancePolicy": {
-    "trust:presentation_definition": {
+  "iatp:issuancePolicy": {
+    "iatp:presentationDefinition": {
       "@id": "https://expample.com/example_definition"
     }
   }
@@ -368,8 +415,8 @@ and
 
 ```json
 {
-  "issuancePolicy": {
-    "trust:presentation_definition": {
+  "iatp:issuancePolicy": {
+    "iatp:presentationDefinition": {
       "id": "example_presentation_definition",
       "input_descriptors": [
         "..."
