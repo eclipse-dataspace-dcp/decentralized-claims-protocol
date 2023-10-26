@@ -136,7 +136,7 @@ The POST body is a `CredentialMessage` JSON object with the following properties
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
 contain both.
 
-The following is a non-normative example of the JSON body:
+The following are non-normative examples of the JSON body:
 
 ```json
 {
@@ -145,8 +145,18 @@ The following is a non-normative example of the JSON body:
     "https://identity.foundation/presentation-exchange/submission/v1"
   ],
   "@type": "PresentationQueryMessage",
-  "presentationDefinition": "...",
   "scope": []
+}
+```
+
+```json
+{
+  "@context": [
+    "https://w3id.org/catenax/2023/cs/v1",
+    "https://identity.foundation/presentation-exchange/submission/v1"
+  ],
+  "@type": "PresentationQueryMessage",
+  "presentationDefinition": "..."
 }
 ```
 
