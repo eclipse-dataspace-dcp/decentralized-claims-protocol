@@ -62,13 +62,12 @@ in [Section](#6-cs-endpoint-resolution-through-did-documents). The VPs are then 
 
 # 3. Security
 
-CS endpoints may require an [OAuth 2](https://www.rfc-editor.org/rfc/rfc6749) access token obtained from the resource
-owner. For example, a client (the resource owner) that needs to present a VP to an endpoint will provide an access token
-to the endpoint. The endpoint server will in turn use the access token when resolving the VP through a request to the
-client's Credential Service.
+CS endpoints may require an access token obtained from the resource owner. For example, a client (the resource owner)
+that needs to present a VP to an endpoint will provide an access token to the endpoint. The endpoint server will in turn
+use the access token when resolving the VP through a request to the client's Credential Service.
 
-Tokens may be [OAuth 2.0 Bearer Tokens](https://www.rfc-editor.org/rfc/rfc6750) or any other valid OAuth 2.0 token type.
-Any OAuth 2.0 grant type may be used to request the access tokens.
+The format of the access token is not defined. The only requirement is that the token can be used by the Credential
+Service to perform an access control check as defined in [Section 3.1](#31-access-scopes) .
 
 ## 3.1. Access Scopes
 
@@ -111,6 +110,14 @@ How access control is defined in a Credential Service is implementation-specific
 provide the ability to selectively restrict access to resources. The access control mechanism must support the scope
 restrictions defined in [Section 3.1](#31-access-scopes). Implementations may support additional restriction methods,
 including requiring the requester to present its own VPs.
+
+# 3.2.1 Submitting an Access Token
+
+Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
+implementations to enforce proof-of-possession. The access token must be submitted in the `bearer_access_token` claim of
+a self-issued identity token as defined
+in [Base Identity Protocol Section 4](./identity.protocol.base.md#4-self-issued-id-tokens). The self-issued token must
+be submitted in the HTTP `Authorization` header of the request.
 
 # 4. Resolution API
 
