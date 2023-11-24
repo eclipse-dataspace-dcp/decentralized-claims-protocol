@@ -114,7 +114,7 @@ including requiring the requester to present its own VPs.
 # 3.2.1 Submitting an Access Token
 
 Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
-implementations to enforce proof-of-possession. The access token MUST be contained in the `presentiation_access_token`
+implementations to enforce proof-of-possession, the access token MUST be contained in the `presentiation_access_token`
 claim of a self-issued identity token as defined
 in [Base Identity Protocol Section 4](./identity.protocol.base.md#4-self-issued-id-tokens). The self-issued token must
 be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
