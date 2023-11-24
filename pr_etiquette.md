@@ -58,7 +58,6 @@ Submitting pull requests in EDC should be done while adhering to a couple of sim
 ## The designated editors (as of Sept 21, 2023)
 
 - Jim Marino (@jimmarino)
-- Matthias Binzer (@matgnt)
 
 ## Responsible committers (as of Sept 21, 2023)
 
