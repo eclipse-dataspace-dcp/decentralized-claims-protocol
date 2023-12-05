@@ -115,14 +115,15 @@ Might need to move this into another document
 
 ## Validating SI tokens as the relying party
 
-To be written - this should outline tests that need to be passed on the relying side, when receiving Self-issued ID
-tokens that contain an `access_token`
+This section outlines tests that need to be passed on the _relying side_, when receiving Self-issued ID
+tokens that contain an `access_token`. 
+Please read details [here](./verifier.md)
 
 ## Validating SI tokens as the proving party
 
-To be written - this should outline tests that need to be passed on the prover side, when receiving back another
-Self-issued
-ID token as Auth header on the `/presentation/query` endpoint.
+This sections outlines tests that need to be passed on the prover side, when receiving back another
+Self-issued ID token as Auth header on the `/presentation/query` endpoint.
+Please read details [here](./prover.md)
 
 ## End-To-End tests
 
