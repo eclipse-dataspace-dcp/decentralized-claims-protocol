@@ -1,19 +1,22 @@
 # IATP Test Plan - Presentation Flow
 
 <!-- TOC -->
-
 * [IATP Test Plan - Presentation Flow](#iatp-test-plan---presentation-flow)
-    * [Introduction](#introduction)
-    * [Definition of terms](#definition-of-terms)
-    * [Verifying LDP-VC / LDP-VP](#verifying-ldp-vc--ldp-vp)
-    * [Validating LDP VCs and VPs](#validating-ldp-vcs-and-vps)
-    * [Verifying JWTs](#verifying-jwts)
-    * [Validating JWT VCs/VPs](#validating-jwt-vcsvps)
-    * [Validating SI tokens as the relying party](#validating-si-tokens-as-the-relying-party)
-    * [Validating SI tokens as the proving party](#validating-si-tokens-as-the-proving-party)
-    * [Future amendments](#future-amendments)
-    * [References](#references)
-
+  * [Introduction](#introduction)
+  * [Definition of terms](#definition-of-terms)
+  * [Verifying LDP-VC / LDP-VP](#verifying-ldp-vc--ldp-vp)
+  * [Validating LDP VCs and VPs](#validating-ldp-vcs-and-vps)
+  * [Verifying JWTs](#verifying-jwts)
+  * [Validating JWT VCs/VPs](#validating-jwt-vcsvps)
+  * [Validating SI tokens as the relying party](#validating-si-tokens-as-the-relying-party)
+  * [Validating SI tokens in the CredentialService](#validating-si-tokens-in-the-credentialservice)
+  * [End-To-End tests](#end-to-end-tests)
+  * [Implementer's notice: certification of compliance](#implementers-notice-certification-of-compliance)
+    * [1. Via test annotations](#1-via-test-annotations)
+    * [1. Embedding in client code](#1-embedding-in-client-code)
+    * [2. Remote execution of tests](#2-remote-execution-of-tests)
+  * [Future amendments](#future-amendments)
+  * [References](#references)
 <!-- TOC -->
 
 ## Introduction

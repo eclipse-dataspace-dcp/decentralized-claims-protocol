@@ -28,8 +28,8 @@ outgoing VP query request from the verifier, respectively. The test harness will
 ## Validating VerifiablePresentation responses
 
 _This series of tests deals with validating a VP response returned from the CredentialService. Please note that basic
-cryptographic integrity is asserted using the [VP/VC verification tests](./testplan.md#verifying-ldp-vc--ldp-vp)
-scheme, and basic schema validation is asserted using the [VP/VC validation](./testplan.md#validating-ldp-vcs-and-vps).
+cryptographic integrity is asserted using the [VP/VC verification tests](./base_tests#verifying-ldp-vc--ldp-vp)
+scheme, and basic schema validation is asserted using the [VP/VC validation](./base_tests#validating-ldp-vcs-and-vps).
 This solely deals with IATP specific assertions._
 
 | Number | Name                        | Description                                                                                                                                                                                  | Sample data |

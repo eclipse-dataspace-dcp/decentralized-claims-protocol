@@ -37,7 +37,7 @@ below._
 
 _This test sequence deals with ensuring, that all VPs created by the CredentialService are structurally and
 cryptographically intact. For basic cryptographic checks please also refer to
-the [VC/VP verification section](./testplan.md#verifying-ldp-vc--ldp-vp)_
+the [VC/VP verification section](./base_tests#verifying-ldp-vc--ldp-vp)_
 
 | Number | Name                                 | Description                                                                                                                                                                                                                    |
 |--------|--------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
