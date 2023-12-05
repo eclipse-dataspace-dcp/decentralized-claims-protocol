@@ -116,14 +116,14 @@ Might need to move this into another document
 ## Validating SI tokens as the relying party
 
 This section outlines tests that need to be passed on the _relying side_, when receiving Self-issued ID
-tokens that contain an `access_token`. 
+tokens that contain an `access_token`.
 Please read details [here](./verifier.md)
 
-## Validating SI tokens as the proving party
+## Validating SI tokens in the CredentialService
 
-This sections outlines tests that need to be passed on the prover side, when receiving back another
+This sections outlines tests that the CredentialService needs to pass, when receiving back another
 Self-issued ID token as Auth header on the `/presentation/query` endpoint.
-Please read details [here](./prover.md)
+Please read details [here](./credentialservice)
 
 ## End-To-End tests
 
@@ -133,7 +133,7 @@ where the CredentialService receives
 
 ## Implementer's notice: certification of compliance
 
-The following section outlines several ways how conformance with this test plan can be established. 
+The following section outlines several ways how conformance with this test plan can be established.
 
 ### 1. Via test annotations
 
