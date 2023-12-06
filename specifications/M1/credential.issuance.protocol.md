@@ -57,7 +57,7 @@ client. If the request is approved, the VC will be issued to the client asynchro
 
 Communication with the `Credential Request Endpoint` MUST utilize TLS.
 
-The credential request endpoint MUST be available under the `POST` method at `/credential` relative to the base URL of
+The credential request endpoint MUST be available under the `POST` method at `/credentials` relative to the base URL of
 the
 issuer.
 
@@ -92,7 +92,7 @@ The Credential Request `POST` body MUST be a `CredentialRequestMessage` JSON obj
 The following is a non-normative example of a `CredentialRequestMessage`:
 
 ```
-POST /credential HTTP/1.1
+POST /credentials HTTP/1.1
 Host: server.example.com
 Content-Type: application/json
 Authorization: Bearer ......
@@ -152,7 +152,7 @@ The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object 
 The following is a non-normative example of a credential offer request:
 
 ```
-POST /credential HTTP/1.1
+POST /credentials HTTP/1.1
 Host: server.example.com
 Content-Type: application/json
 Authorization: Bearer ......
