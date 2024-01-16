@@ -80,7 +80,7 @@ include the following claims:
 
 A Self-Issued ID Token MAY contain an access token as an `access_token` claim that can be used by the relying party to
 obtain additional VPs from a service under the control of the ID token issuer. The format of the `access_token` is
-implementation-specific and therefore must be treated as an opaque token by the relying party.
+implementation-specific and therefore must be treated as an opaque string by the relying party.
 
 > TODO: determine claim name
 
