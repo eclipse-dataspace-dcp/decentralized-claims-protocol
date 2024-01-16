@@ -74,7 +74,6 @@ include the following claims:
 - The `iss` and `sub` claims MUST be equal and set to the bearer's (participant's) DID.
 - The `sub_jwk` claim is not used
 - The `aud` set to the `participant_id` of the relying party (RP)
-- The `client_id` set to the `participant_id` of the consumer
 - The `jti` claim that is used to mitigate against replay attacks
 
 ## 4.1.1. VP Access Token

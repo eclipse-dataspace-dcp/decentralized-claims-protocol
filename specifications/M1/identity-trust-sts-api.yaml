@@ -15,8 +15,6 @@ paths:
                 style: form
               bearer_access_scope:
                 style: form
-              client_id:
-                style: form
               client_secret:
                 style: form
               grant_type:
@@ -37,9 +35,6 @@ paths:
                 bearer_access_scope:
                   type: string
                   description: Scope to be added in the VP access token
-                client_id:
-                  type: string
-                  description: Id of the client requesting an SI token
                 client_secret:
                   type: string
                   description: Secret of the client requesting an SI token
@@ -48,7 +43,6 @@ paths:
                   description: "Type of grant: must be set to client_credentials"
               required:
               - audience
-              - client_id
               - client_secret
               - grant_type
       responses:
