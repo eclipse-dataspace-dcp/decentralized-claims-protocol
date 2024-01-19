@@ -114,7 +114,7 @@ including requiring the requester to present its own VPs.
 # 3.2.1 Submitting an Access Token
 
 Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
-implementations to enforce proof-of-possession, the access token MUST be contained in the `presentiation_access_token`
+implementations to enforce proof-of-possession, the access token MUST be contained in the `access_token`
 claim of a self-issued identity token as defined
 in [Base Identity Protocol Section 4](./identity.protocol.base.md#4-self-issued-id-tokens). The self-issued token MUST
 be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
@@ -185,11 +185,24 @@ mapping between a certain scope value and the respective Presentation Definition
 
 ### 4.1.1.3. Response
 
-The response type of a presentation query is defined by
-the [OpenID for Verifiable Presentations specifications](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#section-6.1).
+The response type of a presentation query is a `PresentationResponseMessage` with the following parameters:
 
-> TODO: This needs to be elaborated
-> TODO: Elaborate error responses
+- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@type`: REQUIRED. A string specifying the `PresentationResponseMessage` type.
+- `presentation`: REQUIRED. An array of Verifiable Presentations. The Verifiable Presentations may be strings, JSON
+  objects, or a combination of both depending on the format.
+
+The following are non-normative examples of the JSON response body:
+
+```json
+{
+  "@context": [
+    "https://w3id.org/catenax/2023/cs/v1"
+  ],
+  "@type": "PresentationResponseMessage",
+  "presentation": ["dsJdh...UMetV"]
+}
+```
 
 # 5. Storage API
 

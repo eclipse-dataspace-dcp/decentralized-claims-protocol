@@ -66,7 +66,7 @@ the [Base Identity Protocol Specification](./identity.protocol.base.md#411-vp-ac
 used by the Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and credential
 binding.
 
-The ID Token MUST contain a `presentiation_access_token` claim that is a bearer token granting write privileges for the
+The ID Token MUST contain a `access_token` claim that is a bearer token granting write privileges for the
 requested VCs into the client's `Credential Service` as defined by
 the [Verifiable Presentation Protocol specification](./verifiable.presentation.protocol.md)
 
