@@ -11,11 +11,7 @@ paths:
                 style: form
               audience:
                 style: form
-              bearer_access_alias:
-                style: form
               bearer_access_scope:
-                style: form
-              client_id:
                 style: form
               client_secret:
                 style: form
@@ -30,10 +26,6 @@ paths:
                 audience:
                   type: string
                   description: Audience for the SI token
-                bearer_access_alias:
-                  type: string
-                  description: Alias to be use in the sub of the VP access token (default
-                    is audience)
                 bearer_access_scope:
                   type: string
                   description: Scope to be added in the VP access token

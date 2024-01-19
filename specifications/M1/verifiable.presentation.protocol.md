@@ -8,7 +8,7 @@ resources. The Verifiable Presentation Protocol (VPP) covers the following aspec
 - Secure token exchange for restricting access to CS endpoints
 
 > Note that management endpoints for creating resource contexts, deleting resources, and defining access control are
-> beyond the scope of this protocol.
+> outside the scope of this protocol.
 
 ## 1.1. Motivation
 
@@ -254,17 +254,3 @@ MUST contain at least one [service entry](https://www.w3.org/TR/did-core/#servic
   ]
 }
 ```
-
-# 7. Profiles
-
-> TODO:
-
-Things we need to restrict outside of this spec:
-
-1. Limit the VP formats
-   to `ldp_vp` [here](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html#appendix-A.1.2)
-2. Define Scope to Presentation Definition mappings
-
-
-
-

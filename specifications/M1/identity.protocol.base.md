@@ -12,7 +12,7 @@ communicate participant identities and [Verifiable Credentials](https://www.w3.o
 > Note that it is not a design goal of this protocol to support a self-sovereign data exchange network where each
 > participant is in full control of its ability to operate on the network. Specifically, participants do not perform
 > self-registration, and instead rely on a _**Registration Service**_. Imposing this restriction provides a mechanism
-> for business security (the field of participants can be restricted through a verification process) and greatly
+> for organizational security (the field of participants can be restricted through a verification process) and greatly
 > simplifies the technical problem at hand.
 
 ## 2.1. Decentralization
@@ -41,16 +41,15 @@ ID  ------ Can resolve to -----> DID
  |----------Associated with--------                               
 ```
 
-This immutable identity is termed the `participant id`.
+This immutable identity is termed the `participant id`. In some dataspaces, the `participant id` may be a `DID`;
+otherwise there must be a mechanism to resolve a `DID` from a `participant id`.
 
 ## 3.1.The Membership VC
 
-Dataspaces which implement the TX identity protocol MUST define a VC that adheres to
-the [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/) and cryptographically binds the
-`participant id` to its `DID`. This VC is termed the `Membership VC`. The VC issuer's cryptographic material MUST
-be resolvable via a `DID`.
-
-> TODO: do we want to define the subject material of the Membership VC or should we leave it dataspace specific?
+In the case where the `participant id` is not a `DID`, dataspaces which implement the TX identity protocol MUST define a
+VC that adheres to the [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/) and
+cryptographically binds the `participant id` to its `DID`. This VC is termed the `Membership VC`. The VC issuer's
+cryptographic material MUST be resolvable via a `DID`.
 
 # 4. Self-Issued ID Tokens
 
@@ -63,8 +62,7 @@ the [Self-Issued OpenID Provider v2 specification](https://openid.net/specs/open
 > NOTE: This specification does NOT require a complete implementation of the SIOPv2 specification
 
 A client may obtain a Self-Issued ID Token using a variety or OAuth grant types. If the OAuth 2.0 Client Credential
-Grant
-type is used, the client MUST conform
+Grant type is used, the client MUST conform
 to [Section 6](#6-using-the-oauth-2-client-credential-grant-to-obtain-access-tokens-from-an-sts).
 
 # 4.1. Self-Issued ID Token Contents
@@ -76,13 +74,13 @@ include the following claims:
 - The `iss` and `sub` claims MUST be equal and set to the bearer's (participant's) DID.
 - The `sub_jwk` claim is not used
 - The `aud` set to the `participant_id` of the relying party (RP)
-- The `client_id` set to the `participant_id` of the consumer
 - The `jti` claim that is used to mitigate against replay attacks
 
 ## 4.1.1. VP Access Token
 
 A Self-Issued ID Token MAY contain an access token as an `access_token` claim that can be used by the relying party to
-obtain additional VPs.
+obtain additional VPs from a service under the control of the ID token issuer. The format of the `access_token` is
+implementation-specific and therefore must be treated as an opaque string by the relying party.
 
 > TODO: determine claim name
 
@@ -101,20 +99,20 @@ entries that can be used to resolve metadata.
 
 A Self-Issued ID Token MAY be obtained by a participant agent executing
 an [OAuth 2.0 Client Credential Grant](https://www.rfc-editor.org/rfc/rfc6749.html#section-4.4) against a Secure Token
-Service (STS) Endpoint. How the participant agent obtains the endpoint address is participant-specific and beyond the
+Service (STS) Endpoint. How the participant agent obtains the endpoint address is implementation-specific and beyond the
 scope of this specification.
 
-> TODO: following section needs rework. e.g. bearer_access_scope is newly defined in this spec, VP Access Token here and in in its own subsection above, is not clearly described, e.g. why "VP" access token?
+If an `access_token` is required to be included in the Self_issued ID token, the participant agent will need to request
+scopes for the access token. This is dependent on the API used to obtain the Self-Issued ID Token. An STS implementation
+MAY use endpoint parameters as defined by
+the [OAuth 2 specification](https://www.rfc-editor.org/rfc/rfc6749.html#section-8.2) to convey metadata necessary for
+the creation of the `access_token` claim. In this case, the Self-Issued ID Token request MAY contain
+a `bearer_access_scope` authorization request parameter set to a
+list of space-delimited scopes the `access_token` claim will be enabled for. If no `bearer_access_scope` parameter is
+present, the `access_token` claim MUST not be included.
 
-The Self-Issued ID Token request MAY contain the `bearer_access_scope` authorization request parameter which is set to a
-list of space-delimited scopes the response `VP Access Token` set in the `access_token` claim will be enabled for. If
-no `bearer_access_scope` parameter is present, the `access_token` claim MUST not be included.
-
-An STS implementation MAY use endpoint parameters as defined by
-the [OAuth 2 specification](https://www.rfc-editor.org/rfc/rfc6749.html#section-8.2) to convey metadata necessary for the
-creation of the `access_token` claim.
-
-> A non-normative OpenAPI spec of an STS implementing client credentials flow is provided [here](./identity-trust-sts-api.yaml)
+> A non-normative OpenAPI spec of an STS implementing client credentials flow is
+> provided [here](./identity-trust-sts-api.yaml)
 
 # 7. The Identity and Trust Protocol Context
 
