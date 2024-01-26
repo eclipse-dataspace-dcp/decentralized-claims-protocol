@@ -90,6 +90,19 @@
         "scope": "iatp:scope"
       }
     },
+    "PresentationResponseMessage": {
+      "@id": "iatp:PresentationResponseMessage",
+      "@context": {
+        "presentation": {
+          "@id": "iatp:presentation",
+          "@type": "@json"
+        },
+        "presentationSubmission": {
+          "@id": "iatp:presentationSubmission",
+          "@type": "@json"
+        }
+      }
+    },
     "credentials": {
       "@id": "iatp:credentials",
       "@container": "@set"
