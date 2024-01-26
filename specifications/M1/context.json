@@ -86,8 +86,15 @@
     "PresentationQueryMessage": {
       "@id": "iatp:PresentationQueryMessage",
       "@context": {
-        "presentationDefinition": "iatp:presentationDefinition",
-        "scope": "iatp:scope"
+        "presentationDefinition": {
+          "@id": "iatp:presentationDefinition",
+          "@type": "@json"
+        },
+        "scope": {
+          "@id": "iatp:scope",
+          "@type": "xsd:string",
+          "@container": "@set"
+        }
       }
     },
     "PresentationResponseMessage": {
@@ -114,15 +121,6 @@
     "format": {
       "@id": "iatp:format",
       "@type": "xsd:string"
-    },
-    "presentationDefinition": {
-      "@id": "iatp:presentationDefinition",
-      "@type": "@json"
-    },
-    "scope": {
-      "@id": "iatp:scope",
-      "@type": "xsd:string",
-      "@container": "@set"
     },
     "type": "@type"
   }
