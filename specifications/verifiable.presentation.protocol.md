@@ -116,7 +116,7 @@ including requiring the requester to present its own VPs.
 Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
 implementations to enforce proof-of-possession, the access token MUST be contained in the `access_token`
 claim of a self-issued identity token as defined
-in [Base Identity Protocol Section 4](./identity.protocol.base.md#4-self-issued-id-tokens). The self-issued token MUST
+in [Base Identity Protocol Section 4](identity.protocol.base.md#4-self-issued-id-tokens). The self-issued token MUST
 be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
 
 # 4. Resolution API
@@ -148,7 +148,7 @@ The following are non-normative examples of the JSON body:
 ```json
 {
   "@context": [
-    "https://w3id.org/catenax/2023/cs/v1",
+    "https://w3id.org/tractusx-trust/v0.8",
     "https://identity.foundation/presentation-exchange/submission/v1"
   ],
   "@type": "PresentationQueryMessage",
@@ -159,7 +159,7 @@ The following are non-normative examples of the JSON body:
 ```json
 {
   "@context": [
-    "https://w3id.org/catenax/2023/cs/v1",
+    "https://w3id.org/tractusx-trust/v0.8",
     "https://identity.foundation/presentation-exchange/submission/v1"
   ],
   "@type": "PresentationQueryMessage",

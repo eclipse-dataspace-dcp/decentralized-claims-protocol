@@ -59,7 +59,8 @@ Submitting pull requests in EDC should be done while adhering to a couple of sim
 
 - Jim Marino (@jimmarino)
 
-## Responsible committers (as of Sept 21, 2023)
+## Responsible committers (as of Feb 26, 2024)
 
 - Paul Latzelsperger (@paullatzelsperger)
 - Enrico Risa (@wolf4ood)
+- Jim Marino (@jimmarino)
