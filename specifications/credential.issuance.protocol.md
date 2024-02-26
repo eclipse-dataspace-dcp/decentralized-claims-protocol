@@ -4,8 +4,8 @@ This specification defines a protocol for Verifiable Credential (VC) issuance. S
 Protocol (CIP) defines the endpoints and message types for requesting credentials to be issued from
 a `Credential Issuer.`
 
-This specification relies on the [Base Identity Protocol](./identity.protocol.base.md) and
-the [Verifiable Presentation Protocol](./verifiable.presentation.protocol.md).
+This specification relies on the [Base Identity Protocol](identity.protocol.base.md) and
+the [Verifiable Presentation Protocol](verifiable.presentation.protocol.md).
 
 ## 1.1. Motivation
 
@@ -27,11 +27,11 @@ associated with manual workflows that are best modelled using asynchronous messa
 # 2. Overview
 
 The Credential Issuance Protocol is designed to be used in conjunction with
-the [Base Identity Protocol](./identity.protocol.base.md) and the
-[Verifiable Presentation Protocol](./verifiable.presentation.protocol.md). This issuance interaction flow is expressed
+the [Base Identity Protocol](identity.protocol.base.md) and the
+[Verifiable Presentation Protocol](verifiable.presentation.protocol.md). This issuance interaction flow is expressed
 in the following diagram:
 
-![Issuance Flow](./issuance.flow.png)
+![Issuance Flow](issuance.flow.png)
 
 In the above sequence, the client uses the `Base Identity Protocol` to create a Self-Issued Identity token that it
 includes in its request to the `Credential Issuer.` If the VC request is approved by the `Credential Issuer`, a VC will
@@ -62,16 +62,16 @@ the
 issuer.
 
 The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
-the [Base Identity Protocol Specification](./identity.protocol.base.md#411-vp-access-token). The `issuer` claim can be
+the [Base Identity Protocol Specification](identity.protocol.base.md#411-vp-access-token). The `issuer` claim can be
 used by the Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and credential
 binding.
 
 The ID Token MUST contain a `access_token` claim that is a bearer token granting write privileges for the
 requested VCs into the client's `Credential Service` as defined by
-the [Verifiable Presentation Protocol specification](./verifiable.presentation.protocol.md)
+the [Verifiable Presentation Protocol specification](verifiable.presentation.protocol.md)
 
 The ID Token MAY contain an `access_token` claim as defined in
-the [Base Identity Protocol Specification](./identity.protocol.base.md)  claim that can be used by the issuer to resolve
+the [Base Identity Protocol Specification](identity.protocol.base.md)  claim that can be used by the issuer to resolve
 Verifiable Presentations (VP) the client is required to hold for issuance of the requested VCs.
 
 If the issuer supports a pre-authorization code flow, the client must use the `pre-authorized_code` claim in the ID
@@ -119,7 +119,7 @@ The issuer MAY respond with `401 Not Authorized` if the request is unauthorized 
 an exception.
 
 If the VC request is approved, the issuer will respond with a write-request to the client's `Credential Service` using
-the Storage API defined in the [Verifiable Presentation Protocol](./verifiable.presentation.protocol.md#5-storage-api).
+the Storage API defined in the [Verifiable Presentation Protocol](verifiable.presentation.protocol.md#5-storage-api).
 
 # 4. Credential Offer Flow
 

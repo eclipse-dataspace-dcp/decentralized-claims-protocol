@@ -112,7 +112,7 @@ list of space-delimited scopes the `access_token` claim will be enabled for. If 
 present, the `access_token` claim MUST not be included.
 
 > A non-normative OpenAPI spec of an STS implementing client credentials flow is
-> provided [here](./identity-trust-sts-api.yaml)
+> provided [here](identity-trust-sts-api.yaml)
 
 # 7. The Identity and Trust Protocol Context
 
