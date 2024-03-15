@@ -72,7 +72,7 @@ components:
     StsTokenResponse:
       type: object
       properties:
-        token:
+        access_token:
           type: string
         expires_in:
           type: integer
