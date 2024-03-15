@@ -78,8 +78,8 @@ include the following claims:
 
 ## 4.1.1. VP Access Token
 
-A Self-Issued ID Token MAY contain an access token as an `access_token` claim that can be used by the relying party to
-obtain additional VPs from a service under the control of the ID token issuer. The format of the `access_token` is
+A Self-Issued ID Token MAY contain an access token as a `token` claim that can be used by the relying party to
+obtain additional VPs from a service under the control of the ID token issuer. The format of the `token` is
 implementation-specific and therefore must be treated as an opaque string by the relying party.
 
 > TODO: determine claim name
@@ -102,14 +102,14 @@ an [OAuth 2.0 Client Credential Grant](https://www.rfc-editor.org/rfc/rfc6749.ht
 Service (STS) Endpoint. How the participant agent obtains the endpoint address is implementation-specific and beyond the
 scope of this specification.
 
-If an `access_token` is required to be included in the Self_issued ID token, the participant agent will need to request
+If an `token` is required to be included in the Self_issued ID token, the participant agent will need to request
 scopes for the access token. This is dependent on the API used to obtain the Self-Issued ID Token. An STS implementation
 MAY use endpoint parameters as defined by
 the [OAuth 2 specification](https://www.rfc-editor.org/rfc/rfc6749.html#section-8.2) to convey metadata necessary for
-the creation of the `access_token` claim. In this case, the Self-Issued ID Token request MAY contain
+the creation of the `token` claim. In this case, the Self-Issued ID Token request MAY contain
 a `bearer_access_scope` authorization request parameter set to a
-list of space-delimited scopes the `access_token` claim will be enabled for. If no `bearer_access_scope` parameter is
-present, the `access_token` claim MUST not be included.
+list of space-delimited scopes the `token` claim will be enabled for. If no `bearer_access_scope` parameter is
+present, the `token` claim MUST not be included.
 
 > A non-normative OpenAPI spec of an STS implementing client credentials flow is
 > provided [here](identity-trust-sts-api.yaml)

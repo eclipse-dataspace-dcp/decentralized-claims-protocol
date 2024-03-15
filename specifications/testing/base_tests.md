@@ -119,7 +119,7 @@ Might need to move this into another document
 ## Validating SI tokens as the relying party
 
 This section outlines tests that need to be passed on the _relying side_, when receiving Self-issued ID
-tokens that contain an `access_token`.
+tokens that contain a `token`.
 Please read details [here](./verifier.md)
 
 ## Validating SI tokens in the CredentialService
