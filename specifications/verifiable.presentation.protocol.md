@@ -197,7 +197,7 @@ The following are non-normative examples of the JSON response body:
 ```json
 {
   "@context": [
-    "https://w3id.org/catenax/2023/cs/v1"
+    "https://w3id.org/tractusx-trust/v0.8"
   ],
   "@type": "PresentationResponseMessage",
   "presentation": ["dsJdh...UMetV"]
