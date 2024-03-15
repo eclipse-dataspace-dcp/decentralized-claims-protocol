@@ -10,7 +10,7 @@ This document deals with tests for the CredentialService.
 The system-under-test, i.e. the execution runtime of the CredentialService, is regarded as a black box, exposing only
 the
 Resolution API. The test harness then executes REST requests against that API and performs test assertions. It may be
-necessary for the test harness to interact with the system-under-test, e.g. to obtain valid `presentation_access_tokens`
+necessary for the test harness to interact with the system-under-test, e.g. to obtain a valid `token`
 or to prepare a specific (set of) VCs.
 
 ## Verifying/Validating incoming SI Token requests
@@ -27,9 +27,9 @@ below._
 | P_0003 | Signature invalid                           | The signature of the JWT can not be verified using the public key from the counterparty.                                                                                  |
 | P_0004 | `sub_jwk` must not be present               | The JWT contains a `sub_jwk` claim                                                                                                                                        |
 | P_0005 | `jti` already used                          | The same `jti` claim value was used twice within the token's expiry time                                                                                                  |
-| P_0006 | `presentation_access_token` must be present | The JWT must contain a `presentation_access_token` claim, the shape of which is opaque                                                                                    |
+| P_0006 | `token` must be present | The JWT must contain a `token` claim, the shape of which is opaque                                                                                    |
 | P_0007 | `client_id` must be present                 | The JWT must contain a `client_id` claim, that must be identical to the sender's participant ID                                                                           |
-| P_0008 | Issuer's scope not valid                    | The `presentation_access_token` cannot be resolved to a valid scope. That means, the scope string that is encoded in the token is invalid or is not understood.           |
+| P_0008 | Issuer's scope not valid                    | The `token` cannot be resolved to a valid scope. That means, the scope string that is encoded in the token is invalid or is not understood.           |
 | P_0009 | Requestor's query not valid                 | The `scope` or `presentationDefinition` object of the presentation query cannot be parsed to valid scope string.                                                          |
 | P_0010 | Requestor's query is unauthorized           | The requestor is not authorized for at least one item specified by the query. In practice, this could be a scope string that is "too wide"                                |
 

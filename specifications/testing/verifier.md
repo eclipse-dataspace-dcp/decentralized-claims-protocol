@@ -22,7 +22,7 @@ outgoing VP query request from the verifier, respectively. The test harness will
 | R_0001 | Signature invalid                           | The signature of the JWT can not be verified using the public key from the counterparty.        |             |
 | R_0002 | `sub_jwk` must not be present               | The JWT contains a `sub_jwk` claim                                                              |             |
 | R_0003 | `jti` already used                          | The same `jti` claim value was used twice within the token's expiry time                        |             |
-| R_0004 | `presentation_access_token` must be present | The JWT must contain a `presentation_access_token` claim, the shape of which is opaque          |             |
+| R_0004 | `token` must be present | The JWT must contain a `token` claim, the shape of which is opaque          |             |
 | R_0005 | `client_id` must be present                 | The JWT must contain a `client_id` claim, that must be identical to the sender's participant ID |             |
 
 ## Validating VerifiablePresentation responses
