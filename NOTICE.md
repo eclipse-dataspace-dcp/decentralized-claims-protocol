@@ -18,18 +18,20 @@ source code repository logs.
 
 ## Declared Project Licenses
 
-The materials in this repository is made available under the terms
-of the Creative Commons Attribution 4.0 International License, which is available at
-https://spdx.org/licenses/CC-BY-4.0.html.
+This Tractus-X project repository uses the following license:
 
+- CC-BY-4.0 for non-code
+
+CC-BY-4.0:
+The materials in this repository are made available under the terms of the Creative Commons Attribution 4.0 International License, which is available at https://spdx.org/licenses/CC-BY-4.0.html.
 SPDX-License-Identifier: CC-BY-4.0
 
 ## Source Code
 
 The project maintains the following source code repositories
-in the GitHub organization <https://github.com/eclipse-tractusx>:
+in the GitHub organization https://github.com/eclipse-tractusx:
 
-* <https://github.com/eclipse-tractusx/identity-trust>
+* https://github.com/eclipse-tractusx/identity-trust
 
 ## Third-party Content
 
