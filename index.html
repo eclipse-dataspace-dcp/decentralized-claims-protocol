@@ -1,86 +1,1110 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-	<meta charset='utf-8'>
-	<script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
-	<script class='remove'>
-		var respecConfig = {
-		  specStatus: "unofficial",
-		  editors: [{
-			  name: "Your Name",
-			  url: "https://your-site.com",
-			  company: "My company",
-			  companyURL: "https://your-site.com",
-		  }],
-		  github: {
-			branch: "main",
-			repoURL: "eclipse-dataspace-dcp/decentralized-claims-protocol",
-		  },
-		  xref: "web-platform",
-		};
-	</script>
+    <meta charset='utf-8'>
+    <script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
+    <script class='remove'>
+        var respecConfig = {
+          specStatus: "unofficial",
+          editors: [{
+              name: "Your Name",
+              url: "https://your-site.com",
+              company: "My company",
+              companyURL: "https://your-site.com",
+          }],
+          github: {
+            branch: "main",
+            repoURL: "eclipse-dataspace-dcp/decentralized-claims-protocol",
+          },
+          xref: "web-platform",
+          lint: { "no-unused-dfns": false },
+        };
+    </script>
+    <title>Eclipse Decentralized Claims Protocol</title>
 </head>
 <body>
 <h1 id="title">Eclipse Decentralized Claims Protocol</h1>
 <section id='abstract'>
-	<p>
-		This is the abstract (required).
-	</p>
+    <p>
+        This repository contains normative documents defining protocols and flows withing the Identity and Trust system
+        to be used in Tractus-X projects.
+    </p>
 </section>
 <section id='sotd'>
-	<p>
-		This is the state of the doc.
-	</p>
+    <p>
+        The responsibility of the specification has been transfered to the <a href="https://dataspace.eclipse.org/">Eclipse
+        Dataspace Working Group</a>.
+        Please file
+        change requests or contributions according to the working group processes. Until the first version of the
+        specification from the working group is released and implemented, this repository contains the current
+        specification implemented in the Catena-X data space. Maintenance is limited to urgent issues concerning the
+        operation of this data space. There are <a
+            href="https://github.com/eclipse-tractusx/identity-trust/blob/main/pr_etiquette.md#the-designated-editors-as-of-sept-21-2023">designated
+        editors</a>,
+        who are the primary contributors to the content of
+        this repository. Please file urgent issues that cannot wait for the first working group release through GitHub
+        Discussions or Issues.
+    </p>
 </section>
 <section>
-	<h2>Introduction</h2>
-	<section>
-		<h3>
-			Automated bibliography management
-		</h3>
-		<p>
-			This section has a CSS class "<code>informative</code>", so it is
-			listed in the TOC. ReSpec will list this reference as non-normative
-			since this is an informative section [[HTML]].
-		</p>
-	</section>
-	<section>
-		<h3>
-			Rendering of HTTP requests etc
-		</h3>
-		<aside class="example" title="Some payload">
-			<p>
-				A http request from the spec
-			<p>
-			<pre class="http">
+    <h2><dfn>Tractus-X Dataspace Topology</dfn></h2>
+    <section>
+        <h3>
+            Introduction
+        </h3>
+        <p>
+            This document details the systems topology that Tractus-X dataspaces employ. This topology adheres to the
+            model defined by the <a href="https://docs.internationaldataspaces.org/dataspace-protocol/overview/model">Dataspace
+            Protocol Specifications</a>
+            (DSP):
+        </p>
+        <ul>
+            <li>The <dfn>Dataspace Authority</dfn> manages the dataspace. In a Tractus-X dataspace, this role may be
+                federated across multiple operating companies responsible for registration, onboarding, and
+                operations management.
+            </li>
+            <li>A <dfn>Participant</dfn> is a member the dataspace. In a Tractus-X dataspace, members may take on
+                different roles, which are attested to by <a>Verifiable Credentials</a>
+            </li>
+            <li>A <dfn>Participant Agent</dfn> performs tasks such as publishing a catalog or engaging in an asset
+                transfer. Note that a participant agent is a logical construct and does not necessarily correspond
+                to a single runtime process.
+            </li>
+            <li>An <dfn>Identity Provider</dfn> is a service that generates ID tokens used to verify the identity
+                of a Participant Agent. In a Tractus-X dataspace, each participant will use their own identity
+                provider, which may be self-hosted or hosted in a managed environment.
+            </li>
+            <li>A <dfn>Credential Issuer</dfn> issues <a>Verifiable Credentials</a> (VC) used by participant agents to
+                allow access to assets and verify usage control
+            </li>
+            <li>
+                <dfn data-lt="VC">Verifiable Credential</dfn> see [[vc-data-model]].
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h3>
+            Scope
+        </h3>
+        <p>
+            This specification does not cover dataspace <dfn data-lt="registration service">registration systems</dfn>
+            managed by a <a>Dataspace Authority</a>
+            (operating company) as the participant registration and discovery process is out-of-scope.
+        </p>
+    </section>
+    <section>
+        <h3>
+            Identities
+        </h3>
+        <p>
+            The DSP specifications are based on the concept that all participants have a stable identifier (ID). This
+            ID is typically a number assigned to the participant business entity. In this scheme, <a>participant
+            agent</a>
+            identities may be ephemeral since all operations such as signing contract agreements are associated with the
+            participant identity. This specification will also make use of DIDs [[did-core]], which can be employed to
+            cryptographically verify a participant identity. These are related as follows:
+        </p>
+        <pre class="noghighlight">
+			ID  ------ Can resolve to -----> DID
+			^                                |
+			|                                |
+			|----------Associated with--------
+		</pre>
+        <p>
+            A DID may also be used as an ID, but it is recommended to distinguish the two to allow for DID rotation.
+            For example, a participant may opt to change its hosting environment, resulting in a change to its DID such
+            as the URL associated with its DID in the case of `did:web` or its DID method. Since its Identifier remains
+            stable, existing signed contracts will not be impacted.
+        </p>
+    </section>
+    <section>
+        <h3>Systems</h3>
+        <section>
+            <h4><dfn>Registration system</dfn></h4>
+            <p>The registration system is responsible for participant registration, onboarding, and management.</p>
+            <section>
+                <h5><dfn>Registration process</dfn></h5>
+                <p>
+                    When a participant is onboarded, it will be assigned an ID and either a secret token/code or
+                    Membership VC that will allow the participant to bootstrap its systems. If provided a secret token,
+                    the participant will be able to exchange it for a Membership VC with a <a>Credential Issuer</a>.
+                </p>
+            </section>
+        </section>
+        <section>
+            <h4><dfn>Participant Agent Systems</dfn></h4>
+            <p>
+                Participants will run one or more agent systems that interact in the dataspace. These systems may offer
+                data catalogs, perform data transfers or provide application functionality.
+
+                A participant may run the following identity-related agents. Note that this is a logical description
+                and may not represent an actual deployment topology.
+            </p>
+            <section>
+                <h5><dfn data-lt="Secure Token Service|STS">Security Token Service</dfn> (STS)</h5>
+                <p>
+                    The STS creates self-issued authorization tokens that contain identity claims used by participant
+                    agents under the control of the same participant.
+                </p>
+            </section>
+            <section>
+                <h5><dfn>Credential Service</dfn> (CS)</h5>
+                <p>
+                    The CS manages <a>Verifiable Credentials</a>. This includes read and write endpoints for Verifiable
+                    Presentations (VPs) and Verifiable Credentials (VCs).
+                </p>
+            </section>
+            <section>
+                <h5><dfn>DID Service</dfn> (DIDS)</h5>
+                <p>
+                    The DIDS creates, signs and publishes DID documents.
+                </p>
+            </section>
+        </section>
+        <section>
+            <h4><dfn>Issuer Service</dfn> (IS)</h4>
+            <p>
+                The Issuer Service is run by trust anchor and manages the lifecycle of Verifiable Credentials in a
+                dataspace. A dataspace may contain multiple Issuer Services run by different trust anchors. The
+                Issuer Service:
+            </p>
+            <ul>
+                <li>Issues VCs for dataspace participants</li>
+                <li>Manages revocation lists for VC types it issues based on Verifiable Credentials Status List v2021
+                    [[vc-bitstring-status-list-20230427]].
+                </li>
+                <li>
+                    Provides cryptographic material used to verify VPs and VCs. If this is in the form of a DID, the
+                    Issuer
+                    Service may use the Identity Hub DID Service.
+                </li>
+            </ul>
+        </section>
+    </section>
+</section>
+<section>
+    <h2><dfn data-lt="Base Identity Protocol">Identity Protocol Base</dfn></h2>
+    <p>
+    <section>
+        <h3>Introduction</h3>
+        <p>
+            This document defines a base protocol for communicating participant identities and claims in a Tractus-X
+            dataspace. This specification assumes familiarity with the <a>Tractus-X Dataspace Topology</a>
+        </p>
+    </section>
+    <section>
+        <h3>Motivation</h3>
+        <p>
+            The key goal of this protocol specification is to minimize the risk of business disruption related to the
+            failure of identity and credential systems in a Tractus-X dataspace. As such, it provides a design for a
+            decentralized system to communicate participant identities and <a>Verifiable Credentials</a> (VCs).
+        </p>
+        <p class="note">
+            Note that it is not a design goal of this protocol to support a self-sovereign data exchange network
+            where each participant is in full control of its ability to operate on the network. Specifically,
+            participants do not perform self-registration, and instead rely on a Registration Service. Imposing this
+            restriction provides a mechanism for organizational security (the field of participants can be restricted
+            through a verification process) and greatly simplifies the technical problem at hand.
+        </p>
+        <section>
+            <h4>Decentralization</h4>
+            <p>
+                Decentralization is achieved in the following ways:
+            </p>
+            <ul>
+                <li>
+                    <b>Self-Issued Identity Tokens</b> - Each participant is responsible for creating and
+                    cryptographically signing its own identity tokens. A central identity provider is therefore
+                    not required, eliminating a potential locus of network failure.
+                </li>
+                <li>
+                    <b>Participant VC and Cryptographic Material Management</b> - Each participant is
+                    responsible for storing VCs and presenting them (VPs) in the network. Each participant is
+                    also responsible for storing and making its own cryptographic material available to
+                    verifiers in the network. This specification defines how VCs are presented and verified
+                    without the need for a third-party verification service.
+                </li>
+                <li>
+                    <b>Multiple Trust Anchors</b> - Participant VCs are signed by a third-party issuer acting
+                    as a trust anchor using a cryptographic proof. The identity protocol allows for multiple
+                    trust anchors in a dataspace.
+                </li>
+            </ul>
+        </section>
+    </section>
+    <section>
+        <h3>Identities and Identifiers</h3>
+        <p>
+            Each participant MUST have a unique, immutable <b>identity</b> provided by the <a>Registration Service</a>
+            and a DID that it chooses. This relationship is expressed as:
+        </p>
+        <pre class="nohighlight">
+			ID  ------ Can resolve to -----> DID
+			^                                |
+			|                                |
+			|----------Associated with--------
+			</pre>
+        <p>
+            This immutable identity is termed the `participant id`. In some dataspaces, the `participant id` may be
+            a DID; otherwise there must be a mechanism to resolve a DID from a `participant id`.
+        </p>
+        <section>
+            <h4>The Membership VC</h4>
+            <p>
+                In the case where the `participant id` is not a DID, dataspaces which implement the TX identity
+                protocol MUST define a VC that adheres to the Verifiable Credentials Data Model v1.1 [[vc-data-model]]
+                and cryptographically binds the participant id to its DID. This VC is termed the Membership VC.
+                The VC issuer's cryptographic material MUST be resolvable via a DID.
+            </p>
+        </section>
+    </section>
+    <section id="self-issued-id-tokens">
+        <h3>Self-Issued ID Tokens</h3>
+        <p>
+            A Self-Issued ID Token is defined in the <a
+                href="https://openid.net/specs/openid-connect-self-issued-v2-1_0.html#section-1.1">Self-Issued OpenID
+            Provider v2 specification</a>.
+        </p>
+        <p class="note" title="quote">In the Self-Issued OP case, the ID Token is self-signed with a private key under
+            the user's control, identified by the `sub` claim.</p>
+        <p class="note" title="disclaimer">This specification does NOT require a complete implementation of the SIOPv2
+            specification</p>
+        <p>A client may obtain a Self-Issued ID Token using a variety or OAuth grant types. If the OAuth 2.0 Client
+            Credential Grant type is used, the client MUST conform to <a href="#get-sts-token">the section on obtaining
+                STS-issued access tokens</a>.</p>
+        <section>
+            <h4>Self-Issued ID Token Contents</h4>
+            <p>
+                The Self-Issued ID Token MUST adhere to JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens
+                [[rfc9068]] and MUST include the following claims:
+            </p>
+            <ul>
+                <li>The `iss` and `sub` claims MUST be equal and set to the bearer's (participant's) DID.</li>
+                <li>The `sub_jwk` claim is not used.</li>
+                <li>The `aud` set to the `participant_id` of the relying party (RP).</li>
+                <li>The `jti` claim that is used to mitigate against replay attacks.</li>
+            </ul>
+            <section>
+                <h5>VP Access Token</h5>
+                <p>
+                    A Self-Issued ID Token MAY contain an access token as a `token` claim that can be used by
+                    the relying party to obtain additional VPs from a service under the control of the ID
+                    token issuer. The format of the `token` is implementation-specific and therefore must be
+                    treated as an opaque string by the relying party.
+                </p>
+                <p class="ednote" title="TODO">determine claim name</p>
+            </section>
+        </section>
+        <section>
+            <h3>Validating Self-Issued ID Tokens</h3>
+            <p>The relying party MUST follow the steps specified in the <a
+                    href="https://openid.net/specs/openid-connect-self-issued-v2-1_0.html#section-1.1">Self-Issued
+                OpenID Provider v2 specification</a>.</p>
+        </section>
+    </section>
+    <section>
+        <h3>Verifiable Presentations</h3>
+        <p>
+            Additional client metadata such as Verifiable Presentations can be obtained by a relying party (RP)
+            using the client's DID, typically specified in the `sub` claim of a Self-Issued ID Token. The DID
+            document may contain `service` entries that can be used to resolve metadata.
+        </p>
+    </section>
+    <section id="get-sts-token">
+        <h3>Using the OAuth2 Client Credential Grant to Obtain Access Tokens from an STS</h3>
+        <p>
+            A Self-Issued ID Token MAY be obtained by a participant agent executing an
+            <a data-cite="rfc6749#section-4.4">OAuth 2.0 Client Credential Grant</a>
+            against a <a>Secure Token Service</a> (STS) Endpoint. How the participant
+            agent obtains the endpoint address is implementation-specific and beyond the scope of this specification.
+            If a `token` is required to be included in the Self-issued ID token, the participant agent will need to
+            request scopes for the access token. This is dependent on the API used to obtain the Self-Issued ID
+            Token. An STS implementation MAY use endpoint parameters as defined by the <a
+                data-cite="rfc6749#section-8.2">OAuth 2 specification</a>
+            to convey metadata necessary for the creation of the `token` claim. In this
+            case, the Self-Issued ID Token request MAY contain a `bearer_access_scope` authorization request
+            parameter set to a list of space-delimited scopes the `token` claim will be enabled for. If no
+            `bearer_access_scope` parameter is present, the `token` claim MUST not be included.
+        </p>
+        <p class="note">
+            A non-normative OpenAPI spec of an STS implementing client credentials flow is provided <a
+                href="static/sts-openapi.yaml">here</a>
+        </p>
+    </section>
+    <section>
+        <h3>The Identity and Trust Protocol Context</h3>
+        <p>The [[json-ld]]Json-ld context URI for the all identity and trust specifications is:</p>
+        <p>`https://w3id.org/tractusx-trust/v[version]`</p>
+        <p>
+            Where version indicates a Semantic Versioning `MAJOR.MINOR` number. The current specifications use 0.8
+            version and the following context URI:
+        </p>
+        <p>`https://w3id.org/tractusx-trust/v0.8`</p>
+    </section>
+
+</section>
+<section>
+    <h2><dfn>Verifiable Presentation Protocol</dfn></h2>
+    <section>
+        <h3>Introduction</h3>
+        <p>
+            This specification defines a protocol for storing and presenting Verifiable Credentials (VC) and other
+            identity-related resources. The Verifiable Presentation Protocol (VPP) covers the following aspects:
+        </p>
+        <ul>
+            <li>Endpoints and message types for storing identity resources belonging to a holder in a <a>Credential
+                Service</a></li>
+            <li>Endpoints and message types for resolving identity resources</li>
+            <li>Secure token exchange for restricting access to CS endpoints</li>
+        </ul>
+        <p class="note">
+            Note that management endpoints for creating resource contexts, deleting resources, and
+            defining access control are outside the scope of this protocol.
+        </p>
+        <section>
+            <h4>Motivation</h4>
+            <p>The Verifiable Presentation Protocol (VPP) is designed to address the problem of resolving Verifiable
+                Presentations and other claims when they cannot be passed as part of a client request. For example,
+                VPs often cannot be passed as part of an HTTP message header due to size restrictions. The protocol
+                provides a secure mechanism for endpoints to resolve client resources. As part of this issue, the VPP
+                also addresses how VC issuers can request the holder's CS to store issued credentials.
+            </p>
+        </section>
+        <section>
+            <h4>Terms</h4>
+            <ul>
+                <li><b>Credential Service</b> - A network-accessible service that manages identity resources</li>
+                <li>
+                    <dfn>Holder</dfn> - An entity that possesses a set of identity resources as defined by the
+                    W3C VC Data Model [[vc-data-model]]. The holder will typically be the subject of a VC.
+                </li>
+                <li><dfn>Resource</dfn> - A resource is an entity managed by the <a>Credential Service</a> such as a
+                    Verifiable Credential ( VC) or Verifiable Presentation (VP).
+                </li>
+                <li><dfn>Subject</dfn> - The target of a set of claims contained in a VC as defined by the W3C VC Data
+                    Model [[vc-data-model]]. In a dataspace, a subject will be a participant.
+                </li>
+                <li><dfn>DID</dfn> - A decentralized identifier as defined by the DID specification [[did-core]]</li>
+            </ul>
+        </section>
+        <section>
+            <h4>Json-Ld Context</h4>
+            <p>The VPP is based on Json-Ld message types. The CS Json-Ld context is:</p>
+            <p>`https://w3id.org/tractusx-trust/v0.8`</p>
+        </section>
+        <section>
+            <h4>The Base Url</h4>
+            <p>
+                All endpoint URLs in this specification are relative. The base URL is implementation specific and may
+                include additional context information such as a sub-path that disambiguates a holder.
+            </p>
+        </section>
+    </section>
+    <section>
+        <h3>Presentation Flow</h3>
+        <p>
+            Below is a sequence where the client uses the OAuth 2 client credential grant flow as defined in the
+            <a>Identity Protocol Base</a> Specification:
+        </p>
+        <figure id="vpp-flow">
+            <img src="static/vpp.png" alt="Schematic sequence chart of data flow according to IATP VPP"/>
+            <figcaption>data flow according to IATP VPP</figcaption>
+        </figure>
+        <p>
+            In the above sequence, the STS acts as an authorization endpoint for the client CS. The client requests a
+            self-issued token including the `bearer_access_scope` authorization parameter set to an array of scopes that
+            define the VPs the client wants the Verifier to have access to. This list of scopes is determined out of
+            band and may be derived from metadata the verifier has previously made available to the client.
+        </p>
+        <p>
+            The client receives the Self-Issued ID Token (containing an access token based on the `bearer_access_scope`
+            value) and provides it with a request to access protected resources to the verifier. The verifier extracts
+            the access token and uses it to request VPs from the client's CS. The verifier may resolve the CS endpoint
+            through a variety of methods, for example, by resolving the client's DID document and using a service entry
+            as described in <a href="#cs-endpoint-res">Section</a>. The VPs are then returned to the Verifier.
+        </p>
+    </section>
+    <section>
+        <h3>Security</h3>
+        <p>
+            CS endpoints may require an access token obtained from the resource owner. For example, a client (the
+            resource owner) that needs to present a VP to an endpoint will provide an access token to the endpoint.
+            The endpoint server will in turn use the access token when resolving the VP through a request to the
+            client's Credential Service.
+
+            The format of the access token is not defined. The only requirement is that the token can be used by the
+            Credential Service to perform an access control check as defined in <a href="#access-scopes">Section
+            access scopes</a>.
+        <section>
+            <h4 id="access-scopes">Access Scopes</h4>
+            <p>Scopes are used to specify access privileges. A scope is a string value in the form:</p>
+            <p>`[alias]:[descriminator]:[read|write|all]`</p>
+            <p>The `[alias]` value may be implementation-specific. The `all` value indicates both `read` and `write`
+                access.</p>
+            <section>
+                <h5>The `org.eclipse.tractusx.vc.type` Alias</h5>
+                <p>The `vc.type` alias value must be supported and is used to specify access to a verifiable credential
+                    by type. For example:</p>
+                <p>`org.eclipse.tractusx.vc.type:Member:read`</p>
+                <p>denotes read-only access to the VC type `Member` and may be used to request a VC or VP.</p>
+            </section>
+            <section>
+                <h5>The `org.eclipse.tractusx.vc.id` Alias</h5>
+                <p>The `org.eclipse.tractusx.vc.id` alias value must be supported and is used to specify access to a
+                    verifiable credential by id. For example:</p>
+                <p>`org.eclipse.tractusx.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d:read`</p>
+                <p>denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be
+                    used to request a VC or VP.</p>
+            </section>
+            <section>
+                <h5>The `*` Wildcard Alias</h5>
+                <p>Implementations must also support the `*` wildcard:</p>
+                <p>`org.eclipse.tractusx.vc.type:*:write`</p>
+                <p>The above expression enables write-only access to all VCs.</p>
+            </section>
+        </section>
+        <section>
+            <h4>Access Control</h4>
+            <p>
+                How access control is defined in a <a>Credential Service</a> is implementation-specific. Implementations
+                may provide the ability to selectively restrict access to resources. The access control mechanism
+                must support the scope restrictions defined in <a href="#access-scopes">Section access scopes</a>.
+                Implementations may support additional restriction methods, including requiring the requester to
+                present its own VPs.
+            <section>
+                <h5>Submitting an Access Token</h5>
+                <p>
+                    Implementations that support access control require an access token. To provide the
+                    opportunity for <a>Credential Service</a> implementations to enforce proof-of-possession,
+                    the access token MUST be contained in the `token` claim of a self-issued identity token as
+                    defined in <a href="#self-issued-id-tokens">Base Identity Protocol</a>. The self-issued
+                    token MUST be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the
+                    request.
+                </p>
+            </section>
+            </p>
+        </section>
+        </p>
+    </section>
+    <section>
+        <h3>Resolution API</h3>
+        <p>
+            If a client is not authorized for an endpoint request, the Credential Service may return `4xx Client Error`.
+            The exact error code is implementation-specific.
+        </p>
+        <section>
+            <h4>Query for Presentations</h4>
+            <p>Presentations can be queried by POSTing a `PresentationQueryMessage` message to the query endpoint:</p>
+            <p>POST /presentations/query</p>
+            <p>The POST body is a `CredentialMessage` JSON object with the following properties</p>
+            <ul>
+                <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.</li>
+                <li>`@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.</li>
+                <li>`presentationDefinition`: OPTIONAL. A valid `Presentation Definition` according to the <a
+                        href="https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition">Presentation
+                    Exchange Specification</a>.
+                </li>
+                <li>`scope`: OPTIONAL. An array of scopes.</li>
+            </ul>
+            <p>A PresentationQueryMessage MUST contain either a presentationDefinition or a scope parameter. It is an
+                error to contain both.</p>
+            <p>The following are non-normative examples of the JSON body:</p>
+            <pre class="json">
+{
+  "@context": [
+    "https://w3id.org/tractusx-trust/v0.8",
+    "https://identity.foundation/presentation-exchange/submission/v1"
+  ],
+  "@type": "PresentationQueryMessage",
+  "scope": []
+}
+			</pre>
+            <pre class="json">
+{
+  "@context": [
+    "https://w3id.org/tractusx-trust/v0.8",
+    "https://identity.foundation/presentation-exchange/submission/v1"
+  ],
+  "@type": "PresentationQueryMessage",
+  "presentationDefinition": "..."
+}
+			</pre>
+            <section>
+                <h5>Presentation Definitions</h5>
+                <p>
+                    Implementations MAY support the `presentationDefinition` parameter. If they do not, they MUST return
+                    `501 Not Implemented`. The `presentationDefinition` parameter contains a valid `Presentation
+                    Definition`
+                    according to the <a
+                        href="https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition">Presentation
+                    Exchange Specification</a>.
+                    The CS may require an authorization token to authorize the request and uses the presentation
+                    definition
+                    to return a set of matching VPs in the format specified by the definition.
+                </p>
+            </section>
+            <section>
+                <h5>Scopes</h5>
+                <p>
+                    Implementations MAY support requesting presentation of Verifiable Credentials using OAuth 2.0 OAuth
+                    2.0 scope values.
+                </p>
+                <p>
+                    Such a scope value MUST be an alias for a well-defined Presentation Definition. The specific scope
+                    values, and the mapping between a certain scope value and the respective Presentation Definition is
+                    out of scope of this specification.
+                </p>
+            </section>
+            <section>
+                <h5>Response</h5>
+                <p>
+                    The response type of a presentation query is a `PresentationResponseMessage` with the following
+                    parameters:
+                </p>
+                <ul>
+                    <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.</li>
+                    <li>`@type`: REQUIRED. A string specifying the `PresentationResponseMessage` type.</li>
+                    <li>`presentation`: REQUIRED. An array of Verifiable Presentations. The Verifiable Presentations may
+                        be strings, JSON objects, or a combination of both depending on the format.
+                    </li>
+                </ul>
+                <p>
+                    The following are non-normative examples of the JSON response body:
+                </p>
+                <pre class="json">
+{
+  "@context": [
+    "https://w3id.org/tractusx-trust/v0.8"
+  ],
+  "@type": "PresentationResponseMessage",
+  "presentation": ["dsJdh...UMetV"]
+}
+			    </pre>
+            </section>
+        </section>
+    </section>
+    <section>
+        <h3>Storage API</h3>
+        <p>
+            VCs can be written to the Credential Service by POSTing a CredentialMessage containing an array of
+            Verifiable Credentials to the credentials endpoint:</p>
+        <p>`POST /credentials`</p>
+        <p>If the `POST` is successful, credentials will be created and a HTTP 2XX is returned.</p>
+        <p>The POST body is a `CredentialMessage` JSON object with the following properties:</p>
+        <ul>
+            <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.</li>
+            <li>`@type`: REQUIRED. A string specifying the `CredentialMessage` type.</li>
+            <li>`credentials`: REQUIRED. An array of `CredentialContainer` Json objects corresponding to the schema
+                specified below.
+            </li>
+        </ul>
+        <section>
+            <h4>The `CredentialContainer` Object</h4>
+            <p>The `credentials` property contains an array of `CredentialContainer` objects. The `CredentialContainer`
+                object contains the following properties:
+            </p>
+            <ul>
+                <li>`@type`: REQUIRED. A string specifying the CredentialContainer type.
+                </li>
+                <li>`payload`: REQUIRED. A Json Literal ([[json-ld]], sect. 4.2.2) containing the verifiable credential
+                    (VC).
+                </li>
+            </ul>
+        </section>
+
+    </section>
+    <section id="cs-endpoint-res">
+        <h3>CS Endpoint Resolution through DID Documents</h3>
+        <p>Different methods may be used by a Relying Party (as defined by the OAuth2 specification, link TBD) to
+            resolve the Credential Service for a client. One way is through DID documents. If a DID document is used,
+            the client `DID document` MUST contain at least one <a data-cite="did-core#services">service entry</a> of
+            type CredentialService:
+        </p>
+        <pre class="json">
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/tractusx-trust/v0.8"
+  ],
+  "service": [
+    {
+      "id": "did:example:123#identity-hub",
+      "type": "CredentialService",
+      "serviceEndpoint": "https://cs.example.com"
+    }
+  ]
+}
+        </pre>
+    </section>
+</section>
+<section>
+    <h2><dfn>Credential Issuance Protocol</dfn></h2>
+    <section>
+        <h3>Introduction</h3>
+        <p>
+            This specification defines a protocol for Verifiable Credential (VC) issuance. Specifically, the Credential
+            Issuance Protocol (CIP) defines the endpoints and message types for requesting credentials to be issued from
+            a <a>Credential Issuer</a>.
+
+            This specification relies on the <a>Base Identity Protocol</a> and the <a>Verifiable Presentation
+            Protocol</a>.
+        </p>
+        <section>
+            <h4>Motivation</h4>
+            <p>Verifiable Credentials enable a holder to present claims directly to a Relying Party (RP) without the
+                involvement or knowledge of the <a>Credential Issuer</a>. The Credential Issuance Protocol (CIP)
+                provides an interoperable mechanism for parties (potential holders) to request credentials from a
+                <a>Credential Issuer</a>. The protocol is designed to handle use cases where credentials can
+                automatically be issued and where a manual workflow is required.
+            </p>
+            <p>
+                This specification draws from the <a
+                    href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-introduction">OpenID
+                for Verifiable Credential Issuance</a> specification but differs in its focus on service-to-service
+                interactions where end-user devices are not involved in the protocol flow. Moreover, the current
+                specification accommodates the requirement for long-running interactions typically associated with
+                manual workflows that are best modelled using asynchronous messaging paradigms.
+            </p>
+        </section>
+    </section>
+    <section>
+        <h3>Overview</h3>
+        <p>
+            The Credential Issuance Protocol is designed to be used in conjunction with the <a>Base Identity
+            Protocol</a> and the <a>Verifiable Presentation Protocol</a>. This issuance interaction flow is expressed in
+            the following diagram:
+        </p>
+        <figure id="cip-flow">
+            <img src="static/cip.png" alt="Schematic sequence chart of data flow according to IATP CIP"/>
+            <figcaption>data flow according to IATP CIP</figcaption>
+        </figure>
+        <p>
+            In the above sequence, the client uses the <a>Base Identity Protocol</a> to create a Self-Issued Identity
+            token that it includes in its request to the <a>Credential Issuer</a>. If the VC request is approved by the
+            <a>Credential Issuer</a>, a VC will be written to the client's <a>Credential Service</a> using the <a>Verifiable
+            Presentation Protocol</a>. The operation is performed asynchronously from the client request, resulting in
+            non-blocking behavior.
+        </p>
+        <section>
+            <h4>The Issuer Base URL</h4>
+            <p>
+                All endpoint addresses are defined relative to the base URL of the issuer service. The base URL MUST use
+                the HTTPS scheme. The issuer will use the base URL for the `issuer` field in all VCs it issues as
+                defined by the <a data-cite="vc-data-model#dfn-property">issuer property</a>.
+
+                This specification makes no assumption about the base URL, for example, if it is a domain, subdomain, or
+                contains a path.
+            </p>
+        </section>
+    </section>
+    <section>
+        <h3>Credential Request Flow</h3>
+        <p>The `credential request flow` is initiated by a client making a request for one or more VCs to an issuer's
+            <a>Credential Request Endpoint</a>. If the request is valid, the issuer endpoint will send an
+            acknowledgement to the client. If the request is approved, the VC will be issued to the client
+            asynchronously.</p>
+        <section>
+            <h4><dfn>Credential Request Endpoint</dfn></h4>
+            <ul>
+                <li>Communication with the `Credential Request Endpoint` MUST utilize TLS.</li>
+                <li>The credential request endpoint MUST be available under the `POST` method at `/credentials` relative
+                    to the base URL of the issuer.
+                </li>
+                <li>The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as
+                    defined in the <a>Base Identity Protocol</a> Specification. The `issuer` claim can be used by the
+                    Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and
+                    credential binding.
+                </li>
+                <li>The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
+                    requested VCs into the client's <a>Credential Service</a> as defined by the <a>Verifiable
+                        Presentation Protocol</a> specification.
+                </li>
+                <li>The ID Token MAY contain a `token` claim as defined in the <a>Base Identity Protocol</a>
+                    Specification claim that can be used by the issuer to resolve Verifiable Presentations (VP) the
+                    client is required to hold for issuance of the requested VCs.
+                </li>
+                <li>
+                    If the issuer supports a pre-authorization code flow, the client must use the `pre-authorized_code`
+                    claim in the ID Token to provide the pre-authorization code to the issuer.
+                </li>
+            </ul>
+            <section>
+                <h5>Credential Request Parameters</h5>
+                <p>The Credential Request `POST` body MUST be a `CredentialRequestMessage` JSON object with the
+                    following properties:</p>
+                <ul>
+                    <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.</li>
+                    <li>`@type`: REQUIRED. A string specifying the PresentationQueryMessage type.</li>
+                    <li>
+                        `format`: REQUIRED. A JSON string that describes the format of the credential to be issued.
+                        Implementations MUST support the `ldp_vc` format as defined by the OpenID for <a
+                            href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#appendix-A.1.2.1">Verifiable
+                        Credential Issuance specification</a>. Implementations MAY support other VC formats.
+                    </li>
+                    <li>`type`: REQUIRED. A JSON array of strings that specifies the VC type being requested.</li>
+                </ul>
+                <p>The following is a non-normative example of a `CredentialRequestMessage`: </p>
+                <pre class="http">
 POST /credentials HTTP/1.1
 Host: server.example.com
 Content-Type: application/json
 Authorization: Bearer ......
 
 {
-   "a": "b",
-   "foo": bar
+   "@context": [
+    "https://w3id.org/tractusx-trust/v0.8",
+     "https://www.w3.org/2018/credentials/v1"
+   ],
+   "@type": "CredentialRequestMessage",
+   "format":"ldp_vd",
+   "type":[
+      "VerifiableCredential",
+      "EntityCredential"
+   ],
 }
-  </pre>
-		</aside>
-	</section>
-	<h3>
-		Embedding of Figures
-	</h3>
-	<p>There's no automatic diagram rendering like the mermaid code block in Github markdown. That's not necessarily
-		a problem as we can use exports</p>
-	<figure id="issuance-flow">
-		<img src="static/issuance.flow.png" alt="Hard to describe tbh..."/>
-		<figcaption>The issuance flow is basically the auth flow with a different scope in the SI token 🤷🏻‍♂️
-		</figcaption>
-	</figure>
-</section>
-<section id='conformance'>
-	<!-- This section is filled automatically by ReSpec. -->
-</section>
-<section id="tof" class="appendix"></section>
+                </pre>
+                <p>
+                    On successful receipt of the request, the <a>Credential Issuer</a> MUST respond with a `201 CREATED`
+                    with the `Location` header set to the location of the request status. See the <a>Credential Request
+                    Status</a> section.
+                </p>
+                <p>The issuer MAY respond with 401 Not Authorized if the request is unauthorized or other HTTP status
+                    codes to indicate an exception.</p>
+                <p>If the VC request is approved, the issuer will respond with a write-request to the client's
+                    Credential Service using the Storage API defined in the <a>Verifiable Presentation Protocol</a>.</p>
+            </section>
+        </section>
+    </section>
+    <section>
+        <h3>Credential Offer Flow</h3>
+        <p>
+            Some scenarios involve the Credential Issuer making an initial offer. For example, an out-of-band process
+            may
+            result in a credential offer. Or, a Credential Issuer may start a key rotation process which involves
+            sending updated credentials to holders signed with the issuer's new key. In this case, the issuer can
+            proactively prompt holders to request a new credential during the key rotation period.
+        </p>
+        <section>
+            <h4><dfn>Credential Offer Endpoint</dfn></h4>
+            <p>Communication with the <a>Credential Offer Endpoint</a> MUST utilize TLS.</p>
+            <p>
+                The credential offer endpoint MUST be available under the `POST` method at `/offers` relative to the
+                base
+                URL of the holder's <a>Credential Service</a> base URL. Issuers can obtain this URL by resolving the
+                holder's DID and inspecting its `CredentialService` service entry.
+            </p>
+            <section>
+                <h5>Credential Offer Parameters</h5>
+                <p>The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object with the following
+                    properties:</p>
+                <ul>
+                    <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.
+                    </li>
+                    <li>`@type`: REQUIRED. A string specifying the `CredentialOfferMessage` type.
+                    </li>
+                    <li>`credentialIssuer`: REQUIRED. The identifier of the Credential Issuer, the Credential Service is
+                        requested to obtain one or more credentials from.
+                    </li>
+                    <li>credentials: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string.
+                        <ul>
+                            <li>entry type object: data MUST adhere to the Credentials Object</li>
+                            <li>entry type string: value MUST be one of the id values in one of the objects in the
+                                `credentials_supported`.
+                            </li>
+                            <li>When processing, the `Credential Service` MUST resolve this string value to the
+                                respective object.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <p>The following is a non-normative example of a credential offer request:</p>
+                <pre class="http">
+POST /credentials HTTP/1.1
+Host: server.example.com
+Content-Type: application/json
+Authorization: Bearer ......
 
+{
+   "@context": [
+    "https://w3id.org/tractusx-trust/v0.8",
+     "https://www.w3.org/2018/credentials/v1"
+   ],
+   "@type": "CredentialOfferMessage",
+   "credentialIssuer" :"...",
+   "credentials: [...]
+}
+                </pre>
+            </section>
+            <section>
+                <h5>The <dfn data-lt="Credential Object">`CredentialObject`</dfn></h5>
+                <p>The `CredentialObject` defines the following properties:</p>
+                <ul>
+                    <li>`@type`: REQUIRED. A string specifying the `CredentialObject` type.
+                    </li>
+                    <li>`format`: REQUIRED. The format of the credential to be requested as defined by the <a
+                            href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-format-profiles">OpenID
+                        for Verifiable Credential Issuance</a> specification.
+                    </li>
+                    <li>`credentialType`: REQUIRED. An array defining the type of credential being offered.
+                    </li>
+                    <li>`bindingMethods`: OPTIONAL. Binding methods supported as defined by
+                        `cryptographic_binding_methods_supported` in the Open ID for Verifiable Credential Issuance
+                        specification.
+                    </li>
+                    <li>`cryptographicSuites`: OPTIONAL. Binding methods supported as defined by
+                        `cryptographic_suites_supported` in the Open ID for Verifiable Credential Issuance
+                        specification.
+                    </li>
+                    <li>`issuancePolicy`: OPTIONAL. An ODRL Policy [[odrl-model]]. Note that the ODRL policy MUST not
+                        contain
+                        `target` attributes. Implementations MAY not support ODRL issuance policies.
+                    </li>
+                    <li>
+                        `offerReason`: OPTIONAL. A reason for the offer as a string. Valid values may include `reissue`
+                        and `proof-key-revocation`.
+                    </li>
+                </ul>
+                <p class="note">
+                    Properties mapped to the Open ID for Verifiable Credential Issuance specification are defined in
+                    the <a
+                        href="https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-credential-issuer-metadata">Credential
+                    Issuer Metadata</a> section.
+                </p>
+                <p>
+                    The following is a non-normative example of a `CredentialObject`:
+                </p>
+                <pre class="json">
+{
+  "@context": {
+    "iatp": "https://w3id.org/tractusx-trust/v0.8",
+    "odrl": "https://www.w3.org/ns/odrl.jsonld"
+  },
+  "@type": "CredentialObject",
+  "credentialType": [
+    "VerifiableCredential",
+    "CompanyCredential"
+  ],
+  "format": "ldp_vc",
+  "offerReason": "reissue",
+  "bindingMethods": [
+    "did:web"
+  ],
+  "cryptographicSuites": [
+    "JsonWebKey2020"
+  ],
+  "issuancePolicy": {
+    "permission": [
+      {
+        "action": "use",
+        "constraint": {
+          "and": [
+            {
+              "leftOperand": "iatp:CredentialPrereq",
+              "operator": "eq",
+              "rightOperand": "active"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+                </pre>
+            </section>
+        </section>
+    </section>
+    <section>
+        <h3>Issuer Metadata endpoint</h3>
+        <p>A credential issuer MUST support the Issuer Metadata endpoint using the HTTPS scheme and the `GET` method.
+            The URL of the endpoint is the base issuer url with the appended path `/.well-known/vci`.</p>
+        <p>The response is a `IssuerMetadata` JSON object with the following properties:</p>
+        <ul>
+            <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.</li>
+            <li>`@type`: REQUIRED. A string specifying the IssuerMetadata type.</li>
+            <li>`credentialIssuer`: REQUIRED. A unique identifier of the issuer, for example, a DID.
+            </li>
+            <li>`credentialsSupported`: OPTIONAL. A Json Array containing a list of <a>CredentialObject</a> JSON objects
+                with properties corresponding to <a>Credential Objects</a>.
+            </li>
+        </ul>
+        <p>The following is a non-normative example of a `IssuerMetadata` response object:</p>
+        <pre class="json">
+{
+  "@context": {
+    "iatp": "https://w3id.org/tractusx-trust/v0.8",
+    "odrl": "https://www.w3.org/ns/odrl.jsonld"
+  },
+  "@type": "IssuerMetadata",
+  "credentialIssuer": "did:web:issuer-url",
+  "credentialsSupported": [
+    {
+      "credentialType": [
+        "VerifiableCredential",
+        "CompanyCredential"
+      ],
+      "offerReason": "reissue",
+      "bindingMethods": [
+        "did:web"
+      ],
+      "cryptographicSuites": [
+        "JsonWebKey2020"
+      ],
+      "issuancePolicy": {
+        "permission": [
+          {
+            "action": "use",
+            "constraint": {
+              "and": [
+                {
+                  "leftOperand": "iatp:CredentialPrereq",
+                  "operator": "eq",
+                  "rightOperand": "active"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+        </pre>
+    </section>
+    <section>
+        <h3><dfn>Credential Request Status</dfn> Endpoint</h3>
+        <p>The issuer MUST provide an `HTTPS GET` endpoint for retrieving the status of a credential at the base issuer
+            url with the appended path `/requests/&ltrequest id&gt`. The issuer SHOULD implement access control such
+            that only the client that made the request may access a particular request status.</p>
+        <p>If accepted, a `CredentialStatus` Json object with a `status` property set to one of the following values:
+            `RECEIVED` | `REJECTED` | `ISSUED` will be returned.</p>
+        <p>The response is a `CredentialStatus` JSON object with the following properties:</p>
+        <ul>
+            <li>`@context`: REQUIRED. Specifies a valid Json-Ld context.</li>
+            <li>`@type`: REQUIRED. A string specifying the `CredentialStatus` type.</li>
+            <li>`requestId`: REQUIRED. A string corresponding to the request id</li>
+            <li>`status`: REQUIRED. A string equal to the one of the values: `RECEIVED`, `REJECTED`, or `ISSUED`.</li>
+        </ul>
+        <p>The following is a non-normative example of a `CredentialStatus` response object:</p>
+        <pre class="json">
+{
+  "@context": {
+    "iatp": "https://w3id.org/tractusx-trust/v0.8"
+  },
+  "@type": "CredentialStatus",
+  "requestId": "...",
+  "status": "RECEIVED"
+}
+        </pre>
+    </section>
+    <section>
+        <h3>Key Rotation and Revocation</h3>
+        <p>Issuer implementations SHOULD support rotation and revocation of keys used to create VC proofs. Key rotation
+            and revocation may be supported in the following way:</p>
+        <ol type="1">
+            <li>After a defined `cryptoperiod`, a rotation is initiated, and a new key pair is generated and the public
+                key is added to a `verficationMethod` in the issuer's DID document. The new private key is used to sign
+                newly issued VC proofs.
+            </li>
+            <li>The old private key is decommissioned (archived or destroyed). However, `verificationMethods` in the
+                issuer's DID document are retained so existing issued VCs may be verified.
+            </li>
+            <li>At some point before existing VCs are set to expire, an issuer may make credential offers for new VCs to
+                holders.
+            </li>
+            <li>After a defined period, revocation will be performed where the public key's `verificationMethods` will
+                be removed from the issuer's DID document. At this point, any existing VCs with proofs signed by the
+                revoked key will not verify.
+            </li>
+        </ol>
+        <p>Implementors following this sequence should set the `expirationDate` property of issued VCs to less than the
+            rotation period of the keys used to sign their proofs.</p>
+    </section>
+    <section>
+        <h3>VC Revocation</h3>
+        <p>VC revocation MUST be supported using the Status List specification [[vc-bitstring-status-list-20230427]].
+            Note that implementations MAY support multiple lists.</p>
+    </section>
+    <section>
+        <h3>Issuer Endpoint resolution through DID Documents</h3>
+        <p>Different methods may be used to resolve the base location of an issuer service. One way is through DID
+            documents. If a DID document is used, the client `DID document` MUST contain at least one <a
+                    data-cite="did-core#services">service entry</a> of type `IssuerService`:</p>
+        <pre class="json">
+{
+  "service": [
+    {
+      "id":"did:example:123#issuer-service",
+      "type": "IssuerService",
+      "serviceEndpoint": "https://issuer.example.com"
+    }
+  ]
+}
+        </pre>
+        <p>The `serviceEndpoint` URL is the base URL for the Issuer Service.</p>
+        <p class="ednote" title="todo">Add IssuerService namespace</p>
+    </section>
+    <section>
+        <h3>ODRL profile</h3>
+        <p>An <a data-cite="odrl-model#policy">ODRL policy</a> issuance and re-issuance policy may be associated with a
+            set of `scopes` or a DIF Presentation Exchange <a
+                    href="https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition">presentation
+                definition</a>.</p>
+        <p>This specification defines two ODRL attributes for the <a data-cite="odrl#policy">Policy</a> class under the
+            `iatp` namespace:</p>
+        <ul>
+            <li>`scope`: Either a single string or an array of strings containing scope values.</li>
+            <li>`presentationDefinition`: Either an object containing an `@id` attribute with a URI value referencing a
+                `presentation definition`, or a `presentation definition` object.
+            </li>
+        </ul>
+        <p>It is an error to specify both attributes. The value of these attributes identify `Verifiable Presentations`
+            required for issuance or re-issuance.</p>
+        <p>The following are non-normative examples of the `scope` attribute:</p>
+        <pre class="json">
+{
+  "iatp:issuancePolicy": {
+    "iatp:scope": [
+      "example_scope1",
+      "example_scope2"
+    ]
+  }
+}
+        </pre>
+        <pre class="json">
+{
+  "iatp:issuancePolicy": {
+    "iatp:scope": "example_scope1"
+  }
+}
+        </pre>
+        <p>The following is a non-normative examples of the `presentationDefinition` attribute:</p>
+        <pre class="json">
+{
+  "iatp:issuancePolicy": {
+    "iatp:presentationDefinition": {
+      "@id": "https://expample.com/example_definition"
+    }
+  }
+}
+        </pre>
+        <pre class="json">
+{
+  "iatp:issuancePolicy": {
+    "iatp:presentationDefinition": {
+      "id": "example_presentation_definition",
+      "input_descriptors": [
+        "..."
+      ]
+    }
+  }
+}
+        </pre>
+    </section>
+</section>
+<section id='conformance'></section>
+<section id="tof" class="appendix">
+    <h1>Notes</h1>
+</section>
 
 </body>
 </html>

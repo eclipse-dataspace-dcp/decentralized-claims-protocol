@@ -1,0 +1,32 @@
+@startuml
+!pragma layout smetana
+
+!include diagram.styles.puml
+
+autonumber
+
+box "Client Entity"
+participant "Client" as C
+participant "Credential Service" as CS
+participant "Secure Token Service" as STS
+end box
+
+box "Issuer Entity"
+participant "Issuer Service(s)" as IS #FFF4B3
+end box
+
+group #F3F7FF Base Identity Protocol
+C -> STS: Self-Issued ID token request
+STS -> C: Token response w/ access token
+end
+
+'#E6F8E9
+group #FFF4B3 Issuance Protocol
+C -> IS: Request Credential using Self-Issued ID token
+group #E6F8E9 Verifiable Presentation Protocol
+IS -> CS: (async) )Write Membership Credential
+end
+end
+
+
+@enduml
