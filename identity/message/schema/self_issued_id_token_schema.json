@@ -1,0 +1,94 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Self-Issued ID Token",
+    "type": "object",
+    "properties": {
+        "sub": {
+            "type": "string",
+            "description": "Subject identifier"
+        },
+        "iss": {
+            "type": "string",
+            "description": "Issuer identifier"
+        },
+        "iat": {
+            "type": "integer",
+            "description": "Issued at time (seconds since epoch)"
+        },
+        "exp": {
+            "type": "integer",
+            "description": "Expiration time (seconds since epoch)"
+        },
+        "jti": {
+            "type": "string",
+            "description": "JWT ID"
+        },
+        "did_document": {
+            "type": "object",
+            "description": "DID document for the participant",
+            "properties": {
+                "@context": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "JSON-LD context URI"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "DID identifier"
+                },
+                "service": {
+                    "type": "array",
+                    "description": "Service endpoints",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "Service ID"
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Service type"
+                            },
+                            "serviceEndpoint": {
+                                "type": "string",
+                                "description": "Service endpoint URI"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "type",
+                            "serviceEndpoint"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "@context",
+                "id",
+                "service"
+            ]
+        },
+        "civ": {
+            "type": "array",
+            "description": "Cryptographic material",
+            "items": {
+                "type": "string"
+            }
+        },
+        "vcs": {
+            "type": "array",
+            "description": "Verifiable credentials",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "sub",
+        "iss",
+        "iat",
+        "exp",
+        "jti"
+    ]
+}
