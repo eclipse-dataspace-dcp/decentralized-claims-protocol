@@ -1,0 +1,9 @@
+@prefix : <http://example.org/ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+:IdentityAndTrustProtocolContext a schema:Thing ;
+    schema:name "Identity and Trust Protocol Context" ;
+    schema:description "The context for the identity and trust protocol" ;
+    :context [ a schema:URL ] ;
+    :version [ a schema:Text ] .

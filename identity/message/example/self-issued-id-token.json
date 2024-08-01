@@ -1,0 +1,20 @@
+{
+    "sub": "did:example:123456789abcdefghi",
+    "iss": "https://example.com",
+    "iat": 1610839200,
+    "exp": 1610842800,
+    "jti": "a4a711f6-35d6-49a1-9dd4-0b805b0c6e5b",
+    "did_document": {
+        "context": "https://www.w3.org/ns/did/v1",
+        "id": "did:example:123456789abcdefghi",
+        "service": [
+            {
+                "id": "did:example:123456789abcdefghi#vcs",
+                "type": "VerifiableCredentialService",
+                "serviceEndpoint": "https://example.com/vc/"
+            }
+        ]
+    },
+    "civ": ["credential1", "credential2"],
+    "vcs": ["vc1", "vc2"]
+}
