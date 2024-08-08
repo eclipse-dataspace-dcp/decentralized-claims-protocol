@@ -1,0 +1,27 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.org/ns#> .
+
+ex:PresentationQueryMessageShape
+    a sh:NodeShape ;
+    sh:targetClass ex:PresentationQueryMessage ;
+    sh:property [
+        sh:path ex:context ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path ex:type ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path ex:presentationDefinition ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path ex:scope ;
+        sh:datatype xsd:string ;
+    ] .

@@ -1,0 +1,14 @@
+{
+  "@context": [
+    "https://w3id.org/tractusx-trust/v0.8"
+  ],
+  "@type": "PresentationResponseMessage",
+  "presentation": [
+    {
+      "type": "VerifiablePresentation",
+      "verifiableCredential": [
+        "{...}"
+      ]
+    }
+  ]
+}

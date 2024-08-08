@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "PresentationResponseMessage",
+    "type": "object",
+    "properties": {
+      "@context": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "@type": {
+        "type": "string"
+      },
+      "presentation": {
+        "type": "array",
+        "items": {
+          "type": ["string", "object"]
+        }
+      }
+    },
+    "required": ["@context", "@type", "presentation"]
+}
+  
