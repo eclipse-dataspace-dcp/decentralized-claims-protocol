@@ -10,17 +10,5 @@
     :iat [ a schema:Number ] ;
     :exp [ a schema:Number ] ;
     :jti [ a schema:Text ] ;
-    :did_document [ a schema:Thing ;
-        schema:context [ a schema:URL ] ;
-        schema:id [ a schema:Text ] ;
-        :service [
-            a schema:ItemList ;
-            schema:itemListElement [ a schema:Thing ;
-                schema:id [ a schema:Text ] ;
-                schema:type [ a schema:Text ] ;
-                :serviceEndpoint [ a schema:URL ]
-            ]
-        ]
-    ] ;
-    :civ [ a schema:ItemList ; schema:itemListElement [ a schema:Text ] ] ;
-    :vcs [ a schema:ItemList ; schema:itemListElement [ a schema:Text ] ] .
+    :bearer_access_scope [ a schema:Text ] ; 
+    :token [ a schema:Text ] .

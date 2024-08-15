@@ -23,65 +23,13 @@
             "type": "string",
             "description": "JWT ID"
         },
-        "did_document": {
-            "type": "object",
-            "description": "DID document for the participant",
-            "properties": {
-                "@context": {
-                    "type": "string",
-                    "format": "uri",
-                    "description": "JSON-LD context URI"
-                },
-                "id": {
-                    "type": "string",
-                    "description": "DID identifier"
-                },
-                "service": {
-                    "type": "array",
-                    "description": "Service endpoints",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "string",
-                                "description": "Service ID"
-                            },
-                            "type": {
-                                "type": "string",
-                                "description": "Service type"
-                            },
-                            "serviceEndpoint": {
-                                "type": "string",
-                                "description": "Service endpoint URI"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "type",
-                            "serviceEndpoint"
-                        ]
-                    }
-                }
-            },
-            "required": [
-                "@context",
-                "id",
-                "service"
-            ]
+        "bearer_access_scope": {
+            "type": "string",
+            "description": "Authorization request parameter containing a list of space-delimited scopes for the token claim"
         },
-        "civ": {
-            "type": "array",
-            "description": "Cryptographic material",
-            "items": {
-                "type": "string"
-            }
-        },
-        "vcs": {
-            "type": "array",
-            "description": "Verifiable credentials",
-            "items": {
-                "type": "string"
-            }
+        "token": {
+            "type": "string",
+            "description": "An access token for obtaining additional VPs from a service"
         }
     },
     "required": [
@@ -90,5 +38,19 @@
         "iat",
         "exp",
         "jti"
-    ]
+    ],
+    "if": {
+        "properties": {
+            "bearer_access_scope": { "type": "string" }
+        },
+        "required": ["bearer_access_scope"]
+    },
+    "then": {
+        "required": ["token"]
+    },
+    "else": {
+        "not": {
+            "required": ["token"]
+        }
+    }
 }
