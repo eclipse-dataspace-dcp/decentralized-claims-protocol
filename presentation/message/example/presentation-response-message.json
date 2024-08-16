@@ -5,10 +5,29 @@
   "@type": "PresentationResponseMessage",
   "presentation": [
     {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+      ],
       "type": "VerifiablePresentation",
       "verifiableCredential": [
-        "{...}"
-      ]
+        {
+          "@context": [
+            "https://www.w3.org/2018/credentials/v1"
+          ],
+          "type": "VerifiableCredential",
+          "credentialSubject": {
+            "id": "did:example:123",
+            "name": "John Doe"
+          }
+        }
+      ],
+      "proof": {
+        "type": "Ed25519Signature2018",
+        "created": "2024-08-10T14:12:00Z",
+        "verificationMethod": "did:example:123#key-1",
+        "proofPurpose": "assertionMethod",
+        "jws": "eyJhbGciOiJFZERTQSJ9..."
+      }
     }
   ]
 }

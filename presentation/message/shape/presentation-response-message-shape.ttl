@@ -9,16 +9,71 @@ ex:PresentationResponseMessageShape
         sh:path ex:context ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path ex:type ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
-        sh:maxCount 1 ;
     ] ;
     sh:property [
         sh:path ex:presentation ;
-        sh:datatype xsd:string ;
         sh:minCount 1 ;
+        sh:node [
+            a sh:NodeShape ;
+            sh:or (
+                [
+                    sh:datatype xsd:string ;
+                ]
+                [
+                    sh:nodeKind sh:BlankNodeOrIRI ;
+                    sh:property [
+                        sh:path ex:context ;
+                        sh:datatype xsd:string ;
+                        sh:minCount 1 ;
+                    ] ;
+                    sh:property [
+                        sh:path ex:type ;
+                        sh:datatype xsd:string ;
+                        sh:minCount 1 ;
+                    ] ;
+                    sh:property [
+                        sh:path ex:verifiableCredential ;
+                        sh:minCount 1 ;
+                        sh:node [
+                            a sh:NodeShape ;
+                            sh:nodeKind sh:BlankNodeOrIRI ;
+                        ] ;
+                    ] ;
+                    sh:property [
+                        sh:path ex:proof ;
+                        sh:nodeKind sh:BlankNodeOrIRI ;
+                        sh:property [
+                            sh:path ex:proofType ;
+                            sh:datatype xsd:string ;
+                            sh:minCount 1 ;
+                        ] ;
+                        sh:property [
+                            sh:path ex:created ;
+                            sh:datatype xsd:dateTime ;
+                            sh:minCount 1 ;
+                        ] ;
+                        sh:property [
+                            sh:path ex:verificationMethod ;
+                            sh:datatype xsd:string ;
+                            sh:minCount 1 ;
+                        ] ;
+                        sh:property [
+                            sh:path ex:proofPurpose ;
+                            sh:datatype xsd:string ;
+                            sh:minCount 1 ;
+                        ] ;
+                        sh:property [
+                            sh:path ex:jws ;
+                            sh:datatype xsd:string ;
+                            sh:minCount 1 ;
+                        ] ;
+                    ] ;
+                ]
+            ) ;
+        ] ;
     ] .

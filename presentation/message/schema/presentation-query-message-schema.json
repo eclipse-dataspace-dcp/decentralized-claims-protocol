@@ -13,7 +13,7 @@
         "type": "string"
       },
       "presentationDefinition": {
-        "type": ["string", "null"]
+        "type": ["object", "null"]
       },
       "scope": {
         "type": "array",
@@ -22,6 +22,20 @@
         }
       }
     },
-    "required": ["@context", "@type"]
+    "required": ["@context", "@type"],
+    "oneOf": [
+      {
+        "required": ["presentationDefinition"],
+        "not": {
+          "required": ["scope"]
+        }
+      },
+      {
+        "required": ["scope"],
+        "not": {
+          "required": ["presentationDefinition"]
+        }
+      }
+    ]
 }
   

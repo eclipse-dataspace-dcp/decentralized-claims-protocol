@@ -17,11 +17,29 @@ ex:PresentationQueryMessageShape
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
-    sh:property [
-        sh:path ex:presentationDefinition ;
-        sh:datatype xsd:string ;
-    ] ;
-    sh:property [
-        sh:path ex:scope ;
-        sh:datatype xsd:string ;
-    ] .
+    sh:xone (
+        [
+            sh:property [
+                sh:path ex:presentationDefinition ;
+                sh:minCount 1 ;
+            ] ;
+            sh:not [
+                sh:property [
+                    sh:path ex:scope ;
+                    sh:minCount 1 ;
+                ] ;
+            ] ;
+        ]
+        [
+            sh:property [
+                sh:path ex:scope ;
+                sh:minCount 1 ;
+            ] ;
+            sh:not [
+                sh:property [
+                    sh:path ex:presentationDefinition ;
+                    sh:minCount 1 ;
+                ] ;
+            ] ;
+        ]
+    ) .
