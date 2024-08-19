@@ -1,14 +1,10 @@
-# Notices for Eclipse Tractus-X
+# Notices for Eclipse Dataspace DCP
 
-This content is produced and maintained by the Eclipse Tractus-X project.
-
-* Project home: <https://projects.eclipse.org/projects/automotive.tractusx>
-
-See the AUTHORS file(s) distributed with this work for additional information regarding authorship.
+This content is produced and maintained by the Eclipse Decentralized Claims Protocol project.
 
 ## Trademarks
 
-Eclipse Tractus-X is a trademark of the Eclipse Foundation.
+Eclipse Decentralized Claims Protocol is a trademark of the Eclipse Foundation.
 
 ## Copyright
 
@@ -18,20 +14,16 @@ source code repository logs.
 
 ## Declared Project Licenses
 
-This Tractus-X project repository uses the following license:
+This specification project repository uses the following license:
 
-- CC-BY-4.0 for non-code
-
-CC-BY-4.0:
-The materials in this repository are made available under the terms of the Creative Commons Attribution 4.0 International License, which is available at https://spdx.org/licenses/CC-BY-4.0.html.
-SPDX-License-Identifier: CC-BY-4.0
+- XXX
 
 ## Source Code
 
 The project maintains the following source code repositories
-in the GitHub organization https://github.com/eclipse-tractusx:
+in the GitHub organization https://github.com/eclipse-dataspace-dcp:
 
-* https://github.com/eclipse-tractusx/identity-trust
+* https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol
 
 ## Third-party Content
 
