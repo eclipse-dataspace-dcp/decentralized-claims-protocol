@@ -1,26 +1,19 @@
-# Contributing to Eclipse Tractus-X
+# Contributing to the Decentralized Claims Protocol Specification Project
 
 Thanks for your interest in this project.
 
 ## Project description
 
-The companies involved want to increase the automotive industry's
-competitiveness, improve efficiency through industry-specific cooperation and
-accelerate company processes through standardization and access to information
-and data. A special focus is also on SMEs, whose active participation is of
-central importance for the network's success. That is why Catena-X has been
-conceived from the outset as an open network with solutions ready for SMEs,
-where these companies will be able to participate quickly and with little IT
-infrastructure investment. Tractus-X is meant to be the PoC project of the
-Catena-X alliance focusing on parts traceability.
+The Decentralized Claims Protocol is a specification project under the governance of the [Eclipse Dataspace Working
+Group](https://www.eclipse.org/org/workinggroups/dataspace-charter.php) (EDWG).
 
-* https://projects.eclipse.org/projects/automotive.tractusx
+* https://projects.eclipse.org/projects/technology.dataspace-dcp
 
 ## Project licenses
 
-This Tractus-X project repository uses the following license:
+This repository uses the following license:
 
-* CC-BY-4.0 for non-code
+* XXX
 
 ## Terms of Use
 
@@ -33,15 +26,15 @@ This repository is subject to the Terms of Use of the Eclipse Foundation
 Information regarding source code management, builds, coding standards, and
 more.
 
-* https://projects.eclipse.org/projects/automotive.tractusx/developer
+* https://projects.eclipse.org/projects/technology.dataspace-dcp/governance
 
 The project maintains the source code repositories in the following GitHub organization:
 
-* https://github.com/eclipse-tractusx
+* https://github.com/eclipse-dataspace-dcp
 
 ## Eclipse Development Process
 
-This Eclipse Foundation open project is governed by the Eclipse Foundation
+This Eclipse Foundation open specification project is governed by the Eclipse Foundation
 Development Process and operates under the terms of the Eclipse IP Policy.
 
 * https://eclipse.org/projects/dev_process
@@ -67,4 +60,4 @@ https://www.eclipse.org/projects/handbook/#resources-commit
 
 Contact the project developers via the project's "dev" list.
 
-* https://accounts.eclipse.org/mailing-list/tractusx-dev
+* https://accounts.eclipse.org/mailing-list/dataspace-dcp-dev
