@@ -1,0 +1,34 @@
+name: Feature Request Report
+description: Tell us about your idea and request a new feature
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What's missing?
+      placeholder: Describe what the spec should govern but currently doesn't
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why should it be in the spec?
+      description: Explain why this is an issue for DCP specifically. Reasons might be to eliminate ambiguity or take new functionality into scope.
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where should this be added?
+      description: What location in the existing structure could be extended to accommodate the proposed feature?
+  - type: textarea
+    id: context
+    attributes:
+      label: More context
+      description: If applicable, add additional info to help explain your problem.
+  - type: markdown
+    attributes:
+      value: |
+        _Please be sure to take a look at
+        our [contribution guidelines](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/blob/main/CONTRIBUTING.md) and
+        our [PR etiquette](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/blob/main/PR_ETIQUETTE.md)._
