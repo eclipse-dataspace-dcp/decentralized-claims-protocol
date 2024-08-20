@@ -20,45 +20,11 @@
                 "type": "string"
             },
             "description": "Array of verifiable credentials included in the presentation"
-        },
-        "proof": {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "type": "string",
-                    "description": "Proof type"
-                },
-                "created": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Proof creation time"
-                },
-                "proofPurpose": {
-                    "type": "string",
-                    "description": "Purpose of the proof"
-                },
-                "verificationMethod": {
-                    "type": "string",
-                    "description": "Verification method URI"
-                },
-                "jws": {
-                    "type": "string",
-                    "description": "JSON Web Signature"
-                }
-            },
-            "required": [
-                "type",
-                "created",
-                "proofPurpose",
-                "verificationMethod",
-                "jws"
-            ]
         }
     },
     "required": [
         "id",
         "type",
-        "verifiableCredential",
-        "proof"
+        "verifiableCredential"
     ]
 }

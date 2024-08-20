@@ -7,11 +7,4 @@
     schema:description "A verifiable presentation" ;
     :id [ a schema:Text ] ;
     :type [ a schema:ItemList ; schema:itemListElement [ a schema:Text ] ] ;
-    :verifiableCredential [ a schema:ItemList ; schema:itemListElement [ a schema:Text ] ] ;
-    :proof [ a schema:Thing ;
-        schema:type [ a schema:Text ] ;
-        schema:created [ a schema:DateTime ] ;
-        :proofPurpose [ a schema:Text ] ;
-        :verificationMethod [ a schema:URL ] ;
-        :jws [ a schema:Text ]
-    ] .
+    :verifiableCredential [ a schema:ItemList ; schema:itemListElement [ a schema:Text ] ] .

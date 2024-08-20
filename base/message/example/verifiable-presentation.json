@@ -1,12 +1,6 @@
 {
+    "@context": ["https://w3id.org/tractusx-trust/v0.8"],
     "id": "https://example.com/credentials/1872",
     "type": ["VerifiablePresentation"],
-    "verifiableCredential": ["https://example.com/credentials/1872"],
-    "proof": {
-        "type": "RsaSignature2018",
-        "created": "2020-04-22T10:37:22Z",
-        "proofPurpose": "assertionMethod",
-        "verificationMethod": "https://example.com/keys/1",
-        "jws": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9..."
-    }
+    "verifiableCredential": ["https://example.com/credentials/1872"]
 }

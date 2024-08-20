@@ -7,11 +7,7 @@
             "type": "string",
             "format": "uri",
             "description": "JSON-LD context URI"
-        },
-        "version": {
-            "type": "string",
-            "description": "Semantic versioning MAJOR.MINOR number"
         }
     },
-    "required": ["@context", "version"]
+    "required": ["@context"]
 }

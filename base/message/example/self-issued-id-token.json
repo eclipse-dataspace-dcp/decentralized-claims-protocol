@@ -1,9 +1,9 @@
 {
+    "@context": ["https://w3id.org/tractusx-trust/v0.8"],
     "sub": "did:example:123456789abcdefghi",
     "iss": "https://example.com",
     "iat": 1610839200,
     "exp": 1610842800,
     "jti": "a4a711f6-35d6-49a1-9dd4-0b805b0c6e5b",
-    "bearer_access_scope": "scope1 scope2",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }

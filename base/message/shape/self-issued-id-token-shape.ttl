@@ -10,5 +10,4 @@
     :iat [ a schema:Number ] ;
     :exp [ a schema:Number ] ;
     :jti [ a schema:Text ] ;
-    :bearer_access_scope [ a schema:Text ] ; 
     :token [ a schema:Text ] .

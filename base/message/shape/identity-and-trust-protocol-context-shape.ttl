@@ -5,5 +5,4 @@
 :IdentityAndTrustProtocolContext a schema:Thing ;
     schema:name "Identity and Trust Protocol Context" ;
     schema:description "The context for the identity and trust protocol" ;
-    :context [ a schema:URL ] ;
-    :version [ a schema:Text ] .
+    :context [ a schema:URL ] .
