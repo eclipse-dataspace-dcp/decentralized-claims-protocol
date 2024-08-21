@@ -8,7 +8,7 @@
       "items": {
         "type": "string"
       },
-      "description": "Specifies a valid Json-LD context"
+      "description": "Specifies a set of valid Json-LD contexts"
     },
     "@type": {
       "type": "string"
@@ -19,14 +19,9 @@
     "credentialsSupported": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/CredentialObject"
+        "$ref": "./credential-object-schema.json"
       }
     }
   },
-  "required": ["@context", "@type", "credentialIssuer"],
-  "definitions": {
-    "CredentialObject": {
-      "$ref": "CredentialObject.json"
-    }
-  }
+  "required": ["@context", "@type", "credentialIssuer"]
 }

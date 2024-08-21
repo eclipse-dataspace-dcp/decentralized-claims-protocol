@@ -1,10 +1,37 @@
 {
     "@context": ["https://w3id.org/tractusx-trust/v0.8", "http://example.org/context"],
     "@type": "IssuerMetadata",
-    "credentialIssuer": "https://issuer.example.org",
+    "credentialIssuer": "did:web:issuer",
     "credentialsSupported": [
-      "UniversityDegreeCredential",
-      "VerifiableCredential"
+      {
+        "credentialType": [
+          "VerifiableCredential",
+          "CompanyCredential"
+        ],
+        "offerReason": "reissue",
+        "bindingMethods": [
+          "did:web"
+        ],
+        "cryptographicSuites": [
+          "JsonWebKey2020"
+        ],
+        "issuancePolicy": {
+          "permission": [
+            {
+              "action": "use",
+              "constraint": {
+                "and": [
+                  {
+                    "leftOperand": "https://w3id.org/tractusx-trust/CredentialPrereq",
+                    "operator": "eq",
+                    "rightOperand": "active"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
     ]
   }
   
