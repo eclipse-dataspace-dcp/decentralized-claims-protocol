@@ -3,74 +3,34 @@
   "title": "PresentationResponseMessage",
   "type": "object",
   "properties": {
-      "@context": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "Specifies a valid Json-LD context"
+    "@context": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
       },
-      "@type": {
-          "type": "string"
-      },
-      "presentation": {
-          "type": "array",
-          "items": {
-              "anyOf": [
-                  {
-                      "type": "string"
-                  },
-                  {
-                      "$ref": "#/definitions/verifiablePresentation"
-                  }
-              ]
-          }
-      }
-  },
-  "required": ["@context", "@type", "presentation"],
-  "definitions": {
-      "verifiablePresentation": {
-          "type": "object",
-          "properties": {
-              "@context": {
-                  "type": "array",
-                  "items": {
-                      "type": "string"
-                  }
-              },
-              "type": {
-                  "type": "string"
-              },
-              "verifiableCredential": {
-                  "type": "array",
-                  "items": {
-                      "type": "object"
-                  }
-              },
-              "proof": {
-                  "type": "object",
-                  "properties": {
-                      "type": {
-                          "type": "string"
-                      },
-                      "created": {
-                          "type": "string",
-                          "format": "date-time"
-                      },
-                      "verificationMethod": {
-                          "type": "string"
-                      },
-                      "proofPurpose": {
-                          "type": "string"
-                      },
-                      "jws": {
-                          "type": "string"
-                      }
-                  },
-                  "required": ["type", "created", "verificationMethod", "proofPurpose", "jws"]
-              }
+      "description": "Specifies a set of valid Json-LD contexts"
+    },
+    "@type": {
+      "type": "string"
+    },
+    "presentation": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
           },
-          "required": ["@context", "type", "verifiableCredential", "proof"]
+          {
+            "$ref": "../../../base/message/schema/verifiable-presentation-schema.json"
+          }
+        ]
       }
-  }
+    }
+  },
+  "required": [
+    "@context",
+    "@type",
+    "presentation"
+  ]
 }
