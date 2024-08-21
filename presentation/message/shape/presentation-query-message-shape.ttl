@@ -17,6 +17,60 @@ ex:PresentationQueryMessageShape
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;
+    sh:property [
+        sh:path ex:presentationDefinition ;
+        sh:nodeKind sh:Node ;  # Indicates that it must be an object
+        sh:property [
+            sh:path ex:id ;  # For the Presentation Definition ID
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ;
+        
+        sh:property [
+            sh:path ex:input_descriptors ;
+            sh:nodeKind sh:Node ;  # Indicates input_descriptors is an array of objects
+            sh:property [
+                sh:path ex:id ;  # For each Input Descriptor ID
+                sh:datatype xsd:string ;
+                sh:minCount 1 ;
+                sh:maxCount 1 ;
+            ] ;
+            sh:property [
+                sh:path ex:name ;  # Optional human-friendly name
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path ex:purpose ;  # Purpose of the Input Descriptor
+                sh:datatype xsd:string ;
+            ] ;
+            sh:property [
+                sh:path ex:constraints ;  # Constraints for Input Descriptors
+                sh:nodeKind sh:Node ;  # Indicates this is an object
+                sh:property [
+                    sh:path ex:fields ;
+                    sh:nodeKind sh:Node ;  # Indicates fields is an array of objects
+                    sh:property [
+                        sh:path ex:path ;  # JSONPath expressions
+                        sh:datatype xsd:string ;
+                        sh:minCount 1 ;  # At least one path must be present
+                    ] ;
+                    sh:property [
+                        sh:path ex:limit_disclosure ;  # Limit disclosure strategy
+                        sh:datatype xsd:string ;
+                        sh:in ( "required" "preferred" ) ;  # Allow only these values
+                    ] ;
+                ] ;
+            ] ;
+        ] ;
+    ] ;
+    
+    sh:property [
+        sh:path ex:scope ;
+        sh:nodeKind sh:Node ;  # Indicates that it can be an array
+        sh:datatype xsd:string ;
+    ] ;
+
     sh:xone (
         [
             sh:property [

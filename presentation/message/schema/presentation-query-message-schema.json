@@ -1,42 +1,149 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "PresentationQueryMessage",
-    "type": "object",
-    "properties": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PresentationQueryMessage",
+  "type": "object",
+  "properties": {
       "@context": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        },
-        "description": "Specifies a valid Json-LD context"
+          "type": "array",
+          "items": {
+              "type": "string"
+          },
+          "description": "Specifies a valid Json-LD context"
       },
       "@type": {
-        "type": "string"
+          "type": "string"
       },
       "presentationDefinition": {
-        "type": ["object", "null"]
+          "type": "object",
+          "properties": {
+              "id": {
+                  "type": "string",
+                  "description": "A unique identifier for the Presentation Definition, typically a UUID."
+              },
+              "input_descriptors": {
+                  "type": "array",
+                  "items": {
+                      "type": "object",
+                      "properties": {
+                          "id": {
+                              "type": "string",
+                              "description": "Identifier for the input descriptor."
+                          },
+                          "name": {
+                              "type": "string",
+                              "description": "A human-friendly name for the input descriptor."
+                          },
+                          "purpose": {
+                              "type": "string",
+                              "description": "Description of the purpose for which the input's data is being requested."
+                          },
+                          "constraints": {
+                              "type": "object",
+                              "properties": {
+                                  "fields": {
+                                      "type": "array",
+                                      "items": {
+                                          "type": "object",
+                                          "properties": {
+                                              "path": {
+                                                  "type": "array",
+                                                  "items": {
+                                                      "type": "string",
+                                                      "description": "JSONPath string expressions to select target values."
+                                                  }
+                                              },
+                                              "id": {
+                                                  "type": "string",
+                                                  "description": "Unique identifier for each field."
+                                              },
+                                              "name": {
+                                                  "type": "string",
+                                                  "description": "A human-friendly name describing the target field."
+                                              },
+                                              "purpose": {
+                                                  "type": "string",
+                                                  "description": "Purpose for which the field's data is being requested."
+                                              },
+                                              "filter": {
+                                                  "type": "object",
+                                                  "description": "JSON Schema descriptor used to filter values."
+                                              },
+                                              "optional": {
+                                                  "type": "boolean",
+                                                  "description": "Indicates if the field is optional."
+                                              }
+                                          },
+                                          "required": ["path"]
+                                      }
+                                  },
+                                  "limit_disclosure": {
+                                      "type": "string",
+                                      "enum": ["required", "preferred"],
+                                      "description": "Indicates the disclosure requirements for fields."
+                                  }
+                              },
+                              "required": ["fields"],
+                              "description": "Constraints on the required fields for the proofs."
+                          }
+                      },
+                      "required": ["id", "constraints"],
+                      "additionalProperties": false
+                  },
+                  "description": "An array of input descriptor objects."
+              },
+              "name": {
+                  "type": "string",
+                  "description": "Optional - a human-friendly name for the Presentation Definition."
+              },
+              "purpose": {
+                  "type": "string",
+                  "description": "Optional - purpose for which the Presentation Definition's inputs are being used."
+              },
+              "format": {
+                  "type": "object",
+                  "description": "Details about the formats supported for input descriptors.",
+                  "additionalProperties": {
+                      "type": "object",
+                      "properties": {
+                          "alg": {
+                              "type": "array",
+                              "items": {
+                                  "type": "string"
+                              }
+                          },
+                          "proof_type": {
+                              "type": "array",
+                              "items": {
+                                  "type": "string"
+                              }
+                          }
+                      },
+                      "additionalProperties": false
+                  }
+              }
+          },
+          "required": ["id", "input_descriptors"]
       },
       "scope": {
-        "type": "array",
-        "items": {
-          "type": "string"
-        }
+          "type": "array",
+          "items": {
+              "type": "string"
+          }
       }
-    },
-    "required": ["@context", "@type"],
-    "oneOf": [
+  },
+  "required": ["@context", "@type"],
+  "oneOf": [
       {
-        "required": ["presentationDefinition"],
-        "not": {
-          "required": ["scope"]
-        }
+          "required": ["presentationDefinition"],
+          "not": {
+              "required": ["scope"]
+          }
       },
       {
-        "required": ["scope"],
-        "not": {
-          "required": ["presentationDefinition"]
-        }
+          "required": ["scope"],
+          "not": {
+              "required": ["presentationDefinition"]
+          }
       }
-    ]
+  ]
 }
-  
