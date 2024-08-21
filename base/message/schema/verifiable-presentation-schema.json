@@ -5,9 +5,10 @@
     "properties": {
         "@context": {
             "type": "array",
-            "description": "JSON-LD context for the schema",
+            "description": "Remote JSON-LD contexts",
             "items": {
-                "type": "string"
+                "type": "string",
+                "format": "uri"
             }
         },
         "id": {
@@ -26,7 +27,7 @@
             "items": {
                 "type": "string"
             },
-            "description": "Array of verifiable credentials included in the presentation"
+            "description": "Array of encoded verifiable credentials included in the presentation"
         }
     },
     "required": ["@context", "id", "type", "verifiableCredential"]

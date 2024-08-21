@@ -4,9 +4,12 @@
     "type": "object",
     "properties": {
         "@context": {
-            "type": "string",
-            "format": "uri",
-            "description": "JSON-LD context URI"
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uri"
+            },
+            "description": "A list of JSON-LD context URI"
         }
     },
     "required": ["@context"]

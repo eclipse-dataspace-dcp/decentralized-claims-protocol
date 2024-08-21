@@ -1,5 +1,5 @@
 {
-    "@context": ["https://w3id.org/tractusx-trust/v0.8"],
+    "@context": ["https://w3id.org/tractusx-trust/v0.8", "https://www.w3.org/2018/credentials/v1"],
     "id": "https://example.com/credentials/1872",
     "type": ["VerifiablePresentation"],
     "verifiableCredential": ["https://example.com/credentials/1872"]

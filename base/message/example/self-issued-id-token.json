@@ -1,5 +1,4 @@
 {
-    "@context": ["https://w3id.org/tractusx-trust/v0.8"],
     "sub": "did:example:123456789abcdefghi",
     "iss": "https://example.com",
     "iat": 1610839200,
