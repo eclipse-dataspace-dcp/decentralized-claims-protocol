@@ -4,10 +4,11 @@
   "type": "object",
   "properties": {
       "@context": {
-          "type": "array",
-          "items": {
-              "type": "string"
-          }
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Specifies a valid Json-LD context"
       },
       "@type": {
           "type": "string"

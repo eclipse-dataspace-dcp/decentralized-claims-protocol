@@ -3,6 +3,13 @@
     "title": "Self-Issued ID Token",
     "type": "object",
     "properties": {
+        "@context": {
+            "type": "array",
+            "description": "JSON-LD context for the schema",
+            "items": {
+                "type": "string"
+            }
+        },
         "sub": {
             "type": "string",
             "description": "Subject identifier"
@@ -23,34 +30,10 @@
             "type": "string",
             "description": "JWT ID"
         },
-        "bearer_access_scope": {
-            "type": "string",
-            "description": "Authorization request parameter containing a list of space-delimited scopes for the token claim"
-        },
         "token": {
             "type": "string",
             "description": "An access token for obtaining additional VPs from a service"
         }
     },
-    "required": [
-        "sub",
-        "iss",
-        "iat",
-        "exp",
-        "jti"
-    ],
-    "if": {
-        "properties": {
-            "bearer_access_scope": { "type": "string" }
-        },
-        "required": ["bearer_access_scope"]
-    },
-    "then": {
-        "required": ["token"]
-    },
-    "else": {
-        "not": {
-            "required": ["token"]
-        }
-    }
+    "required": ["@context", "sub", "iss", "iat", "exp", "jti"]
 }

@@ -3,6 +3,13 @@
     "title": "Verifiable Presentation",
     "type": "object",
     "properties": {
+        "@context": {
+            "type": "array",
+            "description": "JSON-LD context for the schema",
+            "items": {
+                "type": "string"
+            }
+        },
         "id": {
             "type": "string",
             "description": "Presentation identifier"
@@ -22,9 +29,5 @@
             "description": "Array of verifiable credentials included in the presentation"
         }
     },
-    "required": [
-        "id",
-        "type",
-        "verifiableCredential"
-    ]
+    "required": ["@context", "id", "type", "verifiableCredential"]
 }
