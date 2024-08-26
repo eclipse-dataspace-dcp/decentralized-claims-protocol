@@ -1,0 +1,31 @@
+{
+  "@context": {
+    "odrl": "http://www.w3.org/ns/odrl/2/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "cred": "https://www.w3.org/2018/credentials#",
+    "sec": "https://w3id.org/security#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "cc": "http://creativecommons.org/ns#",
+    "dct": "http://purl.org/dc/terms/",
+    "dcat": "http://www.w3.org/ns/dcat#",
+    "dcp": "https://w3id.org/tractus-trust/resources#",
+
+    "CredentialContainer": "dcp:CredentialContainer",
+    "CredentialMessage": "dcp:CredentialMessage",
+    "PresentationQueryMessage": "dcp:PresentationQueryMessage",
+    "payload": {
+      "@id": "dcp:payload",
+      "@type": "@id",
+      "@container": "@graph"
+    },
+    "credentials": {
+      "@id": "dcp:credentials",
+      "@type": "@id",
+      "@container": "@graph"
+    },
+    "scope": {
+      "@id": "dcp:scope",
+      "@type": "xsd:string"
+    }
+  }
+}
