@@ -60,7 +60,7 @@ The client receives the Self-Issued ID Token (containing an access token based o
 provides it with a request to access protected resources to the verifier. The verifier extracts the access token and
 uses it to request VPs from the client's CS. The verifier may resolve the CS endpoint through a variety of methods,
 for example, by resolving the client's DID document and using a service entry as described
-in [Section](#6-cs-endpoint-resolution-through-did-documents). The VPs are then returned to the Verifier.
+in [section _Endpoint Resolution_](6-cs-endpoint-resolution-through-did-documents). The VPs are then returned to the Verifier.
 
 ## Security
 
@@ -69,7 +69,7 @@ that needs to present a VP to an endpoint will provide an access token to the en
 use the access token when resolving the VP through a request to the client's Credential Service.
 
 The format of the access token is not defined. The only requirement is that the token can be used by the Credential
-Service to perform an access control check as defined in [Section 3.1](#31-access-scopes) .
+Service to perform an access control check as defined in [section _Access Scopes_](#access-scopes) .
 
 ### Access Scopes
 
@@ -110,7 +110,7 @@ The above expression enables write-only access to all VCs.
 
 How access control is defined in a Credential Service is implementation-specific. Implementations may
 provide the ability to selectively restrict access to resources. The access control mechanism must support the scope
-restrictions defined in [Section 3.1](#31-access-scopes). Implementations may support additional restriction methods,
+restrictions defined in [section _Access Scopes_](#access-scopes). Implementations may support additional restriction methods,
 including requiring the requester to present its own VPs.
 
 ## Submitting an Access Token
@@ -118,7 +118,7 @@ including requiring the requester to present its own VPs.
 Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
 implementations to enforce proof-of-possession, the access token MUST be contained in the `token`
 claim of a self-issued identity token as defined
-in [Base Identity Protocol Section 4](identity.protocol.base.md#4-self-issued-id-tokens). The self-issued token MUST
+in [Base Identity Protocol](#self-issued-id-tokens). The self-issued token MUST
 be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
 
 ## Resolution API

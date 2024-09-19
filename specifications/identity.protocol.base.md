@@ -65,7 +65,7 @@ the [Self-Issued OpenID Provider v2 specification](https://openid.net/specs/open
 
 A client may obtain a Self-Issued ID Token using a variety or OAuth grant types. If the OAuth 2.0 Client Credential
 Grant type is used, the client MUST conform
-to [Section 6](#6-using-the-oauth-2-client-credential-grant-to-obtain-access-tokens-from-an-sts).
+to [the section on obtaining STS-issued access tokens](#using-the-oauth-2-client-credential-grant-to-obtain-access-tokens-from-an-sts).
 
 ### Self-Issued ID Token Contents
 
