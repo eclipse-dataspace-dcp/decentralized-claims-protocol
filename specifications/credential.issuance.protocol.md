@@ -70,8 +70,8 @@ The ID Token MUST contain a `token` claim that is a bearer token granting write 
 requested VCs into the client's `Credential Service` as defined by
 the [Verifiable Presentation Protocol specification](verifiable.presentation.protocol.md)
 
-The ID Token MAY contain an `token` claim as defined in
-the [Base Identity Protocol Specification](identity.protocol.base.md)  claim that can be used by the issuer to resolve
+The ID Token MAY contain a `token` claim as defined in
+the [Base Identity Protocol Specification](identity.protocol.base.md) that can be used by the issuer to resolve
 Verifiable Presentations (VP) the client is required to hold for issuance of the requested VCs.
 
 If the issuer supports a pre-authorization code flow, the client must use the `pre-authorized_code` claim in the ID
@@ -152,7 +152,7 @@ The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object 
 The following is a non-normative example of a credential offer request:
 
 ```
-POST /credentials HTTP/1.1
+POST /offers HTTP/1.1
 Host: server.example.com
 Content-Type: application/json
 Authorization: Bearer ......
@@ -292,7 +292,7 @@ The following is a non-normative example of a `IssuerMetadata` response object:
 
 The issuer MUST provide an `HTTPS GET` endpoint for retrieving the status of a credential at the base issuer url with
 the appended path `/requests/<request id>`. The issuer SHOULD implement access control such that only the client that
-made the request may access a particualr request status.
+made the request may access a particular request status.
 
 If accepted, a `CredentialStatus` Json object with a `status` property set to one of the following
 values: `RECEIVED` | `REJECTED` | `ISSUED` will be returned.
@@ -361,7 +361,7 @@ The `serviceEndpoint` URL is the base URL for the Issuer Service.
 
 > TODO: Add `IssuerService` namespace
 
-10. ODRL (Open Digital Rights Language) Profile
+# 10. ODRL (Open Digital Rights Language) Profile
 
 An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
 a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
