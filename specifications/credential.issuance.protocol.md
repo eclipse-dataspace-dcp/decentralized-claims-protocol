@@ -64,7 +64,7 @@ the
 issuer.
 
 The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
-the [Base Identity Protocol Specification](identity.protocol.base.md#411-vp-access-token). The `issuer` claim can be
+the [Base Identity Protocol Specification](#vp-access-token). The `issuer` claim can be
 used by the Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and credential
 binding.
 
@@ -121,7 +121,7 @@ The issuer MAY respond with `401 Not Authorized` if the request is unauthorized 
 an exception.
 
 If the VC request is approved, the issuer will respond with a write-request to the client's `Credential Service` using
-the Storage API defined in the [Verifiable Presentation Protocol](verifiable.presentation.protocol.md#5-storage-api).
+the Storage API defined in the [Verifiable Presentation Protocol](#storage-api).
 
 ## Credential Offer Flow
 
@@ -147,7 +147,7 @@ The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object 
 - `credentialIssuer`: REQUIRED. The identifier of the Credential Issuer, the `Credential Service` is requested to obtain
   one or more credentials from.
 - `credentials`: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string.
-    - entry type object: data MUST adhere to the [Credentials Object](#412-the-credentialobject)
+    - entry type object: data MUST adhere to the [Credentials Object](#the-credentialobject)
     - entry type string: value MUST be one of the id values in one of the objects in the `credentials_supported`.
     - When processing, the `Credential Service` MUST resolve this string value to the respective object.
 
@@ -189,8 +189,7 @@ The `CredentialObject` defines the following properties:
   and `proof-key-revocation`.
 
 > Note: Properties mapped to the _Open ID for Verifiable Credential Issuance_ specification are defined in
->
-the [Credential Issuer Metadata](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#section-10.2.3.1)
+> the [Credential Issuer Metadata](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#section-10.2.3.1)
 > section.
 
 The following is a non-normative example of a `CredentialObject`:
@@ -244,7 +243,7 @@ The response is a `IssuerMetadata` JSON object with the following properties:
 - `@type`: REQUIRED. A string specifying the `IssuerMetadata` type.
 - `credentialIssuer`: REQUIRED. A unique identifier of the issuer, for example, a DID.
 - `credentialsSupported`: OPTIONAL. A Json Array containing a list of `CredentialObject` JSON objects with properties
-  corresponding to [Credential Objects](#412-the-credentialobject).
+  corresponding to [Credential Objects](the-credentialobject).
 
 The following is a non-normative example of a `IssuerMetadata` response object:
 
@@ -303,7 +302,7 @@ The response is a `CredentialStatus` JSON object with the following properties:
 
 - `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
 - `@type`: REQUIRED. A string specifying the `CredentialStatus` type.
-- `requestId`: REQUIRED. A string corresponding to the request id 
+- `requestId`: REQUIRED. A string corresponding to the request id
 - `status`: REQUIRED. A string equal to the one of the values: `RECEIVED`, `REJECTED`, or `ISSUED`.
 
 The following is a non-normative example of a `CredentialStatus` response object:
