@@ -135,7 +135,7 @@ Presentations can be queried by POSTing a `PresentationQueryMessage` message to 
 
 The POST body is a `CredentialMessage` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.
 - `presentationDefinition`: OPTIONAL. A valid `Presentation Definition` according to
   the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
@@ -188,7 +188,7 @@ mapping between a certain scope value and the respective Presentation Definition
 
 The response type of a presentation query is a `PresentationResponseMessage` with the following parameters:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `PresentationResponseMessage` type.
 - `presentation`: REQUIRED. An array of Verifiable Presentations. The Verifiable Presentations may be strings, JSON
   objects, or a combination of both depending on the format.
@@ -216,7 +216,7 @@ If the POST is successful, credentials will be created and a HTTP `2XX` is retur
 
 The POST body is a `CredentialMessage` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialMessage` type.
 - `credentials`: REQUIRED. An array of `CredentialContainer` Json objects corresponding to the schema
   specified in section [[[#the-credentialcontainer-object]]].
@@ -244,7 +244,7 @@ The `credentials` property contains an array of `CredentialContainer` objects. T
 the following properties:
 
 - `@type`: REQUIRED. A string specifying the `CredentialContainer` type.
-- `payload`: REQUIRED. A [Json Literal]([[json-ld]], sect. 4.2.2) containing the verifiable
+- `payload`: REQUIRED. A [Json Literal]([[json-ld11]], sect. 4.2.2) containing the verifiable
   credential (VC).
 
 ## CS Endpoint Resolution through DID Documents

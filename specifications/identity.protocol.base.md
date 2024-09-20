@@ -34,7 +34,7 @@ Decentralization is achieved in the following ways:
 ## Identities and Identifiers
 
 Each participant MUST have a unique, immutable **_identity_** provided by the `Registration Service` and
-a [DID](https://github.com/w3c/did-core) that it chooses. This relationship is expressed as:
+a [DID] [[did-core]] that it chooses. This relationship is expressed as:
 
 ```
 ID  ------ Can resolve to -----> DID
@@ -118,7 +118,7 @@ present, the `token` claim MUST not be included.
 
 ## The Identity and Trust Protocol Context
 
-The [[[json-ld]]] context URI for the all identity and trust specifications is:
+The [[[json-ld11]]] context URI for the all identity and trust specifications is:
 
 `https://w3id.org/tractusx-trust/v[version]`
 

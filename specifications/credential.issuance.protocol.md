@@ -82,7 +82,7 @@ Token to provide the pre-authorization code to the issuer.
 
 The Credential Request `POST` body MUST be a `CredentialRequestMessage` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialRequestMessage` type.
 - `format`: REQUIRED. A JSON string that describes the format of the credential to be issued. Implementations MUST
   support the `ldp_vc` format as defined by
@@ -140,7 +140,7 @@ its `CredentialService` service entry.
 
 The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialOfferMessage` type.
 - `credentialIssuer`: REQUIRED. The identifier of the Credential Issuer, the `Credential Service` is requested to obtain
   one or more credentials from.
@@ -237,7 +237,7 @@ the endpoint is the base issuer url with the appended path `/.well-known/vci`.
 
 The response is a `IssuerMetadata` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `IssuerMetadata` type.
 - `credentialIssuer`: REQUIRED. A unique identifier of the issuer, for example, a DID.
 - `credentialsSupported`: OPTIONAL. A Json Array containing a list of `CredentialObject` JSON objects with properties
@@ -298,7 +298,7 @@ values: `RECEIVED` | `REJECTED` | `ISSUED` will be returned.
 
 The response is a `CredentialStatus` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialStatus` type.
 - `requestId`: REQUIRED. A string corresponding to the request id
 - `status`: REQUIRED. A string equal to the one of the values: `RECEIVED`, `REJECTED`, or `ISSUED`.
