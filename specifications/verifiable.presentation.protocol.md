@@ -61,6 +61,7 @@ uses it to request VPs from the client's CS. The verifier may resolve the CS end
 for example, by resolving the client's DID document and using a service entry as described
 in section [[[#cs-endpoint-resolution-through-did-documents]]]. The VPs are then returned to the Verifier.
 
+
 ## Security
 
 CS endpoints may require an access token obtained from the resource owner. For example, a client (the resource owner)
@@ -110,14 +111,14 @@ The above expression enables write-only access to all VCs.
 How access control is defined in a Credential Service is implementation-specific. Implementations may
 provide the ability to selectively restrict access to resources. The access control mechanism must support the scope
 restrictions defined in section [[[#access-scopes]]]. Implementations may support additional restriction methods,
+
 including requiring the requester to present its own VPs.
 
 ## Submitting an Access Token
 
 Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
 implementations to enforce proof-of-possession, the access token MUST be contained in the `token`
-claim of a self-issued identity token as defined
-in section [[[#self-issued-id-tokens]]]. The self-issued token MUST
+claim of a self-issued identity token as definedin section [[[#self-issued-id-tokens]]]. The self-issued token MUST
 be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
 
 ## Resolution API
