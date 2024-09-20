@@ -1,4 +1,5 @@
 cp scripts/respec-template.html index.html
+cp specifications/*.png .
 index=`cat index.html`
 top=`cat specifications/tx.dataspace.topology.md`
 topph="THIS IS THE PLACEHOLDER FOR THE DATASPACE TOPOLOGY"
