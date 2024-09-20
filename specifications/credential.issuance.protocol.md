@@ -6,8 +6,8 @@ This specification defines a protocol for Verifiable Credential (VC) issuance. S
 Protocol (CIP) defines the endpoints and message types for requesting credentials to be issued from
 a `Credential Issuer.`
 
-This specification relies on the [Base Identity Protocol](identity.protocol.base.md) and
-the [Verifiable Presentation Protocol](verifiable.presentation.protocol.md).
+This specification relies on sections [[[#identity-protocol-base]]] and
+[[[#verifiable-presentation-protocol]]].
 
 ### Motivation
 
@@ -24,13 +24,12 @@ associated with manual workflows that are best modelled using asynchronous messa
 
 ### Terms
 
-- ***DID*** - A decentralized identifier as defined by the [DID specification](https://github.com/w3c/did-core).
+- ***DID*** - A decentralized identifier as defined by [[[did-core]]].
 
 ## Overview
 
 The Credential Issuance Protocol is designed to be used in conjunction with
-the [Base Identity Protocol](identity.protocol.base.md) and the
-[Verifiable Presentation Protocol](verifiable.presentation.protocol.md). This issuance interaction flow is expressed
+[[[#identity-protocol-base]]] and [[[#verifiable-presentation-protocol]]]. This issuance interaction flow is expressed
 in the following diagram:
 
 ![Issuance Flow](issuance.flow.png)
@@ -44,7 +43,7 @@ asynchronously from the client request, resulting in non-blocking behavior.
 
 All endpoint addresses are defined relative to the base URL of the issuer service. The base URL MUST use the HTTPS
 scheme. The issuer will use the base URL for the `issuer` field in all VCs it issues as defined by
-the [issuer property](https://www.w3.org/TR/vc-data-model/#dfn-property).
+the `issuer` property ([[vc-data-model]]).
 
 This specification makes no assumption about the base URL, for example, if it is a domain, subdomain, or contains a
 path.
@@ -64,16 +63,17 @@ the
 issuer.
 
 The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
-the [Base Identity Protocol Specification](#vp-access-token). The `issuer` claim can be
+the [[[#vp-access-token]]]. The `issuer` claim can be
+
 used by the Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and credential
 binding.
 
 The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
 requested VCs into the client's `Credential Service` as defined by
-the [Verifiable Presentation Protocol specification](verifiable.presentation.protocol.md)
+[[[#verifiable-presentation-protocol]]]
 
 The ID Token MAY contain an `token` claim as defined in
-the [Base Identity Protocol Specification](identity.protocol.base.md)  claim that can be used by the issuer to resolve
+[[[#identity-protocol-base]]] claim that can be used by the issuer to resolve
 Verifiable Presentations (VP) the client is required to hold for issuance of the requested VCs.
 
 If the issuer supports a pre-authorization code flow, the client must use the `pre-authorized_code` claim in the ID
@@ -83,7 +83,7 @@ Token to provide the pre-authorization code to the issuer.
 
 The Credential Request `POST` body MUST be a `CredentialRequestMessage` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialRequestMessage` type.
 - `format`: REQUIRED. A JSON string that describes the format of the credential to be issued. Implementations MUST
   support the `ldp_vc` format as defined by
@@ -114,14 +114,13 @@ Authorization: Bearer ......
 ```
 
 On successful receipt of the request, the Credential Issuer MUST respond with a `201 CREATED` with the `Location`
-header set to the location of the request status. See
-the [Credential Request Status](#credential-request-status-endpoint) section.
+header set to the location of the request status ([[[#credential-request-status-endpoint]]])
 
 The issuer MAY respond with `401 Not Authorized` if the request is unauthorized or other `HTTP` status codes to indicate
 an exception.
 
 If the VC request is approved, the issuer will respond with a write-request to the client's `Credential Service` using
-the Storage API defined in the [Verifiable Presentation Protocol](#storage-api).
+the Storage API defined in [[[#storage-api]]].
 
 ## Credential Offer Flow
 
@@ -142,12 +141,13 @@ its `CredentialService` service entry.
 
 The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialOfferMessage` type.
 - `credentialIssuer`: REQUIRED. The identifier of the Credential Issuer, the `Credential Service` is requested to obtain
   one or more credentials from.
 - `credentials`: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string.
-    - entry type object: data MUST adhere to the [Credentials Object](#the-credentialobject)
+    - entry type object: data MUST adhere to [[[#the-credentialobject]]]
+
     - entry type string: value MUST be one of the id values in one of the objects in the `credentials_supported`.
     - When processing, the `Credential Service` MUST resolve this string value to the respective object.
 
@@ -183,7 +183,7 @@ The `CredentialObject` defines the following properties:
   _Open ID for Verifiable Credential Issuance_ specification.
 - `cryptographicSuites`: OPTIONAL. Binding methods supported as defined by `cryptographic_suites_supported` in the
   _Open ID for Verifiable Credential Issuance_ specification.
-- `issuancePolicy`: OPTIONAL. An [ODRL Policy](https://www.w3.org/TR/odrl-model/). Note that the ODRL policy MUST not
+- `issuancePolicy`: OPTIONAL. An ODRL Policy [[odrl-model]]. Note that the ODRL Policy MUST not
   contain `target` attributes. Implementations MAY not support ODRL issuance policies.
 - `offerReason`: OPTIONAL. A reason for the offer as a string. Valid values may include `reissue`
   and `proof-key-revocation`.
@@ -239,11 +239,11 @@ the endpoint is the base issuer url with the appended path `/.well-known/vci`.
 
 The response is a `IssuerMetadata` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `IssuerMetadata` type.
 - `credentialIssuer`: REQUIRED. A unique identifier of the issuer, for example, a DID.
 - `credentialsSupported`: OPTIONAL. A Json Array containing a list of `CredentialObject` JSON objects with properties
-  corresponding to [Credential Objects](the-credentialobject).
+  corresponding to [[[#the-credentialobject]]].
 
 The following is a non-normative example of a `IssuerMetadata` response object:
 
@@ -300,7 +300,7 @@ values: `RECEIVED` | `REJECTED` | `ISSUED` will be returned.
 
 The response is a `CredentialStatus` JSON object with the following properties:
 
-- `@context`: REQUIRED. Specifies a valid [Json-Ld context](https://www.w3.org/TR/json-ld11/#the-context).
+- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialStatus` type.
 - `requestId`: REQUIRED. A string corresponding to the request id
 - `status`: REQUIRED. A string equal to the one of the values: `RECEIVED`, `REJECTED`, or `ISSUED`.
@@ -337,14 +337,14 @@ the rotation period of the keys used to sign their proofs.
 
 ## VC Revocation
 
-VC revocation MUST be supported using the [Status List](https://www.w3.org/TR/vc-status-list/) specification. Note that
+VC revocation MUST be supported using the [[[vc-bitstring-status-list-20230427]]] specification. Note that
 implementations MAY support multiple lists.
 
 ## Issuer Endpoint resolution through DID Documents
 
 Different methods may be used to resolve the base location of an issuer service. One way is
 through DID documents. If a DID document is used, the client `DID document` MUST contain at least
-one [service entry](https://www.w3.org/TR/did-core/#services) of type `IssuerService`:
+one service entry ([[did-core]], sect. 5.4) of type `IssuerService`:
 
 ```
 {
@@ -367,7 +367,7 @@ The `serviceEndpoint` URL is the base URL for the Issuer Service.
 An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
 a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
 
-This specification defines two ODRL attributes for the [Policy class](https://www.w3.org/TR/odrl-model/#policy) under
+This specification defines two ODRL attributes for the Policy class [[odrl]] sect. 2.1) under
 the `iatp` namespace:
 
 - **scope** - Either a single `string` or an `array` of strings containing `scope` values
