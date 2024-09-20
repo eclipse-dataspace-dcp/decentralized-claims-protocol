@@ -49,7 +49,7 @@ otherwise there must be a mechanism to resolve a `DID` from a `participant id`.
 ### The Membership VC
 
 In the case where the `participant id` is not a `DID`, dataspaces which implement the TX identity protocol MUST define a
-VC that adheres to the [Verifiable Credentials Data Model v1.1](https://www.w3.org/TR/vc-data-model/) and
+VC that adheres to the [[[vc-data-model]]] and
 cryptographically binds the `participant id` to its `DID`. This VC is termed the `Membership VC`. The VC issuer's
 cryptographic material MUST be resolvable via a `DID`.
 
@@ -70,7 +70,7 @@ to [the section on obtaining STS-issued access tokens](#using-the-oauth-2-client
 ### Self-Issued ID Token Contents
 
 The Self-Issued ID Token MUST adhere
-to [JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens](https://datatracker.ietf.org/doc/html/rfc9068) and MUST
+to JSON Web Token (JWT) Profile for OAuth 2.0 Access Tokens [[rfc9068]] and MUST
 include the following claims:
 
 - The `iss` and `sub` claims MUST be equal and set to the bearer's (participant's) DID.
@@ -118,7 +118,7 @@ present, the `token` claim MUST not be included.
 
 ## The Identity and Trust Protocol Context
 
-The `Json-ld context` URI for the all identity and trust specifications is:
+The [[[json-ld]]] context URI for the all identity and trust specifications is:
 
 `https://w3id.org/tractusx-trust/v[version]`
 

@@ -3,8 +3,7 @@
 ## Introduction
 
 This document details the systems topology that Tractus-X dataspaces employ. This topology adheres to the model defined
-by the [Dataspace Protocol Specifications](https://docs.internationaldataspaces.org/dataspace-protocol/overview/model) (
-DSP):
+by the [Dataspace Protocol Specifications](https://docs.internationaldataspaces.org/dataspace-protocol/overview/model) (DSP):
 
 - The **Dataspace Authority** manages the dataspace. In a Tractus-X dataspace, this role may be federated across
   multiple operating companies responsible for registration, onboarding, and operations management.
@@ -29,10 +28,10 @@ The DSP specifications are based on the concept that all participants have a sta
 typically a number assigned to the participant business entity. In this scheme, participant agent identities may be
 ephemeral since all operations such as signing `contract agreements`are associated with the participant identity.
 
-This specification will also make use of [DIDs](https://github.com/w3c/did-core), which can be employed to
+This specification will also make use of DIDs [[did-core]], which can be employed to
 cryptographically verify a participant identity. These are related as follows:
 
-```
+```text
 ID  ------ Can resolve to -----> DID
  ^                                |
  |                                |
@@ -71,7 +70,7 @@ control of the same participant.
 
 #### Credential Service (CS)
 
-The CS manages [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/). This includes read and write endpoints
+The CS manages Verifiable Credentials [[vc-data-model]]. This includes read and write endpoints
 for Verifiable Presentations (VPs) and Verifiable Credentials (VCs).
 
 #### DID Service (DIDS).
@@ -85,6 +84,6 @@ dataspace may contain multiple Issuer Services run by different trust anchors. T
 
 - Issues VCs for dataspace participants
 - Manages revocation lists for VC types it issues based
-  on [Verifiable Credentials Status List v2021](https://www.w3.org/TR/vc-status-list/).
+  on [[[vc-bitstring-status-list-20230427]]].
 - Provides cryptographic material used to verify VPs and VCs. If this is in the form of a DID, the Issuer Service may
   use the Identity Hub DID Service.  
