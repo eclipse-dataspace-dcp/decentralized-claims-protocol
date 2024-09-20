@@ -64,6 +64,7 @@ issuer.
 
 The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
 the [[[#vp-access-token]]]. The `issuer` claim can be
+
 used by the Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and credential
 binding.
 
@@ -146,6 +147,7 @@ The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object 
   one or more credentials from.
 - `credentials`: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string.
     - entry type object: data MUST adhere to [[[#the-credentialobject]]]
+
     - entry type string: value MUST be one of the id values in one of the objects in the `credentials_supported`.
     - When processing, the `Credential Service` MUST resolve this string value to the respective object.
 
