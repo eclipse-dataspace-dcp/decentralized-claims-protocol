@@ -16,13 +16,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      - name: Inject md to html
+      - name: Copy assets up a level
         run: |
-          chmod +x ./scripts/replace.sh
-          ./scripts/replace.sh
+          cp specifications/*.png .
+          cp specifications/*.yaml .
       - name: Run Respec
         run:
-          sudo npx puppeteer browsers install chrome
           npx respec --src index.html --out index.html.build.html -t 60 --disable-sandbox --verbose
       - uses: actions/upload-pages-artifact@v3
         with:

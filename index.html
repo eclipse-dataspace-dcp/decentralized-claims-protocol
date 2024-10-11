@@ -3,14 +3,17 @@
 <head>
     <meta charset='utf-8'>
     <script src='https://www.w3.org/Tools/respec/respec-w3c' async class='remove'></script>
+    <script class="remove" src="https://cdn.jsdelivr.net/gh/w3c/respec-mermaid@1.1.0/dist/main.js"></script>
     <script class='remove'>
         var respecConfig = {
           specStatus: "unofficial",
+          latestVersion: null,
+          postProcess: [window.respecMermaid.createFigures],
           editors: [{
-              name: "Your Name",
-              url: "https://your-site.com",
-              company: "My company",
-              companyURL: "https://your-site.com",
+              name: "Jim Marino",
+              url: "https://github.com/jimmarino",
+              company: "Metaform Systems",
+
           }],
           github: {
             branch: "main",
@@ -18,7 +21,15 @@
           },
           xref: "web-platform",
           lint: { "no-unused-dfns": false },
-          format: "markdown"
+          format: "markdown",
+          localBiblio: {
+            "dsp-base": {
+              title: "Dataspace Protocol 2024-1",
+              href: "https://eclipse-dataspace-protocol-base.github.io/DataspaceProtocol/",
+              status: "unofficial",
+              publisher: "Eclipse Dataspace Working Group",
+  			},
+          },
         };
     </script>
     <title>Eclipse Decentralized Claims Protocol</title>
@@ -50,28 +61,19 @@
         Discussions or Issues.
     </p>
 </section>
-<section>
 
-THIS IS THE PLACEHOLDER FOR THE DATASPACE TOPOLOGY
-
-</section>
-<section>
-
-THIS IS THE PLACEHOLDER FOR THE BASE PROTOCOL
-
+<section data-include="specifications/tx.dataspace.topology.md" data-include-format="markdown">
 </section>
 
-<section>
-
-THIS IS THE PLACEHOLDER FOR THE PRESENTATION PROTOCOL
-
+<section data-include="specifications/identity.protocol.base.md" data-include-format="markdown">
 </section>
 
-<section>
-
-THIS IS THE PLACEHOLDER FOR THE ISSUANCE PROTOCOL
-
+<section data-include="specifications/verifiable.presentation.protocol.md" data-include-format="markdown">
 </section>
+
+<section data-include="specifications/credential.issuance.protocol.md" data-include-format="markdown">
+</section>
+
 <section id='conformance'></section>
 <section id="tof" class="appendix">
     <h1>Notes</h1>

@@ -36,7 +36,7 @@ Decentralization is achieved in the following ways:
 Each participant MUST have a unique, immutable **_identity_** provided by the `Registration Service` and
 a [DID] [[did-core]] that it chooses. This relationship is expressed as:
 
-```
+```text
 ID  ------ Can resolve to -----> DID
  ^                                |
  |                                |
