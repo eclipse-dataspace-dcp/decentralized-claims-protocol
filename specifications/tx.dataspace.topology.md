@@ -3,7 +3,7 @@
 ## Introduction
 
 This document details the systems topology that Tractus-X dataspaces employ. This topology adheres to the model defined
-by the [Dataspace Protocol Specifications](https://docs.internationaldataspaces.org/dataspace-protocol/overview/model) (DSP):
+by the Dataspace Protocol [[dsp-base]]:
 
 - The **Dataspace Authority** manages the dataspace. In a Tractus-X dataspace, this role may be federated across
   multiple operating companies responsible for registration, onboarding, and operations management.
