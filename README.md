@@ -1,15 +1,11 @@
-# Identity And Trust Specifications
+# Decentralized Claims Protocol DCP
 
-This repository contains normative documents defining protocols and flows withing the Identity and Trust system to be
-used in Tractus-X projects.
+This repository contains normative documents defining protocols and flows of the Eclipse Decentralized Claims Protocol (DCP) defines an interoperable overlay to the [Dataspace Protocol (DSP)](https://github.com/eclipse-dataspace-protocol-base/DataspaceProtocol) Specifications for conveying organizational identities and establishing trust in a way that preserves privacy and limits the possibility of network disruption.
 
-The responsibility of the specification has been transfered to the [Eclipse Dataspace Working Group](https://dataspace.eclipse.org).
-Please file change requests or contributions according to the working group processes.
+The scope of Eclipse DCP specification includes:
 
-Until the first version of the specification from the working group is released and implemented, this repository contains the
-current specification implemented in the Catena-X data space. Maintenance is limited to urgent issues concerning the
-operation of this data space.
+- Specifying a format for self-issued identity tokens
+- Defining a protocol for storing and presenting Verifiable Credentials and other identity-related resources
+- Defining a protocol for parties to request credentials from a credential issuer
 
-There are [designated editors](./pr_etiquette.md#the-designated-editors-as-of-sept-21-2023), who are the primary
-contributors to the content of this repository. Please file urgent issues that cannot wait for the first working
-group release through GitHub Discussions or Issues.
+Eclipse DCP supports multiple trust anchors and allow participants to manage and verify presentations without needing third-party systems outside their control. Note that it is not a requirement for Eclipse DCP to specify a decentralized or "self-sovereign" identity protocol, but it may be based on it.

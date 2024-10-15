@@ -31,7 +31,7 @@ Where applicable, this document also provides test vectors in the form of `*.jso
 ## Definition of terms
 
 For the purposes of this document, term definitions from
-the [IATP specifications](http://github.com/eclipse-tractusx/identity-trust) apply, unless stated otherwise. In
+the [specifications](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol) apply, unless stated otherwise. In
 addition, the following terms apply:
 
 - proving party: the party that makes certain claims about themselves
