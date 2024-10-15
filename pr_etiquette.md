@@ -59,8 +59,6 @@ Submitting pull requests in EDC should be done while adhering to a couple of sim
 
 - Jim Marino (@jimmarino)
 
-## Responsible committers (as of Feb 26, 2024)
+## Responsible committers 
 
-- Paul Latzelsperger (@paullatzelsperger)
-- Enrico Risa (@wolf4ood)
-- Jim Marino (@jimmarino)
+[Who's involved](https://projects.eclipse.org/projects/technology.dataspace-dcp/who)
