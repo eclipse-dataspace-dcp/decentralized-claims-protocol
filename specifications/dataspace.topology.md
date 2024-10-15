@@ -2,18 +2,15 @@
 
 ## Introduction
 
-This document details the systems topology that Tractus-X dataspaces employ. This topology adheres to the model defined
-by the Dataspace Protocol [[dsp-base]]:
+This topology adheres to the model defined by the Dataspace Protocol [[dsp-base]]:
 
-- The **Dataspace Authority** manages the dataspace. In a Tractus-X dataspace, this role may be federated across
+- The **Dataspace Authority** manages the dataspace. This role may be federated across
   multiple operating companies responsible for registration, onboarding, and operations management.
-- A **Participant** is a member the dataspace. In a Tractus-X dataspace, members may take on different roles, which are
+- A **Participant** is a member the dataspace. Members may take on different roles, which are
   attested to by **Verifiable Credentials**.
 - A **Participant Agent** performs tasks such as publishing a catalog or engaging in an asset transfer. Note that a
   participant agent is a logical construct and does not necessarily correspond to a single runtime process.
-- An **Identity Provider** is a service that generates ID tokens used to verify the identity of a Participant Agent. In
-  a Tractus-X dataspace, each participant will use their own identity provider, which may be self-hosted or hosted in a
-  managed environment.
+- An **Identity Provider** is a service that generates ID tokens used to verify the identity of a Participant Agent. Each participant will use their own identity provider, which may be self-hosted or hosted in a managed environment.
 - A **Credential Issuer** issues Verifiable Credentials (VC) used by participant agents to allow access to assets and
   verify usage control.
 

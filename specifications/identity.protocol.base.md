@@ -2,13 +2,13 @@
 
 ## Introduction
 
-This document defines a base protocol for communicating participant identities and claims in a Tractus-X dataspace. This
-specification assumes familiarity with the [Tractus-X Dataspace Topology Specification](tx.dataspace.topology.md).
+This document defines a base protocol for communicating participant identities and claims in a dataspace. This
+specification assumes familiarity with the [Dataspace Topology Specification](dataspace.topology.md).
 
 ## Motivation
 
 The key goal of this protocol specification is to minimize the risk of business disruption related to the failure of
-identity and credential systems in a Tractus-X dataspace. As such, it provides a design for a decentralized system to
+identity and credential systems in a dataspace. As such, it provides a design for a decentralized system to
 communicate participant identities and [Verifiable Credentials](https://www.w3.org/TR/vc-data-model/) (VCs).
 
 > Note that it is not a design goal of this protocol to support a self-sovereign data exchange network where each

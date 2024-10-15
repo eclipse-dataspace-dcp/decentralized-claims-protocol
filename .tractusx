@@ -1,6 +1,0 @@
-product: "Identity And Trust Specifications"
-leadingRepository: "https://github.com/eclipse-tractusx/identity-trust"
-repositories:
-- name: "identity trust"
-  usage: "Identity And Trust Specification"
-  url: "https://github.com/eclipse-tractusx/identity-trust"
