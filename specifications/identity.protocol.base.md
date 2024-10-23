@@ -120,9 +120,9 @@ present, the `token` claim MUST not be included.
 
 The [[[json-ld11]]] context URI for the all identity and trust specifications is:
 
-`https://w3id.org/tractusx-trust/v[version]`
+`https://w3id.org/dspace-dcp/v[version]`
 
 Where version indicates a [Semantic Versioning](https://semver.org/) `MAJOR.MINOR` number. The current specifications
 use `0.8` version and the following context URI:
 
-`https://w3id.org/tractusx-trust/v0.8`
+`https://w3id.org/dspace-dcp/v0.8`

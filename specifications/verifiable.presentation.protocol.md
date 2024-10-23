@@ -36,7 +36,7 @@ issued credentials.
 
 The VPP is based on Json-Ld message types. The CS Json-Ld context is:
 
-`https://w3id.org/tractusx-trust/v0.8`
+`https://w3id.org/dspace-dcp/v0.8`
 
 ### The Base URL
 
@@ -79,21 +79,21 @@ Scopes are used to specify access privileges. A scope is a string value in the f
 
 The `[alias]` value may be implementation-specific. The `all` value indicates both read and write access.
 
-#### The `org.eclipse.tractusx.vc.type` Alias
+#### The `org.eclipse.dspace.dcp.vc.type` Alias
 
 The `vc.type` alias value must be supported and is used to specify access to a verifiable credential by type. For
 example:
 
-`org.eclipse.tractusx.vc.type:Member:read`
+`org.eclipse.dspace.dcp.vc.type:Member:read`
 
 denotes read-only access to the VC type `Member` and may be used to request a VC or VP.
 
-#### The `org.eclipse.tractusx.vc.id` Alias
+#### The `org.eclipse.dspace.dcp.vc.id` Alias
 
-The `org.eclipse.tractusx.vc.id` alias value must be supported and is used to specify access to a verifiable credential
+The `org.eclipse.dspace.dcp.vc.id` alias value must be supported and is used to specify access to a verifiable credential
 by id. For example:
 
-`org.eclipse.tractusx.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d:read`
+`org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d:read`
 
 denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a VC
 or VP.
@@ -102,7 +102,7 @@ or VP.
 
 Implementations must also support the `*` wildcard:
 
-`org.eclipse.tractusx.vc.type:*:write`
+`org.eclipse.dspace.dcp.vc.type:*:write`
 
 The above expression enables write-only access to all VCs.
 
@@ -150,7 +150,7 @@ The following are non-normative examples of the JSON body:
 ```json
 {
   "@context": [
-    "https://w3id.org/tractusx-trust/v0.8",
+    "https://w3id.org/dspace-dcp/v0.8",
     "https://identity.foundation/presentation-exchange/submission/v1"
   ],
   "@type": "PresentationQueryMessage",
@@ -161,7 +161,7 @@ The following are non-normative examples of the JSON body:
 ```json
 {
   "@context": [
-    "https://w3id.org/tractusx-trust/v0.8",
+    "https://w3id.org/dspace-dcp/v0.8",
     "https://identity.foundation/presentation-exchange/submission/v1"
   ],
   "@type": "PresentationQueryMessage",
@@ -199,7 +199,7 @@ The following are non-normative examples of the JSON response body:
 ```json
 {
   "@context": [
-    "https://w3id.org/tractusx-trust/v0.8"
+    "https://w3id.org/dspace-dcp/v0.8"
   ],
   "@type": "PresentationResponseMessage",
   "presentation": ["dsJdh...UMetV"]
@@ -227,7 +227,7 @@ The following is a non-normative example of the JSON body:
 ```json
 {
   "@context": [
-    "https://w3id.org/tractusx-trust/v0.8"
+    "https://w3id.org/dspace-dcp/v0.8"
   ],
   "@type": "CredentialMessage",
   "credentials": [
@@ -258,7 +258,7 @@ MUST contain at least one `Service` entry ([[did-core]], sect. 5.4) of type `Cre
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
-    "https://w3id.org/tractusx-trust/v0.8"
+    "https://w3id.org/dspace-dcp/v0.8"
   ],
   "service": [
     {
