@@ -101,7 +101,7 @@ Authorization: Bearer ......
 
 {
    "@context": [
-    "https://w3id.org/tractusx-trust/v0.8",
+    "https://w3id.org/dspace-dcp/v0.8",
      "https://www.w3.org/2018/credentials/v1"
    ],
    "@type": "CredentialRequestMessage",
@@ -161,7 +161,7 @@ Authorization: Bearer ......
 
 {
    "@context": [
-    "https://w3id.org/tractusx-trust/v0.8",
+    "https://w3id.org/dspace-dcp/v0.8",
      "https://www.w3.org/2018/credentials/v1"
    ],
    "@type": "CredentialOfferMessage",
@@ -197,7 +197,7 @@ The following is a non-normative example of a `CredentialObject`:
 ```json
 {
   "@context": {
-    "iatp": "https://w3id.org/tractusx-trust/v0.8",
+    "iatp": "https://w3id.org/dspace-dcp/v0.8",
     "odrl": "https://www.w3.org/ns/odrl.jsonld"
   },
   "@type": "CredentialObject",
@@ -250,7 +250,7 @@ The following is a non-normative example of a `IssuerMetadata` response object:
 ```json
 {
   "@context": {
-    "iatp": "https://w3id.org/tractusx-trust/v0.8",
+    "iatp": "https://w3id.org/dspace-dcp/v0.8",
     "odrl": "https://www.w3.org/ns/odrl.jsonld"
   },
   "@type": "IssuerMetadata",
@@ -310,7 +310,7 @@ The following is a non-normative example of a `CredentialStatus` response object
 ```json
 {
   "@context": {
-    "iatp": "https://w3id.org/tractusx-trust/v0.8"
+    "iatp": "https://w3id.org/dspace-dcp/v0.8"
   },
   "@type": "CredentialStatus",
   "requestId": "...",
