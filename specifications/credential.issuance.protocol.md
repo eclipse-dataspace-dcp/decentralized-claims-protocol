@@ -293,7 +293,7 @@ The following is a non-normative example of a `IssuerMetadata` response object:
 
 The issuer MUST provide an `HTTPS GET` endpoint for retrieving the status of a credential at the base issuer url with
 the appended path `/requests/<request id>`. The issuer SHOULD implement access control such that only the client that
-made the request may access a particualr request status.
+made the request may access a particular request status.
 
 If accepted, a `CredentialStatus` Json object with a `status` property set to one of the following
 values: `RECEIVED` | `REJECTED` | `ISSUED` will be returned.
