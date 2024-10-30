@@ -134,7 +134,7 @@ Presentations can be queried by POSTing a `PresentationQueryMessage` message to 
 
 `POST /presentations/query`
 
-The POST body is a `CredentialMessage` JSON object with the following properties:
+The POST body is a `PresentationQueryMessage` JSON object with the following properties:
 
 - `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.
@@ -219,6 +219,7 @@ The POST body is a `CredentialMessage` JSON object with the following properties
 
 - `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialMessage` type.
+- `requestId`: REQUIRED. A string corresponding to the request id.
 - `credentials`: REQUIRED. An array of `CredentialContainer` Json objects corresponding to the schema
   specified in section [[[#the-credentialcontainer-object]]].
 
@@ -235,7 +236,8 @@ The following is a non-normative example of the JSON body:
       "@type": "CredentialContainer",
       "payload": ""
     }
-  ]
+  ],
+  "requestId": "..."
 }
 ```
 
