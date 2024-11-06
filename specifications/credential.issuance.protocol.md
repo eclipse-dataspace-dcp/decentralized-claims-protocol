@@ -11,7 +11,7 @@ This specification relies on sections [[[#identity-protocol-base]]] and
 
 ### Motivation
 
-Verifiable Credentials enable a holder to present claims directly to a Relying Party (RP) without
+Verifiable Credentials enable a holder to present claims directly to a Verifier without
 the involvement or knowledge of the `Credential Issuer`. The Credential Issuance Protocol (CIP) provides an
 interoperable mechanism for parties (potential holders) to request credentials from a `Credential Issuer.` The protocol
 is designed to handle use cases where credentials can automatically be issued and where a manual workflow is required.
@@ -24,6 +24,16 @@ associated with manual workflows that are best modelled using asynchronous messa
 
 ### Terms
 
+- **Credential Service** - A network-accessible service that manages identity resources.
+- **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
+  VC) or Verifiable Presentation (VP).
+- **Holder** - An entity that possesses a set of identity resources as defined by
+    the W3C [[[vc-data-model]]]. The holder will typically be the subject of
+    a VC.
+- **Verifier** - An entity that receives one or more VCs, optionally presented inside a VP as defined by
+  the W3C [[[vc-data-model]]].
+- **Subject** - The target of a set of claims contained in a VC as defined by
+  the [[[vc-data-model]]]. In a dataspace, a subject will be a participant.
 - ***DID*** - A decentralized identifier as defined by [[[did-core]]].
 
 ## Overview
