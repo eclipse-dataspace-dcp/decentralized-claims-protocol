@@ -23,11 +23,13 @@ issued credentials.
 ### Terms
 
 - **Credential Service** - A network-accessible service that manages identity resources.
+- **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
+  VC) or Verifiable Presentation (VP).
 - **Holder** - An entity that possesses a set of identity resources as defined by
   the W3C [[[vc-data-model]]]. The holder will typically be the subject of
   a VC.
-- **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
-  VC) or Verifiable Presentation (VP).
+- **Verifier** - An entity that receives one or more VCs, optionally presented inside a VP as defined by
+  the W3C [[[vc-data-model]]].
 - **Subject** - The target of a set of claims contained in a VC as defined by
   the [[[vc-data-model]]]. In a dataspace, a subject will be a participant.
 - ***DID*** - A decentralized identifier as defined by [[[did-core]]].
@@ -252,7 +254,7 @@ the following properties:
 
 ## CS Endpoint Resolution through DID Documents
 
-Different methods may be used by a Relying Party (as defined by the OAuth2 specification, link TBD) to resolve the
+Different methods may be used by a Verifier to resolve the
 Credential Service for a client. One way is through DID documents. If a DID document is used, the client `DID document`
 MUST contain at least one `Service` entry ([[did-core]], sect. 5.4) of type `CredentialService`:
 
