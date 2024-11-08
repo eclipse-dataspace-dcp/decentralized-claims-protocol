@@ -1,0 +1,10 @@
+{
+  "@context": [
+    "https://w3id.org/dspace-dcp/v0.8"
+  ],
+  "type": "PresentationResponseMessage",
+  "presentation": [
+    "presentation1",
+    "presentation1"
+  ]
+}

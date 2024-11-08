@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "PresentationQueryMessageSchema",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/PresentationQueryMessage"
+    }
+  ],
+  "$id": "https://w3id.org/dspace-dcp/v0.8/presentation/presentation-query-message-schema.json",
+  "definitions": {
+    "PresentationQueryMessage": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "$ref": "https://w3id.org/dspace-dcp/v0.8/common/context-schema.json"
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "@type": {
+              "type": "string",
+              "const": "PresentationQueryMessage"
+            }
+          },
+          "required": [
+            "@type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "PresentationQueryMessage"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ],
+      "required": [
+        "@context",
+        "scope"
+      ]
+    }
+  }
+}

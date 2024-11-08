@@ -1,0 +1,37 @@
+{
+  "@context": [
+    "https://w3id.org/dspace-dcp/v0.8",
+    "https://www.w3.org/2018/credentials/v1",
+    "https://www.w3.org/2018/credentials/examples/v1"
+  ],
+  "type": "IssuerMetadata",
+  "credentialIssuer": "did:web:issuer-url",
+  "credentialsSupported": [
+    {
+      "type": "CredentialObject",
+      "credentialType": [
+        "VerifiableCredential",
+        "CompanyCredential"
+      ],
+      "offerReason": "reissue",
+      "bindingMethods": [
+        "did:web"
+      ],
+      "cryptographicSuites": [
+        "JsonWebKey2020"
+      ],
+      "issuancePolicy": {
+        "permission": {
+          "action": "use",
+          "constraint": {
+            "and": {
+              "leftOperand": "iatp:CredentialPrereq",
+              "operator": "eq",
+              "rightOperand": "active"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

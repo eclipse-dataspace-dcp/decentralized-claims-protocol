@@ -1,0 +1,10 @@
+{
+  "@context": [
+    "https://w3id.org/dspace-dcp/v0.8"
+  ],
+  "type": "PresentationQueryMessage",
+  "scope": [
+    "presentation1",
+    "presentation2"
+  ]
+}
