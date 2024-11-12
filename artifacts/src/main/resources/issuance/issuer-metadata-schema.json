@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "IssuerMetadataSchema",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/IssuerMetadata"
+    }
+  ],
+  "$id": "https://w3id.org/dspace-dcp/v0.8/issuance/issuer-metadata-schema.json",
+  "definitions": {
+    "IssuerMetadata": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "$ref": "https://w3id.org/dspace-dcp/v0.8/common/context-schema.json"
+        },
+        "credentialsSupported": {
+          "type": "array",
+          "items": {
+            "$ref": "https://w3id.org/dspace-dcp/v0.8/issuance/credential-object-schema.json#/definitions/CredentialObject"
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "@type": {
+              "type": "string",
+              "const": "IssuerMetadata"
+            }
+          },
+          "required": [
+            "@type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "IssuerMetadata"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ],
+      "required": [
+        "@context",
+        "credentialIssuer",
+        "credentialsSupported"
+      ]
+    }
+  }
+}

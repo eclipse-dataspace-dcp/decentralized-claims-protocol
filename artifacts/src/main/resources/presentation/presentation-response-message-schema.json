@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "PresentationResponseMessageSchema",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/PresentationResponseMessage"
+    }
+  ],
+  "$id": "https://w3id.org/dspace-dcp/v0.8/presentation/presentation-response-message-schema.json",
+  "definitions": {
+    "PresentationResponseMessage": {
+      "type": "object",
+      "properties": {
+        "@context": {
+          "$ref": "https://w3id.org/dspace-dcp/v0.8/common/context-schema.json"
+        },
+        "presentation": {
+          "type": "array",
+          "items": {
+            "type": [
+              "object",
+              "string"
+            ]
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "@type": {
+              "type": "string",
+              "const": "PresentationResponseMessage"
+            }
+          },
+          "required": [
+            "@type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "PresentationResponseMessage"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      ],
+      "required": [
+        "@context",
+        "presentation"
+      ]
+    }
+  }
+}
