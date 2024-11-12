@@ -24,7 +24,8 @@ associated with manual workflows that are best modelled using asynchronous messa
 
 ### Terms
 
-- **Credential Service** - A network-accessible service that manages identity resources.
+- **Credential Service** - The CS is a network-accessible service that manages Verifiable Credentials [[vc-data-model]]. This includes read and write endpoints
+  for Verifiable Presentations (VPs) and Verifiable Credentials (VCs).
 - **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
   VC) or Verifiable Presentation (VP).
 - **Holder** - An entity that possesses a set of identity resources as defined by

@@ -67,7 +67,7 @@ control of the same participant.
 
 #### Credential Service (CS)
 
-The CS manages Verifiable Credentials [[vc-data-model]]. This includes read and write endpoints
+The CS is a network-accessible service that manages Verifiable Credentials [[vc-data-model]]. This includes read and write endpoints
 for Verifiable Presentations (VPs) and Verifiable Credentials (VCs).
 
 #### DID Service (DIDS).
