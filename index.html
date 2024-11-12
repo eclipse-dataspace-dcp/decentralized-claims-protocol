@@ -6,66 +6,65 @@
     <script class="remove" src="https://cdn.jsdelivr.net/gh/w3c/respec-mermaid@1.1.0/dist/main.js"></script>
     <script class='remove'>
         var respecConfig = {
-          specStatus: "unofficial",
-          latestVersion: null,
-          postProcess: [window.respecMermaid.createFigures],
-          editors: [{
-              name: "Jim Marino",
-              url: "https://github.com/jimmarino",
-              company: "Metaform Systems",
+            specStatus: "unofficial",
+            latestVersion: null,
+            postProcess: [window.respecMermaid.createFigures],
+            editors: [{
+                name: "Jim Marino",
+                url: "https://github.com/jimmarino",
+                company: "Metaform Systems",
 
-          }],
-          github: {
-            branch: "main",
-            repoURL: "eclipse-dataspace-dcp/decentralized-claims-protocol",
-          },
-          xref: "web-platform",
-          lint: { "no-unused-dfns": false },
-          format: "markdown",
-          localBiblio: {
-            "dsp-base": {
-              title: "Dataspace Protocol 2024-1",
-              href: "https://eclipse-dataspace-protocol-base.github.io/DataspaceProtocol/",
-              status: "unofficial",
-              publisher: "Eclipse Dataspace Working Group",
-  			},
-          },
+            }],
+            github: {
+                branch: "main",
+                repoURL: "eclipse-dataspace-dcp/decentralized-claims-protocol",
+            },
+            xref: "web-platform",
+            lint: {"no-unused-dfns": false},
+            format: "markdown",
+            localBiblio: {
+                "dsp-base": {
+                    title: "Dataspace Protocol 2024-1",
+                    href: "https://eclipse-dataspace-protocol-base.github.io/DataspaceProtocol/",
+                    status: "unofficial",
+                    publisher: "Eclipse Dataspace Working Group",
+                },
+            },
         };
     </script>
     <title>Eclipse Decentralized Claims Protocol</title>
 </head>
 <body>
 <p class="copyright">
-    This document is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">The Apache License, Version 2.0</a>.
+    This document is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">The Apache License,
+    Version 2.0</a>.
 </p>
 <h1 id="title">Eclipse Decentralized Claims Protocol</h1>
 <section id='abstract'>
     <p>
-        This repository contains normative documents defining protocols and flows withing the Identity and Trust system
-        to be used in Tractus-X projects.
+        Dataspaces require the ability to communicate participant identities and credentials to secure data access. This
+        specification defines a set of protocols for asserting participant identities, issuing verifiable credentials,
+        and presenting verifiable credentials using a decentralized architecture for verification and trust.
     </p>
 </section>
 <section id='sotd'>
     <p>
-        The responsibility of the specification has been transfered to the <a href="https://dataspace.eclipse.org/">Eclipse
-        Dataspace Working Group</a>.
-        Please file
-        change requests or contributions according to the working group processes. Until the first version of the
-        specification from the working group is released and implemented, this repository contains the current
-        specification implemented in the Catena-X data space. Maintenance is limited to urgent issues concerning the
-        operation of this data space. There are <a
-            href="https://github.com/eclipse-tractusx/identity-trust/blob/main/pr_etiquette.md#the-designated-editors-as-of-sept-21-2023">designated
-        editors</a>,
-        who are the primary contributors to the content of
-        this repository. Please file urgent issues that cannot wait for the first working group release through GitHub
-        Discussions or Issues.
+        This specification is a work-in-progress affiliated with the
+        <a href="https://dataspace.eclipse.org/">Eclipse Dataspace Working Group</a> that has not yet reached draft
+        status. If you have a question or would like to comment on an aspect of this specification, please open a
+        <a href="https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/discussions">discussion</a>.
+        If you have found an error, please file an <a
+            href="https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/issues">issue</a>.
     </p>
 </section>
 
-<section data-include="specifications/dataspace.topology.md" data-include-format="markdown">
+<section data-include="specifications/dataspace.ecosystem.md" data-include-format="markdown">
 </section>
 
-<section data-include="specifications/identity.protocol.base.md" data-include-format="markdown">
+<section data-include="specifications/terminology.md" data-include-format="markdown">
+</section>
+
+<section data-include="specifications/base.protocol.md" data-include-format="markdown">
 </section>
 
 <section data-include="specifications/verifiable.presentation.protocol.md" data-include-format="markdown">
