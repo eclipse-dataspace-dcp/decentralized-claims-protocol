@@ -24,7 +24,7 @@ associated with manual workflows that are best modelled using asynchronous messa
 
 ### Terms
 
-- **Credential Service** - The CS is a network-accessible service that manages Verifiable Credentials [[vc-data-model]]. This includes read and write endpoints
+- **Credential Service (CS)** - The CS is a network-accessible service that manages Verifiable Credentials [[vc-data-model]]. This includes read and write endpoints
   for Verifiable Presentations (VPs) and Verifiable Credentials (VCs).
 - **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
   VC) or Verifiable Presentation (VP).
