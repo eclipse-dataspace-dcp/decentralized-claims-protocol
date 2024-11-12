@@ -60,11 +60,11 @@ implementation-specific and beyond the scope of this specification.
 
 If an `token` is required to be included in the Self Issued ID token, the participant agent will need to request
 scopes for the access token. This is dependent on the API used to obtain the Self-Issued ID Token. An STS implementation
-MAY use endpoint parameters as defined in the [[[?rfc6749]]] to convey metadata necessary for the creation of the
+may use endpoint parameters as defined in the [[[?rfc6749]]] to convey metadata necessary for the creation of the
 `token`
-claim. In this case, the Self-Issued ID Token request MAY contain a `bearer_access_scope` authorization request
+claim. In this case, the Self-Issued ID Token request may contain a `bearer_access_scope` authorization request
 parameter set to a list of space-delimited scopes the `token` claim will be enabled for. If no `bearer_access_scope`
-parameter is present, the `token` claim MUST not be included.
+parameter is present, the `token` claim should not be included.
 
 <aside class="note">
 A non-normative OpenAPI spec of an STS implementing client credentials flow is provided [here](identity-trust-sts-api.yaml)
@@ -72,7 +72,7 @@ A non-normative OpenAPI spec of an STS implementing client credentials flow is p
 
 ### Validating Self-Issued ID Tokens
 
-The Verifier MUST validate the Self-Issued Token using the following steps:
+The Verifier MUST validate the Self-Issued ID Token using the following steps:
 
 1. The Verifier MUST assert that the `iss` and `sub` claims have the same DID value.
 2. The Verifier MUST assert that the `aud` claim is set to the Verifier's DID.
