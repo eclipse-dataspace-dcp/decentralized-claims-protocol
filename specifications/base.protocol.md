@@ -37,7 +37,6 @@ The following claims MUST be included in the Self-Issued ID Token:
   representing the number of seconds from 1970-01-01T00:00:00Z as measured in UTC until the date/time.
 - The `iat` claim MUST be used to specify the time the JWT was issued. Its value is a JSON number representing the
   number of seconds from 1970-01-01T00:00:00Z as measured in UTC.
-- The `sub_jwk` claim MUST not be used.
 
 ### VP Access Token
 
