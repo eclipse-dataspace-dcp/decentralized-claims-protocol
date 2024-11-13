@@ -43,7 +43,7 @@ The following claims MUST be included in the Self-Issued ID Token:
 
 A Self-Issued ID Token MAY contain an access token as a `token` claim that can be used by the Verifier to
 obtain VPs from the participant's [=Credential Service=]. The format of the `token` is implementation-specific and
-therefore must be treated as an opaque string by the Verifier.
+therefore should be treated as an opaque string by the Verifier.
 
 ### Obtaining Self-Issued ID Tokens
 
