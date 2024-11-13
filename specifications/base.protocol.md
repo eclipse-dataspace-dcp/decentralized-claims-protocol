@@ -1,4 +1,4 @@
-# Base Concepts
+# Base Concepts {#identity-protocol-base}
 
 This section defines the core identity concepts used by the current specification.
 
