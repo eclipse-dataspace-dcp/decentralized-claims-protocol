@@ -1,140 +1,95 @@
 # Verifiable Presentation Protocol
 
-## Introduction
+This section defines a protocol for storing and presenting Verifiable Credentials and other identity-related
+resources. The Verifiable Presentation Protocol covers the following aspects:
 
-This specification defines a protocol for storing and presenting Verifiable Credentials (VC) and other identity-related
-resources. The Verifiable Presentation Protocol (VPP) covers the following aspects:
+- Endpoints and message types for storing identity resources belonging to a [=Holder=] in a [=Credential Service=]
+- Endpoints and message types for resolving an identity [=Resource=]
+- Secure token exchange for restricting access to  [=Credential Service=] endpoints
 
-- Endpoints and message types for storing identity resources belonging to a holder in a `Credential Service`
-- Endpoints and message types for resolving identity resources
-- Secure token exchange for restricting access to CS endpoints
-
-> Note that management endpoints for creating resource contexts, deleting resources, and defining access control are
-> outside the scope of this protocol.
-
-### Motivation
-
-The Verifiable Presentation Protocol (VPP) is designed to address the problem of resolving Verifiable Presentations and
-other claims when they cannot be passed as part of a client request. For example, VPs often cannot be passed as part of
-an HTTP message header due to size restrictions. The protocol provides a secure mechanism for endpoints to resolve
-client resources. As part of this issue, the VPP also addresses how VC issuers can request the holder's CS to store
-issued credentials.
-
-### Terms
-
-- **Credential Service** - A network-accessible service that manages identity resources.
-- **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
-  VC) or Verifiable Presentation (VP).
-- **Holder** - An entity that possesses a set of identity resources as defined by
-  the W3C [[[vc-data-model]]]. The holder will typically be the subject of
-  a VC.
-- **Verifier** - An entity that receives one or more VCs, optionally presented inside a VP as defined by
-  the W3C [[[vc-data-model]]].
-- **Subject** - The target of a set of claims contained in a VC as defined by
-  the [[[vc-data-model]]]. In a dataspace, a subject will be a participant.
-- ***DID*** - A decentralized identifier as defined by [[[did-core]]].
-
-### Json-Ld Context
-
-The VPP is based on Json-Ld message types. The CS Json-Ld context is:
-
-`https://w3id.org/dspace-dcp/v0.8`
-
-### The Base URL
-
-All endpoint URLs in this specification are relative. The base URL is implementation specific and may include
-additional context information such as a sub-path that disambiguates a holder.
+<aside class="note">
+The Verifiable Presentation Protocol is designed to address the problem of resolving [=Verifiable Presentations=] and
+other claims when they cannot be passed as part of a client request. For example, they often cannot be included as part
+of an HTTP message header due to size restrictions. The protocol provides a secure mechanism for a [=Verifier=] to 
+resolve credential-related resources. The protocol also provides a mechanism for storing issued [=Verifiable Credentials=].   
+</aside>
 
 ## Presentation Flow
 
-Below is a sequence where the client uses the OAuth 2 client credential grant flow as defined in
-section [[[#identity-protocol-base]]] Specification:
+The following sequence diagram depicts a non-normative flow where a client interacts with a [=Verifier=] to present a
+[=Verifiable Credential=]:
 
-![](auth.flow.png)
+![alt text 2](specifications/auth.flow.png "Presentation Flow")
 
-In the above sequence, the STS acts as an authorization endpoint for the client CS. The client requests a self-issued
-token including the `bearer_access_scope` authorization parameter set to an array of scopes that define the VPs the
-client wants the Verifier to have access to. This list of scopes is determined out of band and may be derived from
-metadata the verifier has previously made available to the client.
+1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
+   request is implementation specific. The client may include a set of scopes that define the Verifiable Credentials the
+   client wants the Verifier to have access to. This set of scopes is determined out of band and may be derived from
+   metadata the verifier has previously made available to the client.
+2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
+   an access token. The access token can be used by the verifier to request Verifiable Credentials from the client's
+   Credential Service.
+3. The client makes a request to the [=Verifier=] for a protected resource and includes the [=Self-Issued ID Token=].
+4. The [=Verifier=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
+5. The [=DID Service=] returns the DID Document. The [=Verifier=] validates the [=Self-Issued ID Token=] following
+   Section [[[#validating-self-issued-id-tokens]]].
+6. The [=Verifier=] obtains the client's [=Credential Service=] endpoint address using the DID document as described in
+   Section [[[#credential-service-endpoint-discovery]]]. The [=Verifier=] then issues a request with the access token
+   to the [=Credential Service=] for a set of [=Verifiable Credentials=].
+7. The [=Credential Service=] validates the access token and returns a Verifiable Presentation containg the requested
+   credentials.
 
-The client receives the Self-Issued ID Token (containing an access token based on the `bearer_access_scope` value) and
-provides it with a request to access protected resources to the verifier. The verifier extracts the access token and
-uses it to request VPs from the client's CS. The verifier may resolve the CS endpoint through a variety of methods,
-for example, by resolving the client's DID document and using a service entry as described
-in section [[[#cs-endpoint-resolution-through-did-documents]]]. The VPs are then returned to the Verifier.
+## Credential Service Endpoint Discovery
 
+The client [=DID Service=] MUST make the [=Credential Service=] available as a `service` entry ([[[did-core]]], sect.
+5.4) in the DID document that is resolved by its DID. The `type` attribute of the `service` entry MUST be
+`CredentialService`.
+The `serviceEndpoint` property MUST be interpreted by the Verifier as the base URL of the [=Credential Service=]. The
+following is a non-normative example of a `Credential Service` entry:
 
-## Security
+```json
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    "https://w3id.org/dspace-dcp/v0.8"
+  ],
+  "service": [
+    {
+      "id": "did:example:123#identity-hub",
+      "type": "CredentialService",
+      "serviceEndpoint": "https://cs.example.com"
+    }
+  ]
+}
+```
 
-CS endpoints may require an access token obtained from the resource owner. For example, a client (the resource owner)
-that needs to present a VP to an endpoint will provide an access token to the endpoint. The endpoint server will in turn
-use the access token when resolving the VP through a request to the client's Credential Service.
+## Credential Service Security
 
-The format of the access token is not defined. The only requirement is that the token can be used by the Credential
-Service to perform an access control check as defined in section [[[#access-scopes]]] .
+As described in the previous presentation flow, a [=Credential Service=] may require an access token when processing a
+request from a [=Verifier=]. The format of the access token is not defined. How access control is defined in
+a [=Credential Service=] is implementation-specific. For example, implementations may provide the ability to selectively
+restrict access to resources.
 
-### Access Scopes
+### Submitting an Access Token
 
-Scopes are used to specify access privileges. A scope is a string value in the form:
-
-`[alias]:[descriminator]:[read|write|all]`
-
-The `[alias]` value may be implementation-specific. The `all` value indicates both read and write access.
-
-#### The `org.eclipse.dspace.dcp.vc.type` Alias
-
-The `vc.type` alias value must be supported and is used to specify access to a verifiable credential by type. For
-example:
-
-`org.eclipse.dspace.dcp.vc.type:Member:read`
-
-denotes read-only access to the VC type `Member` and may be used to request a VC or VP.
-
-#### The `org.eclipse.dspace.dcp.vc.id` Alias
-
-The `org.eclipse.dspace.dcp.vc.id` alias value must be supported and is used to specify access to a verifiable credential
-by id. For example:
-
-`org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d:read`
-
-denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a VC
-or VP.
-
-#### The `*` Wildcard Alias
-
-Implementations must also support the `*` wildcard:
-
-`org.eclipse.dspace.dcp.vc.type:*:write`
-
-The above expression enables write-only access to all VCs.
-
-### Access Control
-
-How access control is defined in a Credential Service is implementation-specific. Implementations may
-provide the ability to selectively restrict access to resources. The access control mechanism must support the scope
-restrictions defined in section [[[#access-scopes]]]. Implementations may support additional restriction methods,
-
-including requiring the requester to present its own VPs.
-
-## Submitting an Access Token
-
-Implementations that support access control require an access token. To provide the opportunity for `Credential Service`
-implementations to enforce proof-of-possession, the access token MUST be contained in the `token`
-claim of a self-issued identity token as definedin section [[[#self-issued-id-tokens]]]. The self-issued token MUST
+Implementations that support access control require an access token. To provide the opportunity
+for [=Credential Service=] implementations to enforce proof-of-possession, the access token MUST be contained in the
+`token`
+claim of a Self-Issued ID Token as defined in Section [[[#self-issued-id-tokens]]]. The [=Self-Issued ID Token=] MUST
 be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
 
 ## Resolution API
 
-If a client is not authorized for an endpoint request, the Credential Service may
-return `4xx Client Error`. The exact error code is implementation-specific.
+The Resolution API defines the [=Credential Service=] endpoint for querying credentials and returning a set
+of [=Verifiable
+Presentations=].
 
-### Presentations
+If a client is not authorized for an endpoint request, the [=Credential Service=] SHOULD return `4xx Client Error`. The
+exact error code is implementation-specific.
 
-#### Query For Presentations
+### Query For Presentations
 
-Presentations can be queried by POSTing a `PresentationQueryMessage` message to the query endpoint:
-
-`POST /presentations/query`
+[=Verifiable Presentations=] can be queried by POSTing a `PresentationQueryMessage` message to the query endpoint:
+`POST /presentations/query`.
 
 The POST body is a `PresentationQueryMessage` JSON object with the following properties:
 
@@ -142,7 +97,7 @@ The POST body is a `PresentationQueryMessage` JSON object with the following pro
 - `@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.
 - `presentationDefinition`: OPTIONAL. A valid `Presentation Definition` according to
   the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
-- `scope`: OPTIONAL. An array of scopes.
+- `scope`: OPTIONAL. An array of scopes corresponding to Section [[[#scopes]]].
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
 contain both.
@@ -171,30 +126,54 @@ The following are non-normative examples of the JSON body:
 }
 ```
 
-##### Presentation Definitions
+#### Presentation Definitions
 
-Implementations MAY support the `presentationDefinition` parameter. If they do not, they MUST
-return `501 Not Implemented`. The `presentationDefinition` parameter contains a valid `Presentation Definition`
+An implementations MAY support the `presentationDefinition` parameter. If it does not, it MUST return
+`501 Not Implemented`. The `presentationDefinition` parameter contains a valid `Presentation Definition`
 according to
 the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
-The CS may require an authorization token to authorize the request and uses the presentation definition to return a set
-of matching VPs in the format specified by the definition.
+The [=Credential Service=] will use the presentation definition to return a set of matching VPs in the format specified
+by the definition.
 
-##### Scopes
+#### Scopes
 
-Implementations MAY support requesting presentation of Verifiable Credentials using OAuth 2.0 OAuth 2.0 scope values.
+Implementations MAY support requesting presentation of [=Verifiable Credentials=] using a set of scope values.
+A scope is an alias for a well-defined Presentation Definition. The specific scope value, and the
+mapping between it and the respective Presentation Definition is out of scope of this specification.
 
-Such a scope value MUST be an alias for a well-defined Presentation Definition. The specific scope values, and the
-mapping between a certain scope value and the respective Presentation Definition is out of scope of this specification.
+A scope is a string value in the form:
 
-##### Response
+`[alias]:[descriminator]`
+
+The `[alias]` value MAY be implementation-specific.
+
+##### The `org.eclipse.dspace.dcp.vc.type` Alias
+
+The `vc.type` alias value MUST be supported and is used to specify access to a verifiable credential by type. For
+example:
+
+`org.eclipse.dspace.dcp.vc.type:Member`
+
+denotes read-only access to the VC type `Member` and may be used to request a VC or VP.
+
+##### The `org.eclipse.dspace.dcp.vc.id` Alias
+
+The `org.eclipse.dspace.dcp.vc.id` alias value must be supported and is used to specify access to a verifiable
+credential by id. For example:
+
+`org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d`
+
+denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a
+Verifiable Credential.
+
+#### Query For Presentations Response
 
 The response type of a presentation query is a `PresentationResponseMessage` with the following parameters:
 
 - `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `PresentationResponseMessage` type.
-- `presentation`: REQUIRED. An array of Verifiable Presentations. The Verifiable Presentations may be strings, JSON
-  objects, or a combination of both depending on the format.
+- `presentation`: REQUIRED. An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings,
+  JSON objects, or a combination of both depending on the format.
 
 The following are non-normative examples of the JSON response body:
 
@@ -204,24 +183,32 @@ The following are non-normative examples of the JSON response body:
     "https://w3id.org/dspace-dcp/v0.8"
   ],
   "@type": "PresentationResponseMessage",
-  "presentation": ["dsJdh...UMetV"]
+  "presentation": [
+    "dsJdh...UMetV"
+  ]
 }
 ```
 
 ## Storage API
 
-VCs can be written to the Credential Service by POSTing a `CredentialMessage` containing an array
-of Verifiable Credentials ([[vc-data-model]]) to the `credentials` endpoint:
+The Storage API defines the [=Credential Service=] endpoint for writing issued credentials, typically invoked by
+an [=Issuer Service=].
 
-`POST /credentials`
+If a client is not authorized for an endpoint request, the [=Credential Service=] SHOULD return `4xx Client Error`. The
+exact error code is implementation-specific.
 
-If the POST is successful, credentials will be created and a HTTP `2XX` is returned.
+### Write Credentials
+
+[=Verifiable Credentials=] can be written to the [=Credential Service=] by POSTing a `CredentialMessage` to the
+`credentials` endpoint: `POST /credentials`.
+
+If the POST is successful, credentials will be created and an HTTP `2XX` is returned.
 
 The POST body is a `CredentialMessage` JSON object with the following properties:
 
 - `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
 - `@type`: REQUIRED. A string specifying the `CredentialMessage` type.
-- `requestId`: REQUIRED. A string corresponding to the request id.
+- `requestId`: REQUIRED. A string corresponding to the issuance request id.
 - `credentials`: REQUIRED. An array of `CredentialContainer` Json objects corresponding to the schema
   specified in section [[[#the-credentialcontainer-object]]].
 
@@ -233,43 +220,21 @@ The following is a non-normative example of the JSON body:
     "https://w3id.org/dspace-dcp/v0.8"
   ],
   "@type": "CredentialMessage",
+  "requestId": "...",
   "credentials": [
     {
       "@type": "CredentialContainer",
       "payload": ""
     }
-  ],
-  "requestId": "..."
+  ]
 }
 ```
 
-### The `CredentialContainer` Object
+#### The `CredentialContainer` Object
 
 The `credentials` property contains an array of `CredentialContainer` objects. The `CredentialContainer` object contains
 the following properties:
 
 - `@type`: REQUIRED. A string specifying the `CredentialContainer` type.
-- `payload`: REQUIRED. A [Json Literal]([[json-ld11]], sect. 4.2.2) containing the verifiable
-  credential (VC).
-
-## CS Endpoint Resolution through DID Documents
-
-Different methods may be used by a Verifier to resolve the
-Credential Service for a client. One way is through DID documents. If a DID document is used, the client `DID document`
-MUST contain at least one `Service` entry ([[did-core]], sect. 5.4) of type `CredentialService`:
-
-```json
-{
-  "@context": [
-    "https://www.w3.org/ns/did/v1",
-    "https://w3id.org/dspace-dcp/v0.8"
-  ],
-  "service": [
-    {
-      "id": "did:example:123#identity-hub",
-      "type": "CredentialService",
-      "serviceEndpoint": "https://cs.example.com"
-    }
-  ]
-}
-```
+- `payload`: REQUIRED. A [Json Literal]([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined
+  by ([[vc-data-model]]).

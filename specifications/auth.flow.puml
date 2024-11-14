@@ -8,6 +8,7 @@ autonumber
 box "Client Entity"
 participant "Client" as C
 participant "Secure Token Service" as STS
+participant "DID Service" as DS
 participant "Credential Service" as CS
 end box
 
@@ -18,7 +19,10 @@ end box
 C -> STS: SI token request
 STS -> C: Token response w/ access token
 
-C-> V: Request w/ si token and access token
-V-> CS: request w/ access token
+C -> V: Request w/ Self-Issued ID token containing an access token
+DS <- V: Resolve DID
+DS -> V: DID document response
+CS <- V: request w/ access token
 CS ->V: VP response
+C <- V: Response
 @enduml
