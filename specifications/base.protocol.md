@@ -23,9 +23,9 @@ prescribes the Participant ID MUST be a DID as described in [[did-core]].
 
 ## Self-Issued ID Tokens
 
-Participants use Self-Issued ID Tokens to authenticate themselves and present self-attested claims to a Verifier.
-A Self-Issued ID Token is represented as a JSON Web Token [[rfc7519]] signed with a private key under the participant's
-control.
+Participants use a <dfn>Self-Issued ID Token</dfn> to authenticate themselves and present self-attested claims to a
+Verifier. A Self-Issued ID Token is represented as a JSON Web Token [[rfc7519]] signed with a private key under the
+participant's control.
 
 The following claims MUST be included in the Self-Issued ID Token:
 
@@ -103,3 +103,9 @@ contexts that facilitate this approach to interoperability.
 The [[[json-ld11]]] context URI for the specification is: `https://w3id.org/dspace-dcp/v[version]`. The `version`
 indicates a [Semantic Versioning](https://semver.org/) `MAJOR.MINOR` number. The current specifications use `0.8`
 version and the following context URI: `https://w3id.org/dspace-dcp/v0.8`.
+
+# The Base URL
+
+All endpoint URLs in this specification are relative. The base URL is implementation-specific and may include
+additional context information such as a sub-path that disambiguates a holder.
+
