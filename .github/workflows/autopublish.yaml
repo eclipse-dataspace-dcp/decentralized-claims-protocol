@@ -6,6 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  tests-artifacts:
+    uses: ./.github/workflows/artifacts.yaml
   build:
     name: Build and Validate
     runs-on: ubuntu-22.04
@@ -20,6 +22,9 @@ jobs:
         run: |
           cp specifications/*.png .
           cp specifications/*.yaml .
+          mkdir -p resources/v0.8
+          cp -r artifacts/src/main/resources/* resources/v0.8
+          rm -rf artifacts
       - name: Run Respec
         run:
           npx respec --src index.html --out index.html.build.html -t 60 --disable-sandbox --verbose
