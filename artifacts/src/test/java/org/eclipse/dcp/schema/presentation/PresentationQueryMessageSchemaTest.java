@@ -30,6 +30,13 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
               "scope": ["scope1", "scope2"]
             }""";
 
+    private static final String PRESENTATION_QUERY_MESSAGE_WITH_PRESENTATION_DEF = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@type": "PresentationQueryMessage",
+              "presentationDefinition": {}
+            }""";
+
     private static final String INVALID_PRESENTATION_QUERY_MESSAGE_NO_SCOPE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
@@ -45,10 +52,13 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(PRESENTATION_QUERY_MESSAGE, JSON)).isEmpty();
+        assertThat(schema.validate(PRESENTATION_QUERY_MESSAGE_WITH_PRESENTATION_DEF, JSON)).isEmpty();
 
         assertThat(schema.validate(INVALID_PRESENTATION_QUERY_MESSAGE_NO_SCOPE, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("scope", REQUIRED));
+                .contains(error("scope", REQUIRED), error("presentationDefinition", REQUIRED));
+
+
         assertThat(schema.validate(INVALID_PRESENTATION_QUERY_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
                 .hasSize(4)
                 .extracting(this::errorExtractor)
