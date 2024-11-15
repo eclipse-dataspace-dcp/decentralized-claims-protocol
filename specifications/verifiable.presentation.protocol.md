@@ -46,7 +46,8 @@ The client [=DID Service=] MUST make the [=Credential Service=] available as a `
 The `serviceEndpoint` property MUST be interpreted by the Verifier as the base URL of the [=Credential Service=]. The
 following is a non-normative example of a `Credential Service` entry:
 
-```json
+<aside class="example" title="Credential Service Entry in DID document">
+    <pre class="json">
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
@@ -60,7 +61,8 @@ following is a non-normative example of a `Credential Service` entry:
     }
   ]
 }
-```
+    </pre>
+</aside>
 
 ## Credential Service Security
 
@@ -80,42 +82,39 @@ be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the re
 ## Resolution API
 
 The Resolution API defines the [=Credential Service=] endpoint for querying credentials and returning a set
-of [=Verifiable
-Presentations=].
+of [=Verifiable Presentations=].
 
 If a client is not authorized for an endpoint request, the [=Credential Service=] SHOULD return `4xx Client Error`. The
 exact error code is implementation-specific.
 
-### Query For Presentations
+|                 |                                                                                          |
+|-----------------|------------------------------------------------------------------------------------------|
+| **Sent by**     | [=Verifier=]                                                                             |
+| **HTTP Method** | `POST`                                                                                   |
+| **URL Path**    | `/presentations/query`                                                                   |
+| **Request**     | [PresentationQueryMessage](#presentation-query-message)                                  |
+| **Response**    | [`PresentationResponseMessage`](#presentation-response-message) `HTTP 2xx` OR `HTTP 4xx` |
 
-[=Verifiable Presentations=] can be queried by POSTing a `PresentationQueryMessage` message to the query endpoint:
-`POST /presentations/query`.
+### Presentation Query Message
 
-The POST body is a `PresentationQueryMessage` JSON object with the following properties:
-
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.
-- `presentationDefinition`: OPTIONAL. A valid `Presentation Definition` according to
-  the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
-- `scope`: OPTIONAL. An array of scopes corresponding to Section [[[#scopes]]].
+|              |                                                                                                                                                                                                                                                                                                                  |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/blob/main/artifacts/src/main/resources/presentation/presentation-query-message-schema.json)                                                                                                                                 |
+| **Required** | </br>- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).</br>- `@type`: REQUIRED. A string specifying the `PresentationQueryMessage` type.                                                                                                                                     |
+| **Optional** | </br>- `presentationDefinition`: OPTIONAL. A valid `Presentation Definition` according to the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).</br>- `scope`: OPTIONAL. An array of scopes corresponding to Section [[[#scopes]]]. |
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
 contain both.
 
 The following are non-normative examples of the JSON body:
 
-```json
-{
-  "@context": [
-    "https://w3id.org/dspace-dcp/v0.8",
-    "https://identity.foundation/presentation-exchange/submission/v1"
-  ],
-  "@type": "PresentationQueryMessage",
-  "scope": []
-}
-```
+<aside class="example" title="PresentationQueryMessage with scope">
+    <pre class="json" data-include="./artifacts/src/main/resources/presentation/example/presentation-query-message.json">
+    </pre>
+</aside>
 
-```json
+<aside class="example" title="PresentationQueryMessage with presentationDefinition">
+    <pre class="json">
 {
   "@context": [
     "https://w3id.org/dspace-dcp/v0.8",
@@ -124,7 +123,8 @@ The following are non-normative examples of the JSON body:
   "@type": "PresentationQueryMessage",
   "presentationDefinition": "..."
 }
-```
+    </pre>
+</aside>
 
 #### Presentation Definitions
 
@@ -166,28 +166,19 @@ credential by id. For example:
 denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a
 Verifiable Credential.
 
-#### Query For Presentations Response
+### Presentation Response Message
 
-The response type of a presentation query is a `PresentationResponseMessage` with the following parameters:
-
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `PresentationResponseMessage` type.
-- `presentation`: REQUIRED. An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings,
-  JSON objects, or a combination of both depending on the format.
+|              |                                                                                                                                                                                                                                                                                                                                                                            |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/blob/main/artifacts/src/main/resources/presentation/presentation-response-message-schema.json)                                                                                                                                                                                        |
+| **Required** | - `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).</br>- `@type`: REQUIRED. A string specifying the `PresentationResponseMessage` type.</br>- `presentation`: REQUIRED. An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
 
 The following are non-normative examples of the JSON response body:
 
-```json
-{
-  "@context": [
-    "https://w3id.org/dspace-dcp/v0.8"
-  ],
-  "@type": "PresentationResponseMessage",
-  "presentation": [
-    "dsJdh...UMetV"
-  ]
-}
-```
+<aside class="example" title="Presentation Response Message">
+    <pre class="json" data-include="./artifacts/src/main/resources/presentation/example/presentation-response-message.json">
+    </pre>
+</aside>
 
 ## Storage API
 
@@ -197,43 +188,38 @@ an [=Issuer Service=].
 If a client is not authorized for an endpoint request, the [=Credential Service=] SHOULD return `4xx Client Error`. The
 exact error code is implementation-specific.
 
-### Write Credentials
+|                 |                                           |
+|-----------------|-------------------------------------------|
+| **Sent by**     | [=Issuer Service=]                        |
+| **HTTP Method** | `POST`                                    |
+| **URL Path**    | `/credentials`                            |
+| **Request**     | [Credential Message](#credential-message) |
+| **Response**    | `HTTP 2xx` OR `HTTP 4xx Client Error`     |
 
-[=Verifiable Credentials=] can be written to the [=Credential Service=] by POSTing a `CredentialMessage` to the
-`credentials` endpoint: `POST /credentials`.
+### Credential Message
 
-If the POST is successful, credentials will be created and an HTTP `2XX` is returned.
+|              |                                                                                                                                                                                                                                                                                                                                                             |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/blob/main/artifacts/src/main/resources/presentation/credential-message-schema.json)                                                                                                                                                                                    |
+| **Required** | - `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).</br>- `@type`: REQUIRED. A string specifying the `CredentialMessage` type.</br>- `requestId`: REQUIRED. A string corresponding to the issuance request id.</br>- `credentials`: REQUIRED. An array of `CredentialContainer` Json objects as defined in the following. |
 
-The POST body is a `CredentialMessage` JSON object with the following properties:
+The following is a non-normative example of the Credential Message JSON body:
 
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `CredentialMessage` type.
-- `requestId`: REQUIRED. A string corresponding to the issuance request id.
-- `credentials`: REQUIRED. An array of `CredentialContainer` Json objects corresponding to the schema
-  specified in section [[[#the-credentialcontainer-object]]].
+<aside class="example" title="Credential Message">
+    <pre class="json" data-include="./artifacts/src/main/resources/presentation/example/credential-message.json">
+    </pre>
+</aside>
 
-The following is a non-normative example of the JSON body:
+### Credential Container
 
-```json
-{
-  "@context": [
-    "https://w3id.org/dspace-dcp/v0.8"
-  ],
-  "@type": "CredentialMessage",
-  "requestId": "...",
-  "credentials": [
-    {
-      "@type": "CredentialContainer",
-      "payload": ""
-    }
-  ]
-}
-```
+The [Credential Message](#credential-message)'s`credentials` property contains an array of `CredentialContainer`
+objects.
+The `CredentialContainer` object contains the following properties:
 
-#### The `CredentialContainer` Object
-
-The `credentials` property contains an array of `CredentialContainer` objects. The `CredentialContainer` object contains
-the following properties:
+|              |                                                                                                                                                                                                                        |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/blob/main/artifacts/src/main/resources/presentation/credential-container-schema.json)                                             |
+| **Required** | - `@type`: REQUIRED. A string specifying the `CredentialContainer` type.</br>- `payload`: REQUIRED. A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
 
 - `@type`: REQUIRED. A string specifying the `CredentialContainer` type.
 - `payload`: REQUIRED. A [Json Literal]([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined
