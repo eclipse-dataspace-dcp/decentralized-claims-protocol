@@ -218,5 +218,5 @@ The `CredentialContainer` object contains the following properties:
 
 |              |                                                                                                                                                                                                    |
 |--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-container-schema.json)                         |
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                                                                                                        |
 | **Required** | - `@type`: A string specifying the `CredentialContainer` type.</br>- `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
