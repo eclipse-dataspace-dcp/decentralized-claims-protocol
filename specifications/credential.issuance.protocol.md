@@ -178,8 +178,8 @@ The following is a non-normative example of a `CredentialObject`:
 
 ## Issuer Metadata API
 
-The Issuer Metadata API defines the REQUIRED [=Issuer Service=] endpoint for conveying support for verifiable credential
-types supported by the [=Credential Issuer=].
+The Issuer Metadata API defines the REQUIRED [=Issuer Service=] endpoint for conveying verifiable credential types
+supported by the [=Credential Issuer=].
 
 |                 |                                  |
 |-----------------|----------------------------------|
