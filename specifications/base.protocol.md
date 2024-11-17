@@ -106,6 +106,6 @@ version and the following context URI: `https://w3id.org/dspace-dcp/v0.8`.
 
 # The Base URL
 
-All endpoint URLs in this specification are relative. The base URL is implementation-specific and may include
-additional context information such as a sub-path that disambiguates a holder.
+All endpoint URLs in this specification are relative. The base URL MUST use the HTTPS scheme. The base URL is
+implementation-specific and may include additional context information such as a sub-path that disambiguates a holder.
 
