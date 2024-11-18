@@ -26,7 +26,7 @@ The following sequence diagram depicts a non-normative flow where a client inter
    client wants the Verifier to have access to. This set of scopes is determined out of band and may be derived from
    metadata the verifier has previously made available to the client.
 2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
-   an access token. The access token can be used by the verifier to request Verifiable Credentials from the client's
+   an access token. The access token can be used by the verifier to request [=Verifiable Credentials=] from the client's
    Credential Service.
 3. The client makes a request to the [=Verifier=] for a protected resource and includes the [=Self-Issued ID Token=].
 4. The [=Verifier=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.

@@ -1,362 +1,46 @@
 # Credential Issuance Protocol
 
-## Introduction
-
-This specification defines a protocol for Verifiable Credential (VC) issuance. Specifically, the Credential Issuance
-Protocol (CIP) defines the endpoints and message types for requesting credentials to be issued from
-a `Credential Issuer.`
-
-This specification relies on sections [[[#identity-protocol-base]]] and
-[[[#verifiable-presentation-protocol]]].
-
-### Motivation
-
-Verifiable Credentials enable a holder to present claims directly to a Verifier without
-the involvement or knowledge of the `Credential Issuer`. The Credential Issuance Protocol (CIP) provides an
-interoperable mechanism for parties (potential holders) to request credentials from a `Credential Issuer.` The protocol
-is designed to handle use cases where credentials can automatically be issued and where a manual workflow is required.
-
-This specification draws from the
-[OpenID for Verifiable Credential Issuance specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#name-introduction)
-but differs in its focus on service-to-service interactions where end-user devices are not involved in the
-protocol flow. Moreover, the current specification accommodates the requirement for long-running interactions typically
-associated with manual workflows that are best modelled using asynchronous messaging paradigms.
-
-### Terms
-
-- **Credential Service** - A network-accessible service that manages identity resources.
-- **Resource** - A resource is an entity managed by the Credential Service such as a Verifiable Credential (
-  VC) or Verifiable Presentation (VP).
-- **Holder** - An entity that possesses a set of identity resources as defined by
-    the W3C [[[vc-data-model]]]. The holder will typically be the subject of
-    a VC.
-- **Verifier** - An entity that receives one or more VCs, optionally presented inside a VP as defined by
-  the W3C [[[vc-data-model]]].
-- **Subject** - The target of a set of claims contained in a VC as defined by
-  the [[[vc-data-model]]]. In a dataspace, a subject will be a participant.
-- ***DID*** - A decentralized identifier as defined by [[[did-core]]].
-
-## Overview
-
-The Credential Issuance Protocol is designed to be used in conjunction with
-[[[#identity-protocol-base]]] and [[[#verifiable-presentation-protocol]]]. This issuance interaction flow is expressed
-in the following diagram:
-
-![Issuance Flow](issuance.flow.png)
-
-In the above sequence, the client uses the `Base Identity Protocol` to create a Self-Issued Identity token that it
-includes in its request to the `Credential Issuer.` If the VC request is approved by the `Credential Issuer`, a VC will
-be written to the client's `Credential Service` using the `Verifiable Presentation Protocol.` The operation is performed
-asynchronously from the client request, resulting in non-blocking behavior.
-
-### The Issuer Base URL
-
-All endpoint addresses are defined relative to the base URL of the issuer service. The base URL MUST use the HTTPS
-scheme. The issuer will use the base URL for the `issuer` field in all VCs it issues as defined by
-the `issuer` property ([[vc-data-model]]).
-
-This specification makes no assumption about the base URL, for example, if it is a domain, subdomain, or contains a
-path.
-
-## Credential Request Flow
-
-The `credential request flow` is initiated by a client making a request for one or more VCs to an
-issuer's `Credential Request Endpoint`. If the request is valid, the issuer endpoint will send an acknowledgement to the
-client. If the request is approved, the VC will be issued to the client asynchronously.
-
-### Credential Request Endpoint
-
-Communication with the `Credential Request Endpoint` MUST utilize TLS.
-
-The credential request endpoint MUST be available under the `POST` method at `/credentials` relative to the base URL of
-the
-issuer.
-
-The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
-the [[[#vp-access-token]]]. The `issuer` claim can be
-
-used by the Credential Issuer to resolve the client's DID to obtain cryptographic material for validation and credential
-binding.
-
-The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
-requested VCs into the client's `Credential Service` as defined by
-[[[#verifiable-presentation-protocol]]]
-
-The ID Token MAY contain an `token` claim as defined in
-[[[#identity-protocol-base]]] claim that can be used by the issuer to resolve
-Verifiable Presentations (VP) the client is required to hold for issuance of the requested VCs.
-
-If the issuer supports a pre-authorization code flow, the client must use the `pre-authorized_code` claim in the ID
-Token to provide the pre-authorization code to the issuer.
-
-#### Credential Request Parameters
-
-The Credential Request `POST` body MUST be a `CredentialRequestMessage` JSON object with the following properties:
-
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `CredentialRequestMessage` type.
-- `format`: REQUIRED. A JSON string that describes the format of the credential to be issued. Implementations MUST
-  support the `ldp_vc` format as defined by
-  the [OpenID for Verifiable Credential Issuance specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#section-e.1.3).
-  Implementations MAY support other VC formats.
-- `type`: REQUIRED. A JSON array of strings that specifies the VC type being requested.
-
-The following is a non-normative example of a `CredentialRequestMessage`:
-
-```
-POST /credentials HTTP/1.1
-Host: server.example.com
-Content-Type: application/json
-Authorization: Bearer ......
-
-{
-   "@context": [
-    "https://w3id.org/dspace-dcp/v0.8",
-     "https://www.w3.org/2018/credentials/v1"
-   ],
-   "@type": "CredentialRequestMessage",
-   "format":"ldp_vd",
-   "type":[
-      "VerifiableCredential",
-      "EntityCredential"
-   ],
-}
-```
-
-On successful receipt of the request, the Credential Issuer MUST respond with a `201 CREATED` with the `Location`
-header set to the location of the request status ([[[#credential-request-status-endpoint]]])
-
-The issuer MAY respond with `401 Not Authorized` if the request is unauthorized or other `HTTP` status codes to indicate
-an exception.
-
-If the VC request is approved, the issuer will respond with a write-request to the client's `Credential Service` using
-the Storage API defined in [[[#storage-api]]].
-
-## Credential Offer Flow
-
-Some scenarios involve the Credential Issuer making an initial offer. For example, an out-of-band process may result in
-a credential offer. Or, a Credential Issuer may start a key rotation process which involves sending updated credentials
-to holders signed with the issuer's new key. In this case, the issuer can proactively prompt holders to request a new
-credential during the key rotation period.
-
-### Credential Offer Endpoint
-
-Communication with the `Credential Offer Endpoint` MUST utilize TLS.
-
-The credential offer endpoint MUST be available under the `POST` method at `/offers` relative to the base URL of the
-holder's `Credential Service` base URL. Issuers can obtain this URL by resolving the holder's DID and inspecting
-its `CredentialService` service entry.
-
-#### Credential Offer Parameters
-
-The Credential Offer `POST` body MUST be a `CredentialOfferMessage` JSON object with the following properties:
-
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `CredentialOfferMessage` type.
-- `credentialIssuer`: REQUIRED. The identifier of the Credential Issuer, the `Credential Service` is requested to obtain
-  one or more credentials from.
-- `credentials`: REQUIRED. A JSON array, where every entry is a JSON object or a JSON string.
-    - entry type object: data MUST adhere to [[[#the-credentialobject]]]
-
-    - entry type string: value MUST be one of the id values in one of the objects in the `credentials_supported`.
-    - When processing, the `Credential Service` MUST resolve this string value to the respective object.
-
-The following is a non-normative example of a credential offer request:
-
-```
-POST /credentials HTTP/1.1
-Host: server.example.com
-Content-Type: application/json
-Authorization: Bearer ......
-
-{
-   "@context": [
-    "https://w3id.org/dspace-dcp/v0.8",
-     "https://www.w3.org/2018/credentials/v1"
-   ],
-   "@type": "CredentialOfferMessage",
-   "credentialIssuer" :"...",
-   "credentials: [...]
-   
-}
-```                        
-
-##### The `CredentialObject`
-
-The `CredentialObject` defines the following properties:
-
-- `@type`: REQUIRED. A string specifying the `CredentialObject` type.
-- `format`: REQUIRED. The format of the credential to be requested as defined by
-  the [OpenID for Verifiable Credential Issuance specification](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#format_profiles).
-- `credentialType`: REQUIRED. An array defining the type of credential being offered.
-- `bindingMethods`: OPTIONAL. Binding methods supported as defined by `cryptographic_binding_methods_supported` in the
-  _Open ID for Verifiable Credential Issuance_ specification.
-- `cryptographicSuites`: OPTIONAL. Binding methods supported as defined by `cryptographic_suites_supported` in the
-  _Open ID for Verifiable Credential Issuance_ specification.
-- `issuancePolicy`: OPTIONAL. An ODRL Policy [[odrl-model]]. Note that the ODRL Policy MUST not
-  contain `target` attributes. Implementations MAY not support ODRL issuance policies.
-- `offerReason`: OPTIONAL. A reason for the offer as a string. Valid values may include `reissue`
-  and `proof-key-revocation`.
-
-> Note: Properties mapped to the _Open ID for Verifiable Credential Issuance_ specification are defined in
-> the [Credential Issuer Metadata](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html#section-10.2.3.1)
-> section.
-
-The following is a non-normative example of a `CredentialObject`:
-
-```json
-{
-  "@context": {
-    "iatp": "https://w3id.org/dspace-dcp/v0.8",
-    "odrl": "https://www.w3.org/ns/odrl.jsonld"
-  },
-  "@type": "CredentialObject",
-  "credentialType": [
-    "VerifiableCredential",
-    "CompanyCredential"
-  ],
-  "format": "ldp_vc",
-  "offerReason": "reissue",
-  "bindingMethods": [
-    "did:web"
-  ],
-  "cryptographicSuites": [
-    "JsonWebKey2020"
-  ],
-  "issuancePolicy": {
-    "permission": [
-      {
-        "action": "use",
-        "constraint": {
-          "and": [
-            {
-              "leftOperand": "iatp:CredentialPrereq",
-              "operator": "eq",
-              "rightOperand": "active"
-            }
-          ]
-        }
-      }
-    ]
-  }
-}
-```
-
-## Issuer Metadata endpoint
-
-A credential issuer MUST support the Issuer Metadata endpoint using the HTTPS scheme and the `GET method`. The URL of
-the endpoint is the base issuer url with the appended path `/.well-known/vci`.
-
-The response is a `IssuerMetadata` JSON object with the following properties:
-
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `IssuerMetadata` type.
-- `credentialIssuer`: REQUIRED. A unique identifier of the issuer, for example, a DID.
-- `credentialsSupported`: OPTIONAL. A Json Array containing a list of `CredentialObject` JSON objects with properties
-  corresponding to [[[#the-credentialobject]]].
-
-The following is a non-normative example of a `IssuerMetadata` response object:
-
-```json
-{
-  "@context": {
-    "iatp": "https://w3id.org/dspace-dcp/v0.8",
-    "odrl": "https://www.w3.org/ns/odrl.jsonld"
-  },
-  "@type": "IssuerMetadata",
-  "credentialIssuer": "did:web:issuer-url",
-  "credentialsSupported": [
-    {
-      "credentialType": [
-        "VerifiableCredential",
-        "CompanyCredential"
-      ],
-      "offerReason": "reissue",
-      "bindingMethods": [
-        "did:web"
-      ],
-      "cryptographicSuites": [
-        "JsonWebKey2020"
-      ],
-      "issuancePolicy": {
-        "permission": [
-          {
-            "action": "use",
-            "constraint": {
-              "and": [
-                {
-                  "leftOperand": "iatp:CredentialPrereq",
-                  "operator": "eq",
-                  "rightOperand": "active"
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-}
-```
-
-## Credential Request Status Endpoint
-
-The issuer MUST provide an `HTTPS GET` endpoint for retrieving the status of a credential at the base issuer url with
-the appended path `/requests/<request id>`. The issuer SHOULD implement access control such that only the client that
-made the request may access a particular request status.
-
-If accepted, a `CredentialStatus` Json object with a `status` property set to one of the following
-values: `RECEIVED` | `REJECTED` | `ISSUED` will be returned.
-
-The response is a `CredentialStatus` JSON object with the following properties:
-
-- `@context`: REQUIRED. Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).
-- `@type`: REQUIRED. A string specifying the `CredentialStatus` type.
-- `requestId`: REQUIRED. A string corresponding to the request id
-- `status`: REQUIRED. A string equal to the one of the values: `RECEIVED`, `REJECTED`, or `ISSUED`.
-
-The following is a non-normative example of a `CredentialStatus` response object:
-
-```json
-{
-  "@context": {
-    "iatp": "https://w3id.org/dspace-dcp/v0.8"
-  },
-  "@type": "CredentialStatus",
-  "requestId": "...",
-  "status": "RECEIVED"
-}
-```
-
-## Key Rotation and Revocation
-
-Issuer implementations SHOULD support rotation and revocation of keys used to create VC proofs. Key rotation and
-revocation may be supported in the following way:
-
-1. After a defined `cryptoperiod`, a rotation is initiated, and a new key pair is generated and the public key is added
-   to a `verficationMethod` in the issuer's DID document. The new private key is used to sign newly issued VC proofs.
-2. The old private key is decommissioned (archived or destroyed). However, `verificationMethods` in the issuer's DID
-   document are retained so existing issued VCs may be verified.
-3. At some point before existing VCs are set to expire, an issuer may make credential offers for new VCs to holders.
-4. After a defined period, revocation will be performed where the public key's `verificationMethods` will be removed
-   from the issuer's DID document. At this point, any existing VCs with proofs signed by the revoked key will not
-   verify.
-
-Implementors following this sequence should set the `expirationDate` property of issued VCs to less than
-the rotation period of the keys used to sign their proofs.
-
-## VC Revocation
-
-VC revocation MUST be supported using the [[[vc-bitstring-status-list-20230427]]] specification. Note that
-implementations MAY support multiple lists.
-
-## Issuer Endpoint resolution through DID Documents
-
-Different methods may be used to resolve the base location of an issuer service. One way is
-through DID documents. If a DID document is used, the client `DID document` MUST contain at least
-one service entry ([[did-core]], sect. 5.4) of type `IssuerService`:
-
-```
+The Credential Issuance Protocol defines the endpoints and message types for requesting [=Verifiable Credentials=] from
+a [=Credential Issuer=]. The protocol is designed to handle use cases where credentials can automatically be issued and
+where a manual workflow is required.
+
+## Issuance Flow
+
+The following sequence diagram depicts a non-normative flow where a client interacts with a [=Credential Issuer=] to
+issue a [=Verifiable Credential=]:
+
+![Issuance Flow](issuance.flow.png "Inssuance Flow")
+
+1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
+   request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
+   the client wants the [=Issuer Service=] to provide. This set of scopes is determined out of band and may be derived
+   from metadata the [=Credential Issuer=] has previously made available to the client.
+2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
+   an access token. The access token can be used by the [=Issuer Service=] to write requested [=Verifiable Credentials=]
+   to the client's [=Credential Service=].
+3. The client makes a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=] and includes
+   the [=Self-Issued ID Token=].
+4. The [=Issuer Service=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
+5. The [=DID Service=] returns the DID Document. The [=Issuer Service=] validates the [=Self-Issued ID Token=] following
+   Section [[[#validating-self-issued-id-tokens]]].
+6. The [=Issuer Service=] rejects the request or acknowledges receipt.
+7. At a later point in time, if the [=Verifiable Credential=] request is approved, the [=Issuer Service=] uses the
+   resolved DID Document to obtain the client's [=Credential Service=] endpoint as described in
+   Section [[[#credential-service-endpoint-discovery]]] and sends the [=Verifiable Credentials] to
+   the [=Credential Service=]. The send operation is performed asynchronously from the client request.
+8. The [=Credential Service=] validates the access token and stores the [=Verifiable Credentials=].
+
+## Issuer Service Endpoint Discovery
+
+The client [=DID Service=] MUST make the [=Issuer Service=] available as a `service` entry ([[[did-core]]], sect.
+5.4) in the DID document that is resolved by its DID. The `type` attribute of the `service` entry MUST be
+`IssuerService`.
+
+The `serviceEndpoint` property MUST be interpreted by the client as the base URL of the [=Issuer Service=]. The
+following is a non-normative example of a `Issuer Service` entry:
+
+<aside class="example" title="Credential Service Entry in DID document">
+    <pre class="json">
 {
   "service": [
     {
@@ -366,19 +50,228 @@ one service entry ([[did-core]], sect. 5.4) of type `IssuerService`:
     }
   ]
 }
-```
+    </pre>
+</aside>
 
-The `serviceEndpoint` URL is the base URL for the Issuer Service.
+## Issuer Service Base URL
 
-> TODO: Add `IssuerService` namespace
+All endpoint addresses are defined relative to the base URL of the [=Issuer Service=]. The [=Credential Issuer=] will
+use the base URL for the `issuer` field in all [=Verifiable Credentials=] it issues as defined by the `issuer`
+property ([[vc-data-model]]).
+
+No assumptions are made about the base URL, for example, if it is a domain, subdomain, or contains a path.
+
+## Credential Request API
+
+The Credential Request API defines the REQUIRED [=Issuer Service=] endpoint for requesting [=Verifiable Credentials=].
+
+The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
+the [[[#vp-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve the client's DID to
+obtain cryptographic material for validation and credential binding.
+
+The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
+requested [=Verifiable Credentials=] into the client's `Credential Service` as defined
+by[[[#verifiable-presentation-protocol]]]
+
+The bearer token MAY also be used by the [=Issuer Service=] to resolve [=Verifiable Presentations=] the client is
+required to hold for issuance of the requested [=Verifiable Credentials=].
+
+If the issuer supports a pre-authorization code flow, the client MUST use the `pre-authorized_code` claim in the
+Self-Issued ID Token to provide the pre-authorization code to the issuer.
+
+|                 |                                                           |
+|-----------------|-----------------------------------------------------------|
+| **Sent by**     | Client that is a potential [=Holder=]                     |
+| **HTTP Method** | `POST`                                                    |
+| **URL Path**    | `/credentials`                                            |
+| **Request**     | [`CredentialRequestMessage`](#credential-request-message) |
+| **Response**    | `HTTP 201` OR `HTTP 4xx Client Error`                     |                                                    
+
+### Credential Request Message
+
+|              |                                                                                     |
+|--------------|-------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-request-message-schema.json)     |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).>        |
+|              | - `@type`: A string specifying the `CredentialRequestMessage` type                  |
+|              | - `format`:  A JSON string that describes the format of the credential to be issued |
+|              | - `type`: A JSON array of strings that specifies the VC type being requested        |
+
+The following is a non-normative example of a `CredentialRequestMessage`:
+
+<aside class="example" title="CredentialRequestMessage">
+    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-request-message.json">
+    </pre>
+</aside> 
+
+On successful receipt of the request, the [=Issuer Service=] MUST respond with a `201 CREATED` and the `Location`
+header set to the location of the request status ([[[#credential-request-status-api]]])
+
+The [=Issuer Service=] MAY respond with `401 Not Authorized` if the request is unauthorized or other `HTTP` status codes
+to indicate an exception.
+
+If the request is approved, the issuer endpoint will send an acknowledgement to the client. When
+the [=Verifiable Credentials=] are ready, the [=Issuer Service=] will respond asynchronously with a write-request to the
+client's `Credential Service` using the Storage API defined in Section [[[#storage-api]]].
+
+## Credential Offer API
+
+Some scenarios involve the [=Credential Issuer=] making an initial offer. For example, an out-of-band process may result
+in
+a credential offer. Or, a [=Credential Issuer=] may start a key rotation process which requires
+a [=Verifiable Credential=] to be
+reissued. In this case, the [=Credential Issuer=] can proactively prompt a [=Holder=] to request a
+new [=Verifiable Credential=]
+during the key rotation period.
+
+The Credential Offer API defines the REQUIRED [=Credential Service=] endpoint for notifying a [=Holder=] of
+a [=Verifiable Credential=] offer.
+
+|                 |                                                       |
+|-----------------|-------------------------------------------------------|
+| **Sent by**     | [=Credential Issuer=]                                 |
+| **HTTP Method** | `POST`                                                |
+| **URL Path**    | `/offers`                                             |
+| **Request**     | [`CredentialOfferMessage`](#credential-offer-message) |
+| **Response**    | `HTTP 200` OR `HTTP 4xx Client Error`                 |                                                    
+
+### Credential Offer Message
+
+|              |                                                                                                                    |
+|--------------|--------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-offer-message-schema.json)                                      |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                         |
+|              | - `@type`: A string specifying the `CredentialOfferMessage` type                                                   |
+|              | - `credentialIssuer`:  The [=Credential Issuer=] DID                                                               |
+|              | - `credentials`: A JSON array, where every entry is a JSON object of type [[[#credentialobject]]] or a JSON string |
+
+If the `credentials` property entries are type string, the value MUST be one of the `id` values of an object in the
+`credentialsSupported` returned from the [[[#issuer-metadata-api]]]. When processing, the [=Credential Service=]
+MUST resolve this string value to the respective object.
+
+The following is a non-normative example of a credential offer request:
+
+<aside class="example" title="CredentialOfferMessage">
+    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-offer-message.json">
+    </pre>
+</aside>   
+
+### CredentialObject
+
+|              |                                                                                                                    |
+|--------------|--------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-object-schema.json)                                             |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                        |
+|              | - `@type`: A string specifying the `CredentialObject` type                                                         |
+|              | - `credentialType`: An array of strings defining the type of credential being offered                              |
+| **Optional** | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to            |
+|              | - `cryptographicSuites`: An array of strings defining the algorithm used for credential signing                    |
+|              | - `issuancePolicy`: An ODRL Policy [[odrl-model]]. Note that the ODRL Policy MUST not contain `target` attributes  |
+|              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation` |
+
+The following is a non-normative example of a `CredentialObject`:
+
+<aside class="example" title="CredentialObject">
+    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-object.json">
+    </pre>
+</aside>  
+
+## Issuer Metadata API
+
+The Issuer Metadata API defines the REQUIRED [=Issuer Service=] endpoint for conveying verifiable credential types
+supported by the [=Credential Issuer=].
+
+|                 |                                  |
+|-----------------|----------------------------------|
+| **Sent by**     | A client                         |
+| **HTTP Method** | `GET`                            |
+| **URL Path**    | `/.well-known/vci`               |
+| **Response**    | [[[#issuermetadata]]] `HTTP 200` |                                                    
+
+A credential issuer MUST support the Issuer Metadata endpoint using the HTTPS scheme and the `GET method`. The URL of
+the endpoint is the base issuer url with the appended path `/.well-known/vci`.
+
+### IssuerMetadata
+
+|              |                                                                             |
+|--------------|-----------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/issuer-metadata-schema.json)        |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
+|              | - `@type`: A string specifying the `IssuerMetadata` type                    |
+|              | - `credentialIssuer`: A string containing the [=Credential Issuer=] DID     |
+| **Optional** | - `credentialsSupported`: A JSON array of [[[#credentialobject]]] elements  |
+
+The following is a non-normative example of a `IssuerMetadata` response object:
+
+<aside class="example" title="IssuerMetadata">
+    <pre class="json" data-include="./resources/v0.8/issuance/example/issuer-metadata.json">
+    </pre>
+</aside>  
+
+## Credential Request Status API
+
+The Credential Request Status API defines the REQUIRED [=Issuer Service=] endpoint for conveying the status of a
+[=Verifiable Credential=] request.
+
+|                 |                                                                                                                                                         |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Sent by**     | A client                                                                                                                                                |
+| **HTTP Method** | `GET`                                                                                                                                                   |
+| **URL Path**    | `/requests/<request id>`  where the request id corresponds to the ID identified by the location header returned for a [[[#credential-request-message]]] |
+| **Response**    | [[[#credentialstatus]]] `HTTP 200`                                                                                                                      |     
+
+The [=Issuer Service=] MUST implement access control such that only the client that made the request may access a
+particular request status. A [=Self-Issued ID Token=] MUST be submitted in the HTTP `Authorization` header prefixed
+with `Bearer` of the request.
+
+### CredentialStatus
+
+|              |                                                                             |
+|--------------|-----------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-status-schema.json)      |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
+|              | - `@type`: A string specifying the `CredentialStatus` type                  |
+|              | - `requestId`: A string corresponding to the request id                     |
+|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`    |
+
+The following is a non-normative example of a `CredentialStatus` response object:
+
+<aside class="example" title="CredentialStatus">
+    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-status.json">
+    </pre>
+</aside>  
+
+## Key Rotation and Revocation
+
+[=Issuer Service=] implementations SHOULD support rotation and revocation of keys used to
+create [=Verifiable Credential] proofs. Key rotation and revocation may be supported in the following way:
+
+1. After a defined `cryptoperiod`, a rotation is initiated, a new key pair is generated and the public key is added
+   to a `verficationMethod` in the [=Credential Issuer=] DID document. The new private key is used to sign newly
+   issued [=Verifiable Credential=] proofs.
+2. The old private key is decommissioned (archived or destroyed). However, `verificationMethods` in
+   the [=Credential Issuer=] DID document are retained so existing issued [=Verifiable Credentials=] may be verified.
+3. At some point before existing [=Verifiable Credentials=] are set to expire, an [=Credential Issuer=] may make
+   credential offers for new [=Verifiable Credentials=] to [=Holders=].
+4. After a defined period, revocation will be performed where the public key's `verificationMethods` will be removed
+   from the [=Credential Issuer=] DID document. At this point, any existing [=Verifiable Credentials=] with proofs
+   signed by the revoked key will not verify.
+
+Implementors following this sequence SHOULD set the `expirationDate` property of issued [=Verifiable Credentials=] to
+less than the rotation period of the keys used to sign their proofs.
+
+## Verifiable Credential Revocation
+
+[=Verifiable Credential=] revocation MUST be supported using the [[[vc-bitstring-status-list-20230427]]] specification.
+Note that implementations MAY support multiple lists.
 
 ## ODRL (Open Digital Rights Language) Profile
 
 An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
 a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
 
-This specification defines two ODRL attributes for the Policy class [[odrl]] sect. 2.1) under
-the `iatp` namespace:
+This specification defines two ODRL attributes for the Policy class [[odrl]] sect. 2.1) under the `dspace-dcp`
+namespace:
 
 - **scope** - Either a single `string` or an `array` of strings containing `scope` values
 - **presentationDefinition** - Either an object containing an `@id` attribute with a URI value referencing
@@ -389,45 +282,52 @@ for issuance or re-issuance.
 
 The following are non-normative examples of the `scope` attribute:
 
-```json
+<aside class="example" title="Array of scopes">
+   <pre class="json">
 {
-  "iatp:issuancePolicy": {
-    "iatp:scope": [
+  "issuancePolicy": {
+    "scope": [
       "example_scope1",
       "example_scope2"
     ]
   }
 }
-```
+   </pre>
+</aside>
 
 and
 
-```json
+<aside class="example" title="String scope">
+   <pre class="json">
 {
-  "iatp:issuancePolicy": {
-    "iatp:scope": "example_scope1"
+  "issuancePolicy": {
+    "scope": "example_scope1"
   }
 }
-```
+   </pre>
+</aside>
 
 The following is a non-normative examples of the `presentationDefinitiion` attribute:
 
-```json
+<aside class="example" title="Presentation definition reference">
+   <pre class="json">
 {
-  "iatp:issuancePolicy": {
-    "iatp:presentationDefinition": {
+  "issuancePolicy": {
+    "presentationDefinition": {
       "@id": "https://expample.com/example_definition"
     }
   }
 }
-```
+   </pre>
+</aside>
 
 and
 
-```json
+<aside class="example" title="Presentation definition object">
+   <pre class="json">
 {
-  "iatp:issuancePolicy": {
-    "iatp:presentationDefinition": {
+  "issuancePolicy": {
+    "presentationDefinition": {
       "id": "example_presentation_definition",
       "input_descriptors": [
         "..."
@@ -435,4 +335,5 @@ and
     }
   }
 }
-```
+   </pre>
+</aside>

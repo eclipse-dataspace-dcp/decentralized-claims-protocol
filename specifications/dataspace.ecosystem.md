@@ -5,7 +5,7 @@ adheres to the model defined by the Dataspace Protocol [[dsp-base]]:
 
 - The <dfn>Dataspace Authority</dfn> is responsible for operational management of the dataspace, including participant
   registration and designation of trust credential issuers.
-- A </dfn>Participant</dfn> is a member of the dataspace. Members may take on different roles, which are attested to by
+- A <dfn>Participant</dfn> is a member of the dataspace. Members may take on different roles, which are attested to by
   verifiable credentials.
 - A <dfn>Participant Agent</dfn> performs tasks such as publishing a catalog or engaging in data transfer. Note that a
   participant agent is a logical construct and does not necessarily correspond to a single runtime process.
