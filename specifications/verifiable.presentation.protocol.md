@@ -92,16 +92,18 @@ exact error code is implementation-specific.
 | **Sent by**     | [=Verifier=]                                                                             |
 | **HTTP Method** | `POST`                                                                                   |
 | **URL Path**    | `/presentations/query`                                                                   |
-| **Request**     | [`PresentationQueryMessage`](#presentation-query-message)                                  |
+| **Request**     | [`PresentationQueryMessage`](#presentation-query-message)                                |
 | **Response**    | [`PresentationResponseMessage`](#presentation-response-message) `HTTP 2xx` OR `HTTP 4xx` |
 
 ### Presentation Query Message
 
-|              |                                                                                                                                                                                                                                                                                              |
-|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)                                                                                                             |
-| **Required** | </br>- `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).</br>- `@type`: A string specifying the `PresentationQueryMessage` type.                                                                                                                                     |
-| **Optional** | </br>- `presentationDefinition`: A valid `Presentation Definition` according to the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).</br>- `scope`: An array of scopes corresponding to Section [[[#scopes]]]. |
+|              |                                                                                                                                                                                                               |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)                                                                                                                           |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                                                                                                                    |
+|              | - `@type`: A string specifying the `PresentationQueryMessage` type.                                                                                                                                           |
+| **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                                                                                                                                         |
+|              | - `presentationDefinition`: A valid `Presentation Definition` according to the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition). |
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
 contain both.
@@ -168,10 +170,12 @@ Verifiable Credential.
 
 ### Presentation Response Message
 
-|              |                                                                                                                                                                                                                                                                                                                                              |
-|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-response-message-schema.json)                                                                                                                                                          |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).</br>- `@type`: A string specifying the `PresentationResponseMessage` type.</br>- `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
+|              |                                                                                                                                                                                   |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-response-message-schema.json)                                                                                            |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
+|              | - `@type`: A string specifying the `PresentationResponseMessage` type.                                                                                                            |
+|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
 
 The following are non-normative examples of the JSON response body:
 
@@ -198,10 +202,13 @@ exact error code is implementation-specific.
 
 ### Credential Message
 
-|              |                                                                                                                                                                                                                                                                                                                     |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                                                                                                                            |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).</br>- `@type`: A string specifying the `CredentialMessage` type.</br>- `requestId`: A string corresponding to the issuance request id.</br>- `credentials`: An array of `CredentialContainer` Json objects as defined in the following. |
+|              |                                                                                              |
+|--------------|----------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                  |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                   |
+|              | - `@type`: A string specifying the `CredentialMessage` type.                                 |
+|              | - `requestId`: A string corresponding to the issuance request id.                            |
+|              | - `credentials`: An array of `CredentialContainer` Json objects as defined in the following. |
 
 The following is a non-normative example of the Credential Message JSON body:
 
@@ -216,7 +223,8 @@ The [Credential Message](#credential-message)'s `credentials` property contains 
 objects.
 The `CredentialContainer` object contains the following properties:
 
-|              |                                                                                                                                                                                                    |
-|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                                                                                                        |
-| **Required** | - `@type`: A string specifying the `CredentialContainer` type.</br>- `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
+|              |                                                                                                                                 |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                                     |
+| **Required** | - `@type`: A string specifying the `CredentialContainer` type.                                                                  |
+|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
