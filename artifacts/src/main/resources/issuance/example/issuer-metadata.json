@@ -25,7 +25,7 @@
           "action": "use",
           "constraint": {
             "and": {
-              "leftOperand": "iatp:CredentialPrereq",
+              "leftOperand": "CredentialPrereq",
               "operator": "eq",
               "rightOperand": "active"
             }
