@@ -14,41 +14,65 @@
       "properties": {
         "@context": {
           "$ref": "https://w3id.org/dspace-dcp/v0.8/common/context-schema.json"
-        },
-        "scope": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       },
-      "oneOf": [
+      "allOf": [
         {
-          "properties": {
-            "@type": {
-              "type": "string",
-              "const": "PresentationQueryMessage"
+          "oneOf": [
+            {
+              "properties": {
+                "scope": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "scope"
+              ]
+            },
+            {
+              "properties": {
+                "presentationDefinition": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "presentationDefinition"
+              ]
             }
-          },
-          "required": [
-            "@type"
           ]
         },
         {
-          "properties": {
-            "type": {
-              "type": "string",
-              "const": "PresentationQueryMessage"
+          "oneOf": [
+            {
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "PresentationQueryMessage"
+                }
+              },
+              "required": [
+                "@type"
+              ]
+            },
+            {
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "PresentationQueryMessage"
+                }
+              },
+              "required": [
+                "type"
+              ]
             }
-          },
-          "required": [
-            "type"
           ]
         }
       ],
       "required": [
-        "@context",
-        "scope"
+        "@context"
       ]
     }
   }
