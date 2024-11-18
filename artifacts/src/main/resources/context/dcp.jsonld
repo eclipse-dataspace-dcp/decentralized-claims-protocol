@@ -102,6 +102,7 @@
         }
       }
     },
+    "IssuerService": "dcp:IssuerService",
     "PresentationQueryMessage": {
       "@id": "dcp:PresentationQueryMessage",
       "@context": {

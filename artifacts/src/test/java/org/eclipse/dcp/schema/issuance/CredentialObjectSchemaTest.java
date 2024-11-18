@@ -42,7 +42,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                       "constraint": {
                         "and": [
                           {
-                            "leftOperand": "iatp:CredentialPrereq",
+                            "leftOperand": "CredentialPrereq",
                             "operator": "eq",
                             "rightOperand": "active"
                           }
@@ -76,7 +76,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                       "constraint": {
                         "and": [
                           {
-                            "leftOperand": "iatp:CredentialPrereq",
+                            "leftOperand": "CredentialPrereq",
                             "operator": "eq",
                             "rightOperand": "active"
                           }
