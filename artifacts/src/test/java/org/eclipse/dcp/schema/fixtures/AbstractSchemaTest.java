@@ -31,14 +31,15 @@ public abstract class AbstractSchemaTest {
     protected static final String ONE_OF = "oneOf";
     protected static final String TYPE = "type";
     protected static final String ENUM = "enum";
-
+    protected static final String PRESENTATION_EXCHANGE_PREFIX = "https://identity.foundation/";
     private static final String CLASSPATH_SCHEMA = "classpath:/";
-
     protected JsonSchema schema;
 
     protected void setUp(String schemaFile) {
         var schemaFactory = JsonSchemaFactory.getInstance(V202012, builder ->
-                builder.schemaMappers(schemaMappers -> schemaMappers.mapPrefix(DCP_PREFIX, CLASSPATH_SCHEMA))
+                builder.schemaMappers(schemaMappers ->
+                        schemaMappers.mapPrefix(DCP_PREFIX, CLASSPATH_SCHEMA)
+                                .mapPrefix(PRESENTATION_EXCHANGE_PREFIX, CLASSPATH_SCHEMA))
         );
 
         schema = schemaFactory.getSchema(SchemaLocation.of(DCP_PREFIX + schemaFile));

@@ -35,7 +35,8 @@
             {
               "properties": {
                 "presentationDefinition": {
-                  "type": "object"
+                  "type": "object",
+                  "$ref": "https://identity.foundation/presentation-exchange/schemas/presentation-definition.json"
                 }
               },
               "required": [

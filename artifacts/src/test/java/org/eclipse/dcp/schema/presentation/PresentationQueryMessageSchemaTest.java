@@ -34,7 +34,34 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
               "@type": "PresentationQueryMessage",
-              "presentationDefinition": {}
+              "presentationDefinition": {
+                "id": "presentation1",
+                "input_descriptors": [
+                {
+                      "id": "organization credential",
+                      "format": {
+                        "ldp_vc": {
+                          "proof_type": [
+                            "Ed25519Signature2018"
+                          ]
+                        }
+                      },
+                      "constraints": {
+                        "fields": [
+                          {
+                            "path": [
+                              "$.type"
+                            ],
+                            "filter": {
+                              "type": "string",
+                              "pattern": "OrganizationCredential"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                ]
+              }
             }""";
 
     private static final String INVALID_PRESENTATION_QUERY_MESSAGE_NO_SCOPE = """
