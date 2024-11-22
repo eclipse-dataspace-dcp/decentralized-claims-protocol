@@ -51,5 +51,5 @@ The Issuer Service is run by trust anchor and manages the lifecycle of Verifiabl
 dataspace may contain multiple Issuer Services run by different trust anchors. The Issuer Service:
 
 - Issues VCs for dataspace participants.
-- Manages revocation lists for VC types it issues based on [[[vc-bitstring-status-list-20230427]]].
+- Manages revocation lists for VC types it issues based on [[[vc-bitstring-status-list]]].
 - Provides cryptographic material used to verify VPs and VCs. 

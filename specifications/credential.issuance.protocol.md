@@ -262,7 +262,7 @@ less than the rotation period of the keys used to sign their proofs.
 
 ## Verifiable Credential Revocation
 
-[=Verifiable Credential=] revocation MUST be supported using the [[[vc-bitstring-status-list-20230427]]] specification.
+[=Verifiable Credential=] revocation MUST be supported using the [[[vc-bitstring-status-list]]] specification.
 Note that implementations MAY support multiple lists.
 
 ## ODRL (Open Digital Rights Language) Profile
