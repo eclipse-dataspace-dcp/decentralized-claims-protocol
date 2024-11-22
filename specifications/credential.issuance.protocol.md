@@ -134,7 +134,7 @@ exact error code is implementation-specific.
 
 |              |                                                                                                                      |
 |--------------|----------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                          |
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-message-schema.json)                                              |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
 |              | - `@type`: A string specifying the `Credential Message` type.                                                        |
 |              | - `requestId`: A string corresponding to the issuance request id.                                                    |
@@ -143,7 +143,7 @@ exact error code is implementation-specific.
 The following is a non-normative example of the [Credential Message](#credential-message) JSON body:
 
 <aside class="example" title="Credential Message">
-    <pre class="json" data-include="./resources/issuance/example/credential-message.json">
+    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-message.json">
     </pre>
 </aside>
 
@@ -155,7 +155,7 @@ The  [Credential Container](#credential-container) object contains the following
 
 |              |                                                                                                                                 |
 |--------------|---------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                                     |
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-message-schema.json)                                                         |
 | **Required** | - `@type`: A string specifying the `CredentialContainer` type.                                                                  |
 |              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
 

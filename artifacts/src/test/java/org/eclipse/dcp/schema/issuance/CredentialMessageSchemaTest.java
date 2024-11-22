@@ -12,7 +12,7 @@
  *
  */
 
-package org.eclipse.dcp.schema.presentation;
+package org.eclipse.dcp.schema.issuance;
 
 import org.eclipse.dcp.schema.fixtures.AbstractSchemaTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +87,7 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
 
     @BeforeEach
     void setUp() {
-        setUp("/presentation/credential-message-schema.json");
+        setUp("/issuance/credential-message-schema.json");
     }
 
 
