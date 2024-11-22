@@ -114,6 +114,51 @@ If the request is approved, the issuer endpoint will send an acknowledgement to 
 the [=Verifiable Credentials=] are ready, the [=Issuer Service=] will respond asynchronously with a write-request to the
 client's `Credential Service` using the Storage API defined in Section [[[#storage-api]]].
 
+## Storage API
+
+The Storage API defines the REQUIRED [=Credential Service=] endpoint for writing issued credentials, typically invoked by
+an [=Issuer Service=].
+
+If a client is not authorized for an endpoint request, the [=Credential Service=] SHOULD return `4xx Client Error`. The
+exact error code is implementation-specific.
+
+|                 |                                           |
+|-----------------|-------------------------------------------|
+| **Sent by**     | [=Issuer Service=]                        |
+| **HTTP Method** | `POST`                                    |
+| **URL Path**    | `/credentials`                            |
+| **Request**     | [Credential Message](#credential-message) |
+| **Response**    | `HTTP 2xx` OR `HTTP 4xx Client Error`     |
+
+### Credential Message
+
+|              |                                                                                                                      |
+|--------------|----------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                          |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
+|              | - `@type`: A string specifying the `Credential Message` type.                                                        |
+|              | - `requestId`: A string corresponding to the issuance request id.                                                    |
+|              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following. |
+
+The following is a non-normative example of the [Credential Message](#credential-message) JSON body:
+
+<aside class="example" title="Credential Message">
+    <pre class="json" data-include="./resources/issuance/example/credential-message.json">
+    </pre>
+</aside>
+
+### Credential Container
+
+The [Credential Message](#credential-message)'s `credentials` property contains an array of `CredentialContainer`
+objects.
+The  [Credential Container](#credential-container) object contains the following properties:
+
+|              |                                                                                                                                 |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/credential-message-schema.json)                                                     |
+| **Required** | - `@type`: A string specifying the `CredentialContainer` type.                                                                  |
+|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
+
 ## Credential Offer API
 
 Some scenarios involve the [=Credential Issuer=] making an initial offer. For example, an out-of-band process may result
