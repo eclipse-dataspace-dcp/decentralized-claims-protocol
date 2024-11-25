@@ -33,7 +33,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                   "did:web"
                 ],
                 "cryptography": [
-                  "JsonWebKey2020"
+                  "JsonWebSignature2020"
                 ],
                 "issuancePolicy": {
                   "permission": [
@@ -67,7 +67,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                   "did:web"
                 ],
                 "cryptography": [
-                  "JsonWebKey2020"
+                  "JsonWebSignature2020"
                 ],
                 "issuancePolicy": {
                   "permission": [
