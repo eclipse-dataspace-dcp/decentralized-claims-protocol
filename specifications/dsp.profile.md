@@ -41,7 +41,7 @@ catalog. The `CredentialsSupported` object contains the following properties:
 - `types`: REQUIRED. An array of verifiable credential type strings the credential corresponds to
 - `bindingMethod`: REQUIRED. String that identifies how the credential is bound to the identifier of the
   credential holder.
-- `cryptographicSuites` REQUIRED. An array of strings that identify the cryptographic suites supported for verifying
+- `cryptography` REQUIRED. An array of strings that identify the cryptographic standards supported for verifying
   proofs. Values should either use those defined
   by [IANA JOSE](https://www.iana.org/assignments/jose/jose.xhtml#web-signature-encryption-algorithms) for JWT-based VCs
   or the [Linked Data Cryptographic Suite Registry](https://w3c-ccg.github.io/ld-cryptosuite-registry/) for LD-based

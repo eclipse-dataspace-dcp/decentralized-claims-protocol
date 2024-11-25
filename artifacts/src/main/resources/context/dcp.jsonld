@@ -46,8 +46,8 @@
           "@type": "xsd:string",
           "@container": "@set"
         },
-        "cryptographicSuites": {
-          "@id": "dcp:cryptographicSuites",
+        "cryptography": {
+          "@id": "dcp:cryptography",
           "@type": "xsd:string",
           "@container": "@set"
         },
