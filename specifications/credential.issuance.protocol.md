@@ -210,7 +210,7 @@ The following is a non-normative example of a credential offer request:
 |              | - `@type`: A string specifying the `CredentialObject` type                                                         |
 |              | - `credentialType`: An array of strings defining the type of credential being offered                              |
 | **Optional** | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to            |
-|              | - `cryptographicSuites`: An array of strings defining the algorithm used for credential signing                    |
+|              | - `cryptography`: An array of strings defining the algorithm used for credential signing                    |
 |              | - `issuancePolicy`: An ODRL Policy [[odrl-model]]. Note that the ODRL Policy MUST not contain `target` attributes  |
 |              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation` |
 

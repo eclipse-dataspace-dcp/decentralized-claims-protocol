@@ -32,7 +32,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                 "bindingMethods": [
                   "did:web"
                 ],
-                "cryptographicSuites": [
+                "cryptography": [
                   "JsonWebKey2020"
                 ],
                 "issuancePolicy": {
@@ -66,7 +66,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                 "bindingMethods": [
                   "did:web"
                 ],
-                "cryptographicSuites": [
+                "cryptography": [
                   "JsonWebKey2020"
                 ],
                 "issuancePolicy": {
@@ -95,7 +95,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("credentialType", REQUIRED),
                         error("offerReason", REQUIRED),
                         error("bindingMethods", REQUIRED),
-                        error("cryptographicSuites", REQUIRED),
+                        error("cryptography", REQUIRED),
                         error("issuancePolicy", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
