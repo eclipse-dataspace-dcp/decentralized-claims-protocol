@@ -26,12 +26,12 @@ import static org.eclipse.dcp.schema.SchemaConstants.DCP_PREFIX;
  * Base test class.
  */
 public abstract class AbstractSchemaTest {
+    public static final String PRESENTATION_EXCHANGE_PREFIX = "https://identity.foundation/";
     protected static final String MIN_CONTAINS = "minContains";
     protected static final String REQUIRED = "required";
     protected static final String ONE_OF = "oneOf";
     protected static final String TYPE = "type";
     protected static final String ENUM = "enum";
-    protected static final String PRESENTATION_EXCHANGE_PREFIX = "https://identity.foundation/";
     private static final String CLASSPATH_SCHEMA = "classpath:/";
     protected JsonSchema schema;
 
