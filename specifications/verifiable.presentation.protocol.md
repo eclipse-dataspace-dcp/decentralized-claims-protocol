@@ -101,7 +101,7 @@ exact error code is implementation-specific.
 |--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)                                                                                                                           |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                                                                                                                    |
-|              | - `@type`: A string specifying the `PresentationQueryMessage` type.                                                                                                                                           |
+|              | - `type`: A string specifying the `PresentationQueryMessage` type.                                                                                                                                           |
 | **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                                                                                                                                         |
 |              | - `presentationDefinition`: A valid `Presentation Definition` according to the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition). |
 
@@ -116,15 +116,7 @@ The following are non-normative examples of the JSON body:
 </aside>
 
 <aside class="example" title="PresentationQueryMessage with presentationDefinition">
-    <pre class="json">
-{
-  "@context": [
-    "https://w3id.org/dspace-dcp/v0.8",
-    "https://identity.foundation/presentation-exchange/submission/v1"
-  ],
-  "@type": "PresentationQueryMessage",
-  "presentationDefinition": "..."
-}
+    <pre class="json" data-include="./resources/v0.8/presentation/example/presentation-query-message-w-presentation-definition.json">
     </pre>
 </aside>
 
@@ -174,7 +166,7 @@ Verifiable Credential.
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-response-message-schema.json)                                                                                            |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
-|              | - `@type`: A string specifying the `PresentationResponseMessage` type.                                                                                                            |
+|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                            |
 |              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
 
 The following are non-normative examples of the JSON response body:
