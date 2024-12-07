@@ -41,7 +41,7 @@ for Verifiable Presentations (VPs) and Verifiable Credentials (VCs).
 
 <dfn data-lt="dids | DID Service">DID Service (DIDS).</dfn>
 
-The DIDS Creates, signs and publishes DID documents.
+The DIDS creates, signs and publishes DID documents.
 
 ### Credential Issuer Systems
 
