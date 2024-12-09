@@ -36,22 +36,28 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                   "JsonWebSignature2020"
                 ],
                 "issuancePolicy": {
-                  "permission": [
+                  "id": "Scalable trust example",
+                  "input_descriptors": [
                     {
-                      "action": "use",
-                      "constraint": {
-                        "and": [
+                      "id": "pd-id",
+                      "constraints": {
+                        "fields": [
                           {
-                            "leftOperand": "CredentialPrereq",
-                            "operator": "eq",
-                            "rightOperand": "active"
+                            "path": [
+                              "$.holderIdentifier"
+                            ],
+                            "filter": {
+                              "type": "string",
+                              "pattern": "^BPN[LS][a-zA-Z0-9]{12}$"
+                            }
                           }
                         ]
                       }
                     }
                   ]
                 }
-            }""";
+            }
+            """;
 
     private static final String INVALID_CREDENTIAL_OBJECT = """
             {
@@ -99,7 +105,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                         error("issuancePolicy", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(3)
+                .hasSize(6)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@type", REQUIRED));
 

@@ -203,16 +203,16 @@ The following is a non-normative example of a credential offer request:
 
 ### CredentialObject
 
-|              |                                                                                                                    |
-|--------------|--------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-object-schema.json)                                             |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                        |
-|              | - `@type`: A string specifying the `CredentialObject` type                                                         |
-|              | - `credentialType`: An array of strings defining the type of credential being offered                              |
-| **Optional** | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to            |
-|              | - `cryptography`: An array of strings defining the algorithm used for credential signing                    |
-|              | - `issuancePolicy`: An ODRL Policy [[odrl-model]]. Note that the ODRL Policy MUST not contain `target` attributes  |
-|              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation` |
+|              |                                                                                                                                                                                                                               |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-object-schema.json)                                                                                                                                                        |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                   |
+|              | - `@type`: A string specifying the `CredentialObject` type                                                                                                                                                                    |
+|              | - `credentialType`: An array of strings defining the type of credential being offered                                                                                                                                         |
+| **Optional** | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
+|              | - `cryptography`: An array of strings defining the algorithm used for credential signing                                                                                                                                      |
+|              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
+|              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                            |
 
 The following is a non-normative example of a `CredentialObject`:
 
@@ -309,76 +309,3 @@ less than the rotation period of the keys used to sign their proofs.
 
 [=Verifiable Credential=] revocation MUST be supported using the [[[vc-bitstring-status-list-20230427]]] specification.
 Note that implementations MAY support multiple lists.
-
-## ODRL (Open Digital Rights Language) Profile
-
-An ODRL issuance and re-issuance policy may be associated with a set of `scopes` or
-a [DIF Presentation Exchange presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
-
-This specification defines two ODRL attributes for the Policy class [[odrl]] sect. 2.1) under the `dspace-dcp`
-namespace:
-
-- **scope** - Either a single `string` or an `array` of strings containing `scope` values
-- **presentationDefinition** - Either an object containing an `@id` attribute with a URI value referencing
-  a `presentation definition`, or a `presentation definition` object.
-
-It is an error to specify both attributes. The value of these attributes identify `Verifiable Presentations` required
-for issuance or re-issuance.
-
-The following are non-normative examples of the `scope` attribute:
-
-<aside class="example" title="Array of scopes">
-   <pre class="json">
-{
-  "issuancePolicy": {
-    "scope": [
-      "example_scope1",
-      "example_scope2"
-    ]
-  }
-}
-   </pre>
-</aside>
-
-and
-
-<aside class="example" title="String scope">
-   <pre class="json">
-{
-  "issuancePolicy": {
-    "scope": "example_scope1"
-  }
-}
-   </pre>
-</aside>
-
-The following is a non-normative examples of the `presentationDefinitiion` attribute:
-
-<aside class="example" title="Presentation definition reference">
-   <pre class="json">
-{
-  "issuancePolicy": {
-    "presentationDefinition": {
-      "@id": "https://expample.com/example_definition"
-    }
-  }
-}
-   </pre>
-</aside>
-
-and
-
-<aside class="example" title="Presentation definition object">
-   <pre class="json">
-{
-  "issuancePolicy": {
-    "presentationDefinition": {
-      "id": "example_presentation_definition",
-      "input_descriptors": [
-        "..."
-      ]
-    }
-  }
-}
-   </pre>
-</aside>

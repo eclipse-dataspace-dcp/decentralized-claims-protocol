@@ -51,7 +51,10 @@
           "@type": "xsd:string",
           "@container": "@set"
         },
-        "issuancePolicy": "dcp:issuancePolicy"
+        "issuancePolicy": {
+          "@id": "dcp:issuancePolicy",
+          "@type":"@json"
+        }
       }
     },
     "CredentialOfferMessage": {
