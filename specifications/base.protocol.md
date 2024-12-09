@@ -6,7 +6,7 @@ This section defines the core identity concepts used by the current specificatio
 
 Decentralization is achieved in the following ways:
 
-- **Self-Issued Identity Tokens** - Each participant is responsible for creating and cryptographically signing its own
+- **Self-Issued ID Tokens** - Each participant is responsible for creating and cryptographically signing its own
   identity tokens. A central identity provider is therefore not required, eliminating a potential source of network
   failure.
 - **Participant Verifiable Credential and Cryptographic Material Management** - Each participant is responsible for
