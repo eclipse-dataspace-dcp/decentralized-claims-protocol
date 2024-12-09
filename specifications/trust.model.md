@@ -9,7 +9,7 @@ present the [=Verifiable Credential=] to the [=Verifier=].
 
 The [=Verifier=] decides which [=Verifiable Credentials=] it will accept and the [=Holder=] decides
 which [=Verifiable Credentials=] it will present. All parties rely on a [=Verifiable Data Registry=] to obtain
-identifier information, including cryptographic material, and metadata about [=Verifiable Credentials=], such as
+identifier information and metadata about [=Verifiable Credentials=], such as
 schemas. Furthermore, parties communicate with each other using the protocols defined in the Dataspace Protocol
 specification [[dsp-base]] and this specification.
 
@@ -33,9 +33,9 @@ The Issuer-Holder-Verifier model is mapped to the following architecture in this
   contain an access token bound to the [=Verifier=] that will be used to request a [=Verifiable Presentation=].
   The [=Holder=]'s [=Credential Service=] will verify the access token with the [=STS=].
 - The [=Verifier=] runs a [=Participant Agent=] that engages in dataspace message exchanges with the [=Holder=]
-  agent [[dsp-base]]. When it receives a request, it will use the [=Verifiable Data Registry=] to resolve
-  the [=Holder=]'s DID document. The [=Participant Agent=] will resolve the [=Credential Service=] endpoint from the DID
-  document. The [=Participant Agent=] will send a request for a [=Verifiable Presentation=] to
+  agent [[dsp-base]]. When it receives a request, it will resolve the [=Holder=]'s DID document from
+  the [=Verifiable Data Registry=]. The [=Participant Agent=] will resolve the [=Credential Service=] endpoint from the
+  DID document. The [=Participant Agent=] will send a request for a [=Verifiable Presentation=] to
   the [=Credential Service=] using the protocol defined in Section [[[#verifiable-presentation-protocol]]]. This
   request will include the access token as a claim in the Self-Issued ID Token received from the [=Holder=]'s agent.
   The [=Participant Agent=] will then match the credentials returned in the [=Verifiable Presentation=] against the
