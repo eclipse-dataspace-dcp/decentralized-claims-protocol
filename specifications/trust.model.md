@@ -111,7 +111,8 @@ The [=Holder=] expects:
 The [=Verifier=] expects:
 
 - The [=Dataspace Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
-  of scope of the current specification but may be part of the [=Verifiable Data Registry=].
+  of scope of the current specification but may be part of the [=Verifiable Data Registry=]. [=Verifiers=] can
+  recognize several [=Dataspace Authorities=].
 
 - The [=Issuer=] to issue credentials correctly, including binding them to the holder in a tamper-proof way, and
   maintaining credential integrity.
