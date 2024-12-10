@@ -97,13 +97,13 @@ exact error code is implementation-specific.
 
 ### Presentation Query Message
 
-|              |                                                                                                                                                                                                               |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)                                                                                                                           |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                                                                                                                    |
-|              | - `type`: A string specifying the `PresentationQueryMessage` type.                                                                                                                                           |
-| **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                                                                                                                                         |
-|              | - `presentationDefinition`: A valid `Presentation Definition` according to the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition). |
+|              |                                                                                                      |
+|--------------|------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)                  |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                           |
+|              | - `type`: A string specifying the `PresentationQueryMessage` type.                                   |
+| **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                                |
+|              | - `presentationDefinition`: A valid `Presentation Definition` according to [[presentation-ex]]. |
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
 contain both.
