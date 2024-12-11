@@ -29,11 +29,11 @@
               "fields": [
                 {
                   "path": [
-                    "$.holderIdentifier"
+                    "$.vc.type"
                   ],
                   "filter": {
                     "type": "string",
-                    "pattern": "^BPN[LS][a-zA-Z0-9]{12}$"
+                    "pattern": "^AttestationCredential$"
                   }
                 }
               ]
