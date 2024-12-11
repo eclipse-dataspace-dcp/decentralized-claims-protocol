@@ -1,6 +1,6 @@
 # Verifiable Presentation Protocol
 
-This section defines a protocol for storing and presenting Verifiable Credentials and other identity-related
+This section defines a protocol for storing and presenting [=Verifiable Credentials=] and other identity-related
 resources. The Verifiable Presentation Protocol covers the following aspects:
 
 - Endpoints and message types for storing identity resources belonging to a [=Holder=] in a [=Credential Service=]
@@ -22,12 +22,12 @@ The following sequence diagram depicts a non-normative flow where a client inter
 ![alt text 2](auth.flow.png "Presentation Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
-   request is implementation specific. The client may include a set of scopes that define the Verifiable Credentials the
-   client wants the Verifier to have access to. This set of scopes is determined out of band and may be derived from
-   metadata the verifier has previously made available to the client.
+   request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
+   the client wants the [=Verifier=] to have access to. This set of scopes is determined out of band and may be derived
+   from metadata the [=verifier=] has previously made available to the client.
 2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
    an access token. The access token can be used by the verifier to request [=Verifiable Credentials=] from the client's
-   Credential Service.
+   [=Credential Service=].
 3. The client makes a request to the [=Verifier=] for a protected resource and includes the [=Self-Issued ID Token=].
 4. The [=Verifier=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
 5. The [=DID Service=] returns the DID Document. The [=Verifier=] validates the [=Self-Issued ID Token=] following
@@ -35,16 +35,15 @@ The following sequence diagram depicts a non-normative flow where a client inter
 6. The [=Verifier=] obtains the client's [=Credential Service=] endpoint address using the DID document as described in
    Section [[[#credential-service-endpoint-discovery]]]. The [=Verifier=] then issues a request with the access token
    to the [=Credential Service=] for a set of [=Verifiable Credentials=].
-7. The [=Credential Service=] validates the access token and returns a Verifiable Presentation containg the requested
-   credentials.
+7. The [=Credential Service=] validates the access token and returns a [=Verifiable Presentation=] containing the
+   requested credentials.
 
 ## Credential Service Endpoint Discovery
 
 The client [=DID Service=] MUST make the [=Credential Service=] available as a `service` entry ([[[did-core]]], sect.
-5.4) in the DID document that is resolved by its DID. The `type` attribute of the `service` entry MUST be
-`CredentialService`.
-The `serviceEndpoint` property MUST be interpreted by the Verifier as the base URL of the [=Credential Service=]. The
-following is a non-normative example of a `Credential Service` entry:
+5.4) in the DID document that is resolved by its [=DID=]. The `type` attribute of the `service` entry MUST be
+`CredentialService`. The `serviceEndpoint` property MUST be interpreted by the Verifier as the base URL of
+the [=Credential Service=]. The following is a non-normative example of a `Credential Service` entry:
 
 <aside class="example" title="Credential Service Entry in DID document">
     <pre class="json">
@@ -75,9 +74,8 @@ restrict access to resources.
 
 Implementations that support access control require an access token. To provide the opportunity
 for [=Credential Service=] implementations to enforce proof-of-possession, the access token MUST be contained in the
-`token`
-claim of a Self-Issued ID Token as defined in Section [[[#self-issued-id-tokens]]]. The [=Self-Issued ID Token=] MUST
-be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
+`token` claim of a Self-Issued ID Token as defined in Section [[[#self-issued-id-tokens]]]. The [=Self-Issued ID Token=]
+MUST be submitted in the HTTP `Authorization` header prefixed with `Bearer` of the request.
 
 ## Resolution API
 
@@ -97,12 +95,12 @@ exact error code is implementation-specific.
 
 ### Presentation Query Message
 
-|              |                                                                                                      |
-|--------------|------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)                  |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                           |
-|              | - `type`: A string specifying the `PresentationQueryMessage` type.                                   |
-| **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                                |
+|              |                                                                                                 |
+|--------------|-------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)             |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                      |
+|              | - `type`: A string specifying the `PresentationQueryMessage` type.                              |
+| **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                           |
 |              | - `presentationDefinition`: A valid `Presentation Definition` according to [[presentation-ex]]. |
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
@@ -158,7 +156,7 @@ credential by id. For example:
 `org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d`
 
 denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a
-Verifiable Credential.
+[=Verifiable Credential=].
 
 ### Presentation Response Message
 
@@ -166,7 +164,7 @@ Verifiable Credential.
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-response-message-schema.json)                                                                                            |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
-|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                            |
+|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
 |              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
 
 The following are non-normative examples of the JSON response body:

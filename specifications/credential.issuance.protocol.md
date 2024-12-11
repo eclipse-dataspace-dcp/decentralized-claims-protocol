@@ -26,7 +26,7 @@ issue a [=Verifiable Credential=]:
 6. The [=Issuer Service=] rejects the request or acknowledges receipt.
 7. At a later point in time, if the [=Verifiable Credential=] request is approved, the [=Issuer Service=] uses the
    resolved DID Document to obtain the client's [=Credential Service=] endpoint as described in
-   Section [[[#credential-service-endpoint-discovery]]] and sends the [=Verifiable Credentials] to
+   Section [[[#credential-service-endpoint-discovery]]] and sends the [=Verifiable Credentials=] to
    the [=Credential Service=]. The send operation is performed asynchronously from the client request.
 8. The [=Credential Service=] validates the access token and stores the [=Verifiable Credentials=].
 
@@ -66,8 +66,8 @@ No assumptions are made about the base URL, for example, if it is a domain, subd
 The Credential Request API defines the REQUIRED [=Issuer Service=] endpoint for requesting [=Verifiable Credentials=].
 
 The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
-the [[[#vp-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve the client's DID to
-obtain cryptographic material for validation and credential binding.
+the [[[#verifiable-presentation-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve 
+the client's [=DID=] to obtain cryptographic material for validation and credential binding.
 
 The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
 requested [=Verifiable Credentials=] into the client's `Credential Service` as defined
