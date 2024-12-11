@@ -66,7 +66,7 @@ No assumptions are made about the base URL, for example, if it is a domain, subd
 The Credential Request API defines the REQUIRED [=Issuer Service=] endpoint for requesting [=Verifiable Credentials=].
 
 The request MUST include an ID Token in the HTTP `Authorization` header prefixed with `Bearer` as defined in
-the [[[#verifiable-presentation-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve 
+the [[[#verifiable-presentation-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve
 the client's [=DID=] to obtain cryptographic material for validation and credential binding.
 
 The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
@@ -116,7 +116,8 @@ client's `Credential Service` using the Storage API defined in Section [[[#stora
 
 ## Storage API
 
-The Storage API defines the REQUIRED [=Credential Service=] endpoint for writing issued credentials, typically invoked by
+The Storage API defines the REQUIRED [=Credential Service=] endpoint for writing issued credentials, typically invoked
+by
 an [=Issuer Service=].
 
 If a client is not authorized for an endpoint request, the [=Credential Service=] SHOULD return `4xx Client Error`. The
@@ -206,10 +207,10 @@ The following is a non-normative example of a credential offer request:
 |              |                                                                                                                                                                                                                               |
 |--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-object-schema.json)                                                                                                                                                        |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                   |
-|              | - `@type`: A string specifying the `CredentialObject` type                                                                                                                                                                    |
+| **Required** | - `@type`: A string specifying the `CredentialObject` type                                                                                                                                                                    |
 |              | - `credentialType`: An array of strings defining the type of credential being offered                                                                                                                                         |
-| **Optional** | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
+| **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
+|              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
 |              | - `cryptography`: An array of strings defining the algorithm used for credential signing                                                                                                                                      |
 |              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
 |              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                            |

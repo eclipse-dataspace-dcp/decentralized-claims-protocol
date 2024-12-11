@@ -76,21 +76,26 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                   "JsonWebSignature2020"
                 ],
                 "issuancePolicy": {
-                  "permission": [
-                    {
-                      "action": "use",
-                      "constraint": {
-                        "and": [
-                          {
-                            "leftOperand": "CredentialPrereq",
-                            "operator": "eq",
-                            "rightOperand": "active"
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
+                   "id": "Scalable trust example",
+                   "input_descriptors": [
+                     {
+                       "id": "pd-id",
+                       "constraints": {
+                         "fields": [
+                           {
+                             "path": [
+                               "$.vc.type"
+                             ],
+                             "filter": {
+                               "type": "string",
+                               "pattern": "^AttestationCredential$"
+                             }
+                           }
+                         ]
+                       }
+                     }
+                   ]
+                 }
             }""";
 
     @Test
@@ -105,7 +110,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                         error("issuancePolicy", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(6)
+                .hasSize(3)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@type", REQUIRED));
 
