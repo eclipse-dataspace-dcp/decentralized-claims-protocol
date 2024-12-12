@@ -27,7 +27,7 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
     private static final String CREDENTIAL_OFFER_MESSAGE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialOfferMessage",
+              "type": "CredentialOfferMessage",
               "credentialIssuer": "issuer",
               "credentials": [%s]
             }""";
@@ -35,14 +35,14 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_ISSUER = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialOfferMessage",
+              "type": "CredentialOfferMessage",
               "credentials": [%s]
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIALS = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialOfferMessage",
+              "type": "CredentialOfferMessage",
               "credentialIssuer": "issuer"
             }""";
 
@@ -66,9 +66,9 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("credentials", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT.formatted(CREDENTIAL_OBJECT), JSON))
-                .hasSize(4)
+                .hasSize(2)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED), error("@context", REQUIRED));
+                .contains(error("type", REQUIRED), error("@context", REQUIRED));
 
     }
 

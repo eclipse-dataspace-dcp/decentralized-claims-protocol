@@ -28,7 +28,7 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
     private static final String CREDENTIAL_STATUS = """
             {
                 "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-                "@type": "CredentialStatus",
+                "type": "CredentialStatus",
                 "requestId": "requestId",
                 "status": "%s"
             }""";
@@ -36,7 +36,7 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_CREDENTIAL_STATUS = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialStatus"
+              "type": "CredentialStatus"
             }""";
 
     private static final String INVALID_CREDENTIAL_STATUS_MESSAGE_NO_TYPE_AND_CONTEXT = """
@@ -55,9 +55,9 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("requestId", REQUIRED), error("status", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_STATUS_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(4)
+                .hasSize(2)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED), error("@context", REQUIRED));
+                .contains(error("type", REQUIRED), error("@context", REQUIRED));
     }
 
     @ParameterizedTest

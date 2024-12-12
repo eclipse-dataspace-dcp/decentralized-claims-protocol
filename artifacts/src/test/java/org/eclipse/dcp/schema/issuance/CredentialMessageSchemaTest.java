@@ -28,10 +28,10 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                "@context": [
                  "https://w3id.org/dspace-dcp/v0.8"
                ],
-               "@type": "CredentialMessage",
+               "type": "CredentialMessage",
                "credentials": [
                  {
-                   "@type": "CredentialContainer",
+                   "type": "CredentialContainer",
                    "payload": "jwt"
                  }
                ],
@@ -41,16 +41,16 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_CREDENTIAL_MESSAGE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialMessage"
+              "type": "CredentialMessage"
             }""";
 
     private static final String INVALID_CREDENTIAL_MESSAGE_INVALID_CREDENTIAL_CONTAINER = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialMessage",
+              "type": "CredentialMessage",
               "credentials": [
                  {
-                   "@type": "CredentialContainer"
+                   "type": "CredentialContainer"
                  }
                ],
               "requestId": "requestId"
@@ -61,7 +61,7 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
             {
               "credentials": [
                  {
-                   "@type": "CredentialContainer",
+                   "type": "CredentialContainer",
                    "payload": "jwt"
                  }
               ],
@@ -80,9 +80,9 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("payload", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(4)
+                .hasSize(2)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED), error("@context", REQUIRED));
+                .contains(error("type", REQUIRED), error("@context", REQUIRED));
     }
 
     @BeforeEach

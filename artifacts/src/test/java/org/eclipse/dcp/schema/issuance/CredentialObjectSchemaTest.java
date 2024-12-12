@@ -25,8 +25,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
 
     public static final String CREDENTIAL_OBJECT = """
             {
-                "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-                "@type": "CredentialObject",
+                "type": "CredentialObject",
                 "credentialType": ["VerifiableCredential"],
                 "offerReason": "reissue",
                 "bindingMethods": [
@@ -61,8 +60,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_OBJECT = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialObject"
+              "type": "CredentialObject"
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
@@ -110,9 +108,9 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                         error("issuancePolicy", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(3)
+                .hasSize(1)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED));
+                .contains(error("type", REQUIRED));
 
     }
 
