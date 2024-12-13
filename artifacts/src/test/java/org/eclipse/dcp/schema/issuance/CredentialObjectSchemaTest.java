@@ -71,7 +71,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                   "did:web"
                 ],
                 "profiles": [
-                  "vc20-bssl/jwt", "vc10-sl2021/jwt","
+                  "vc20-bssl/jwt", "vc10-sl2021/jwt"
                 ],
                 "issuancePolicy": {
                    "id": "Scalable trust example",
