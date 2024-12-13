@@ -36,7 +36,6 @@
           "@id": "dcp:credentialType",
           "@container": "@set"
         },
-        "format": "dcp:format",
         "offerReason": {
           "@id": "dcp:offerReason",
           "@type": "xsd:string"
@@ -46,8 +45,8 @@
           "@type": "xsd:string",
           "@container": "@set"
         },
-        "cryptography": {
-          "@id": "dcp:cryptography",
+        "profiles": {
+          "@id": "dcp:profiles",
           "@type": "xsd:string",
           "@container": "@set"
         },

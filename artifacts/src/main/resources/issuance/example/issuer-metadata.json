@@ -17,11 +17,8 @@
       "bindingMethods": [
         "did:web"
       ],
-      "cryptography": [
-        "JsonWebSignature2020",
-        "eddsa-rdfc-2022",
-        "eddsa-jcs-2022",
-        "..."
+      "profiles": [
+        "JsonWebSignature2020", "eddsa-rdfc-2022", "eddsa-jcs-2022", "..."
       ],
       "issuancePolicy": {
         "id": "Scalable trust example",
