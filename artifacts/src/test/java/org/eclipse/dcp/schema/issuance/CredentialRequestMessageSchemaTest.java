@@ -26,7 +26,7 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
     private static final String CREDENTIAL_REQUEST_MESSAGE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialRequestMessage",
+              "type": "CredentialRequestMessage",
               "format": "jwt",
               "credentialType": ["VerifiableCredential"]
             }""";
@@ -34,14 +34,14 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialRequestMessage",
+              "type": "CredentialRequestMessage",
               "credentialType": ["VerifiableCredential"]
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_TYPE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "CredentialRequestMessage",
+              "type": "CredentialRequestMessage",
               "format": "jwt"
             }""";
 
@@ -64,9 +64,9 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("credentialType", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(4)
+                .hasSize(2)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED), error("@context", REQUIRED));
+                .contains(error("type", REQUIRED), error("@context", REQUIRED));
 
 
     }

@@ -20,36 +20,17 @@
           "items": {
             "$ref": "https://w3id.org/dspace-dcp/v0.8/issuance/credential-object-schema.json#/definitions/CredentialObject"
           }
+        },
+        "type": {
+          "type": "string",
+          "const": "IssuerMetadata"
         }
       },
-      "oneOf": [
-        {
-          "properties": {
-            "@type": {
-              "type": "string",
-              "const": "IssuerMetadata"
-            }
-          },
-          "required": [
-            "@type"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "type": "string",
-              "const": "IssuerMetadata"
-            }
-          },
-          "required": [
-            "type"
-          ]
-        }
-      ],
       "required": [
         "@context",
         "credentialIssuer",
-        "credentialsSupported"
+        "credentialsSupported",
+        "type"
       ]
     }
   }

@@ -23,34 +23,15 @@
               "string"
             ]
           }
+        },
+        "type": {
+          "type": "string",
+          "const": "PresentationResponseMessage"
         }
       },
-      "oneOf": [
-        {
-          "properties": {
-            "@type": {
-              "type": "string",
-              "const": "PresentationResponseMessage"
-            }
-          },
-          "required": [
-            "@type"
-          ]
-        },
-        {
-          "properties": {
-            "type": {
-              "type": "string",
-              "const": "PresentationResponseMessage"
-            }
-          },
-          "required": [
-            "type"
-          ]
-        }
-      ],
       "required": [
         "@context",
+        "type",
         "presentation"
       ]
     }

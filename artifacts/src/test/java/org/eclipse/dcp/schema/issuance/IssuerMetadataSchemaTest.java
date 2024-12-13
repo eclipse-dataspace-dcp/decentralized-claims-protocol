@@ -27,7 +27,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
     public static final String ISSUER_METADATA = """
             {
                 "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-                "@type": "IssuerMetadata",
+                "type": "IssuerMetadata",
                 "credentialIssuer": "did:web:issuer-url",
                 "credentialsSupported": [%s]
             }""";
@@ -35,7 +35,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_ISSUER_METADATA = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "IssuerMetadata"
+              "type": "IssuerMetadata"
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
@@ -52,9 +52,9 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("credentialIssuer", REQUIRED), error("credentialsSupported", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT.formatted(CREDENTIAL_OBJECT), JSON))
-                .hasSize(4)
+                .hasSize(2)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED), error("@context", REQUIRED));
+                .contains(error("type", REQUIRED), error("@context", REQUIRED));
     }
 
     @BeforeEach

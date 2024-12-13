@@ -26,21 +26,21 @@ public class PresentationResponseMessageSchemaTest extends AbstractSchemaTest {
     private static final String PRESENTATION_RESPONSE_MESSAGE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "PresentationResponseMessage",
+              "type": "PresentationResponseMessage",
               "presentation": ["presentation1", "presentation2"]
             }""";
 
     private static final String PRESENTATION_RESPONSE_MESSAGE_WITH_OBJECT = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "PresentationResponseMessage",
+              "type": "PresentationResponseMessage",
               "presentation": ["presentation1", {"@id": "presentation2"}]
             }""";
 
     private static final String INVALID_PRESENTATION_RESPONSE_MESSAGE_NO_PRESENTATION = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v0.8"],
-              "@type": "PresentationResponseMessage"
+              "type": "PresentationResponseMessage"
             }""";
 
     private static final String INVALID_PRESENTATION_RESPONSE_MESSAGE_NO_TYPE_AND_CONTEXT = """
@@ -57,9 +57,9 @@ public class PresentationResponseMessageSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error("presentation", REQUIRED));
 
         assertThat(schema.validate(INVALID_PRESENTATION_RESPONSE_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(4)
+                .hasSize(2)
                 .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED), error("@type", REQUIRED), error("@context", REQUIRED));
+                .contains(error("type", REQUIRED), error("@context", REQUIRED));
     }
 
     @BeforeEach
