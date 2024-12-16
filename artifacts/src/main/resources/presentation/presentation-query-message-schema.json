@@ -7,13 +7,13 @@
       "$ref": "#/definitions/PresentationQueryMessage"
     }
   ],
-  "$id": "https://w3id.org/dspace-dcp/v0.8/presentation/presentation-query-message-schema.json",
+  "$id": "https://w3id.org/dspace-dcp/v1.0/presentation/presentation-query-message-schema.json",
   "definitions": {
     "PresentationQueryMessage": {
       "type": "object",
       "properties": {
         "@context": {
-          "$ref": "https://w3id.org/dspace-dcp/v0.8/common/context-schema.json"
+          "$ref": "https://w3id.org/dspace-dcp/v1.0/common/context-schema.json"
         },
         "type": {
           "type": "string",

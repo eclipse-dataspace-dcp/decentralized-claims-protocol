@@ -26,7 +26,7 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
     private static final String CREDENTIAL_MESSAGE_MESSAGE = """
             {
                "@context": [
-                 "https://w3id.org/dspace-dcp/v0.8"
+                 "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
                ],
                "type": "CredentialMessage",
                "credentials": [
@@ -40,13 +40,13 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_MESSAGE = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialMessage"
             }""";
 
     private static final String INVALID_CREDENTIAL_MESSAGE_INVALID_CREDENTIAL_CONTAINER = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialMessage",
               "credentials": [
                  {

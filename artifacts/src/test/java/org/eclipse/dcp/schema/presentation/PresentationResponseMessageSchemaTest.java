@@ -25,21 +25,21 @@ public class PresentationResponseMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String PRESENTATION_RESPONSE_MESSAGE = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "PresentationResponseMessage",
               "presentation": ["presentation1", "presentation2"]
             }""";
 
     private static final String PRESENTATION_RESPONSE_MESSAGE_WITH_OBJECT = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "PresentationResponseMessage",
               "presentation": ["presentation1", {"@id": "presentation2"}]
             }""";
 
     private static final String INVALID_PRESENTATION_RESPONSE_MESSAGE_NO_PRESENTATION = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "PresentationResponseMessage"
             }""";
 

@@ -19,7 +19,7 @@ package org.eclipse.dcp.schema;
  */
 public interface SchemaConstants {
 
-    String DCP_CONTEXT = "https://w3id.org/dspace-dcp/v0.8";
-    String DCP_PREFIX = "https://w3id.org/dspace-dcp/v0.8/";
+    String DCP_CONTEXT = "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld";
+    String DCP_PREFIX = "https://w3id.org/dspace-dcp/v1.0/";
 
 }

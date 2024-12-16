@@ -27,7 +27,7 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
 
     private static final String CREDENTIAL_STATUS = """
             {
-                "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+                "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
                 "type": "CredentialStatus",
                 "requestId": "requestId",
                 "status": "%s"
@@ -35,7 +35,7 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_STATUS = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialStatus"
             }""";
 
