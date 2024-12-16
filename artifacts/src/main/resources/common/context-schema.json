@@ -18,7 +18,7 @@
         }
       },
       "contains": {
-        "const": "https://w3id.org/dspace-dcp/v0.8"
+        "const": "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
       }
     }
   }

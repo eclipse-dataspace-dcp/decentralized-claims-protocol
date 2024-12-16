@@ -26,7 +26,7 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String CREDENTIAL_OFFER_MESSAGE = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialOfferMessage",
               "credentialIssuer": "issuer",
               "credentials": [%s]
@@ -34,14 +34,14 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_ISSUER = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialOfferMessage",
               "credentials": [%s]
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIALS = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialOfferMessage",
               "credentialIssuer": "issuer"
             }""";

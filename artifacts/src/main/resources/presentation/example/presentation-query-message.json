@@ -1,6 +1,6 @@
 {
   "@context": [
-    "https://w3id.org/dspace-dcp/v0.8"
+    "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
   ],
   "type": "PresentationQueryMessage",
   "scope": [

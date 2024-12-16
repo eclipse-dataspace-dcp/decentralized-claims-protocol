@@ -25,14 +25,14 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String PRESENTATION_QUERY_MESSAGE = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "PresentationQueryMessage",
               "scope": ["scope1", "scope2"]
             }""";
 
     private static final String PRESENTATION_QUERY_MESSAGE_WITH_PRESENTATION_DEF = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "PresentationQueryMessage",
               "presentationDefinition": {
                 "id": "presentation1",
@@ -66,7 +66,7 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_PRESENTATION_QUERY_MESSAGE_NO_SCOPE = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "PresentationQueryMessage"
             }""";
 

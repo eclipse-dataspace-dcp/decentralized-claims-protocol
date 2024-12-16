@@ -26,7 +26,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
 
     public static final String ISSUER_METADATA = """
             {
-                "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+                "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
                 "type": "IssuerMetadata",
                 "credentialIssuer": "did:web:issuer-url",
                 "credentialsSupported": [%s]
@@ -34,7 +34,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_ISSUER_METADATA = """
             {
-              "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "IssuerMetadata"
             }""";
 

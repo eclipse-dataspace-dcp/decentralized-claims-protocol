@@ -54,7 +54,7 @@ public class IssuanceContextTest extends AbstractJsonLdTest {
     void verifyCredentialStatus_withStatus(String status) throws IOException {
         var msg = """
                 {
-                    "@context": ["https://w3id.org/dspace-dcp/v0.8"],
+                    "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
                     "type": "CredentialStatus",
                     "requestId": "requestId",
                     "status": "%s"
