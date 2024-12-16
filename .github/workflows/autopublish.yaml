@@ -22,8 +22,8 @@ jobs:
         run: |
           cp specifications/*.png .
           cp specifications/*.yaml .
-          mkdir -p resources/v0.8
-          cp -r artifacts/src/main/resources/* resources/v0.8
+          mkdir -p resources/v1.0
+          cp -r artifacts/src/main/resources/* resources/v1.0
           rm -rf artifacts
       - name: Run Respec
         run:
