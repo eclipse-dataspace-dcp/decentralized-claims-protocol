@@ -19,7 +19,7 @@ resolve credential-related resources. The protocol also provides a mechanism for
 The following sequence diagram depicts a non-normative flow where a client interacts with a [=Verifier=] to present a
 [=Verifiable Credential=]:
 
-![alt text 2](auth.flow.png "Presentation Flow")
+![alt text 2](specifications/auth.flow.png "Presentation Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
    request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
@@ -50,7 +50,7 @@ the [=Credential Service=]. The following is a non-normative example of a `Crede
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
-    "https://w3id.org/dspace-dcp/v0.8"
+    "https://w3id.org/dspace-dcp/v1.0"
   ],
   "service": [
     {
@@ -97,7 +97,7 @@ exact error code is implementation-specific.
 
 |              |                                                                                                 |
 |--------------|-------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-query-message-schema.json)             |
+| **Schema**   | [JSON Schema](./resources/presentation/presentation-query-message-schema.json)                  |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                      |
 |              | - `type`: A string specifying the `PresentationQueryMessage` type.                              |
 | **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                           |
@@ -109,12 +109,12 @@ contain both.
 The following are non-normative examples of the JSON body:
 
 <aside class="example" title="PresentationQueryMessage with scope">
-    <pre class="json" data-include="./resources/v0.8/presentation/example/presentation-query-message.json">
+    <pre class="json" data-include="./resources/presentation/example/presentation-query-message.json">
     </pre>
 </aside>
 
 <aside class="example" title="PresentationQueryMessage with presentationDefinition">
-    <pre class="json" data-include="./resources/v0.8/presentation/example/presentation-query-message-w-presentation-definition.json">
+    <pre class="json" data-include="./resources/presentation/example/presentation-query-message-w-presentation-definition.json">
     </pre>
 </aside>
 
@@ -162,7 +162,7 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 
 |              |                                                                                                                                                                                   |
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/presentation/presentation-response-message-schema.json)                                                                                            |
+| **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                 |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
 |              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
 |              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
@@ -170,6 +170,6 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 The following are non-normative examples of the JSON response body:
 
 <aside class="example" title="Presentation Response Message">
-    <pre class="json" data-include="./resources/v0.8/presentation/example/presentation-response-message.json">
+    <pre class="json" data-include="./resources/presentation/example/presentation-response-message.json">
     </pre>
 </aside>
