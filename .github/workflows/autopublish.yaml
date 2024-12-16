@@ -18,16 +18,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      - name: Copy assets up a level
+      - name: Create Release folders
         run: |
-          cp specifications/*.png .
-          cp specifications/*.yaml .
-          mkdir -p resources/v1.0
-          cp -r artifacts/src/main/resources/* resources/v1.0
-          rm -rf artifacts
-      - name: Run Respec
-        run:
-          npx respec --src index.html --out index.html.build.html -t 60 --disable-sandbox --verbose
+          chmod +x .github/scripts/checkout-tags.sh
+          ./.github/scripts/checkout-tags.sh
+      - name: Redirect top to head
+        run: cp .github/scripts/index.html .
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

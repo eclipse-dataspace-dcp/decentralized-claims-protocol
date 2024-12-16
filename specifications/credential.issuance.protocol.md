@@ -9,7 +9,7 @@ where a manual workflow is required.
 The following sequence diagram depicts a non-normative flow where a client interacts with a [=Credential Issuer=] to
 issue a [=Verifiable Credential=]:
 
-![Issuance Flow](issuance.flow.png "Inssuance Flow")
+![Issuance Flow](specifications/issuance.flow.png "Issuance Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
    request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
@@ -91,8 +91,8 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 
 |              |                                                                                     |
 |--------------|-------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-request-message-schema.json)     |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).>        |
+| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)          |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).         |
 |              | - `@type`: A string specifying the `CredentialRequestMessage` type                  |
 |              | - `format`:  A JSON string that describes the format of the credential to be issued |
 |              | - `type`: A JSON array of strings that specifies the VC type being requested        |
@@ -100,7 +100,7 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 The following is a non-normative example of a `CredentialRequestMessage`:
 
 <aside class="example" title="CredentialRequestMessage">
-    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-request-message.json">
+    <pre class="json" data-include="./resources/issuance/example/credential-request-message.json">
     </pre>
 </aside> 
 
@@ -135,7 +135,7 @@ exact error code is implementation-specific.
 
 |              |                                                                                                                      |
 |--------------|----------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-message-schema.json)                                              |
+| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                   |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
 |              | - `@type`: A string specifying the `Credential Message` type.                                                        |
 |              | - `requestId`: A string corresponding to the issuance request id.                                                    |
@@ -144,7 +144,7 @@ exact error code is implementation-specific.
 The following is a non-normative example of the [Credential Message](#credential-message) JSON body:
 
 <aside class="example" title="Credential Message">
-    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-message.json">
+    <pre class="json" data-include="./resources/issuance/example/credential-message.json">
     </pre>
 </aside>
 
@@ -156,7 +156,7 @@ The  [Credential Container](#credential-container) object contains the following
 
 |              |                                                                                                                                 |
 |--------------|---------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-message-schema.json)                                                         |
+| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                              |
 | **Required** | - `@type`: A string specifying the `CredentialContainer` type.                                                                  |
 |              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
 
@@ -185,7 +185,7 @@ a [=Verifiable Credential=] offer.
 
 |              |                                                                                                                    |
 |--------------|--------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-offer-message-schema.json)                                      |
+| **Schema**   | [JSON Schema](./resources/issuance/credential-offer-message-schema.json)                                           |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                         |
 |              | - `@type`: A string specifying the `CredentialOfferMessage` type                                                   |
 |              | - `credentialIssuer`:  The [=Credential Issuer=] DID                                                               |
@@ -198,7 +198,7 @@ MUST resolve this string value to the respective object.
 The following is a non-normative example of a credential offer request:
 
 <aside class="example" title="CredentialOfferMessage">
-    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-offer-message.json">
+    <pre class="json" data-include="./resources/issuance/example/credential-offer-message.json">
     </pre>
 </aside>   
 
@@ -206,7 +206,7 @@ The following is a non-normative example of a credential offer request:
 
 |              |                                                                                                                                                                                                                               |
 |--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-object-schema.json)                                                                                                                                                        |
+| **Schema**   | [JSON Schema](./resources/issuance/credential-object-schema.json)                                                                                                                                                             |
 | **Required** | - `@type`: A string specifying the `CredentialObject` type                                                                                                                                                                    |
 |              | - `credentialType`: An array of strings defining the type of credential being offered                                                                                                                                         |
 | **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
@@ -218,7 +218,7 @@ The following is a non-normative example of a credential offer request:
 The following is a non-normative example of a `CredentialObject`:
 
 <aside class="example" title="CredentialObject">
-    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-object.json">
+    <pre class="json" data-include="./resources/issuance/example/credential-object.json">
     </pre>
 </aside>  
 
@@ -241,7 +241,7 @@ the endpoint is the base issuer url with the appended path `/.well-known/vci`.
 
 |              |                                                                             |
 |--------------|-----------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/issuer-metadata-schema.json)        |
+| **Schema**   | [JSON Schema](./resources/issuance/issuer-metadata-schema.json)             |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
 |              | - `@type`: A string specifying the `IssuerMetadata` type                    |
 |              | - `credentialIssuer`: A string containing the [=Credential Issuer=] DID     |
@@ -250,7 +250,7 @@ the endpoint is the base issuer url with the appended path `/.well-known/vci`.
 The following is a non-normative example of a `IssuerMetadata` response object:
 
 <aside class="example" title="IssuerMetadata">
-    <pre class="json" data-include="./resources/v0.8/issuance/example/issuer-metadata.json">
+    <pre class="json" data-include="./resources/issuance/example/issuer-metadata.json">
     </pre>
 </aside>  
 
@@ -274,7 +274,7 @@ with `Bearer` of the request.
 
 |              |                                                                             |
 |--------------|-----------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/v0.8/issuance/credential-status-schema.json)      |
+| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)           |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
 |              | - `@type`: A string specifying the `CredentialStatus` type                  |
 |              | - `requestId`: A string corresponding to the request id                     |
@@ -283,7 +283,7 @@ with `Bearer` of the request.
 The following is a non-normative example of a `CredentialStatus` response object:
 
 <aside class="example" title="CredentialStatus">
-    <pre class="json" data-include="./resources/v0.8/issuance/example/credential-status.json">
+    <pre class="json" data-include="./resources/issuance/example/credential-status.json">
     </pre>
 </aside>  
 
