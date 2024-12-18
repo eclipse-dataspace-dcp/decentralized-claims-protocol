@@ -1,6 +1,5 @@
-# Profiles of the Decentralized Claims Protocol
+## Profiles of the Decentralized Claims Protocol
 
-## Introduction
 
 Many different variations of the VerifiableCredentials data model, the revocation system and the proof stack exist which
 makes it almost impossible to reach a sufficient level of interoperability. Profiles of the DCP specification help
