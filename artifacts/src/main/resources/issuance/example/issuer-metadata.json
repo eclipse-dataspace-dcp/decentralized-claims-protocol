@@ -18,7 +18,7 @@
         "did:web"
       ],
       "profiles": [
-        "JsonWebSignature2020", "eddsa-rdfc-2022", "eddsa-jcs-2022", "..."
+        "vc20-bssl/jwt", "vc10-sl2021/jwt", "..."
       ],
       "issuancePolicy": {
         "id": "Scalable trust example",
