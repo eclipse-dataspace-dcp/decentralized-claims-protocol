@@ -211,7 +211,7 @@ The following is a non-normative example of a credential offer request:
 |              | - `credentialType`: An array of strings defining the type of credential being offered                                                                                                                                         |
 | **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
 |              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
-|              | - `cryptography`: An array of strings defining the algorithm used for credential signing                                                                                                                                      |
+|              | - `profiles`: An array of strings containing the aliases of the [profiles](./dcp.profiles.md), e.g. `"vc20-bssl/jwt"`                                                                                                     |
 |              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
 |              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                            |
 
