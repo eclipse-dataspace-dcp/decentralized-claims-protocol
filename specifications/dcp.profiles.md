@@ -6,7 +6,7 @@ Many different variations of the VerifiableCredentials data model, the revocatio
 makes it almost impossible to reach a sufficient level of interoperability. Profiles of the DCP specification help
 narrow down those possibilities.
 
-The DCP working group defines two basic profiles, each of which is referenced by an alias.
+This specification defines two profiles, which are referenced by an alias.
 
 ## DCP profile definitions
 
