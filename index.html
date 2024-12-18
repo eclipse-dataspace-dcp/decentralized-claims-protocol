@@ -6,44 +6,137 @@
     <script class="remove" src="https://cdn.jsdelivr.net/gh/w3c/respec-mermaid@1.1.0/dist/main.js"></script>
     <script class='remove'>
         var respecConfig = {
-          specStatus: "unofficial",
-          latestVersion: "https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/releases/tag/0.8.1",
-          postProcess: [window.respecMermaid.createFigures],
-          editors: [{
-              name: "Jim Marino",
-              url: "https://github.com/jimmarino",
-              company: "Metaform Systems",
+            specStatus: "unofficial",
+            latestVersion: "https://github.com/eclipse-dataspace-dcp/decentralized-claims-protocol/releases/tag/0.8.1",
+            postProcess: [window.respecMermaid.createFigures],
+            editors: [{
+                name: "Jim Marino",
+                url: "https://github.com/jimmarino",
+                company: "Metaform Systems",
 
-          }],
-          github: {
-            branch: "main",
-            repoURL: "eclipse-dataspace-dcp/decentralized-claims-protocol",
-          },
-          xref: "web-platform",
-          lint: { "no-unused-dfns": false },
-          format: "markdown",
-          maxTocLevel: 3,
-          localBiblio: {
-            "dsp-base": {
-              title: "Dataspace Protocol 2024-1",
-              href: "https://eclipse-dataspace-protocol-base.github.io/DataspaceProtocol/",
-              status: "unofficial",
-              publisher: "Eclipse Dataspace Working Group",
-  			},
-  			"presentation-ex": {
-              title: "Presentation Exchange 2.1.1",
-              href: "https://identity.foundation/presentation-exchange/spec/v2.1.1/",
-              status: "unofficial",
-              publisher: "Decentralized Identity Foundation",
-  			},
-          },
+            }],
+            authors: [
+                {
+                    name: "Andrea Bertagnolli",
+                    url: "https://github.com/ndr-brt",
+                    company: "Think-IT",
+
+                },
+                {
+                    name: "Peter Koen",
+                    url: "https://github.com/PeterKoen-MSFT",
+                    company: "Microsoft",
+
+                },
+                {
+                    name: "Maarten Kollenstart",
+                    url: "https://github.com/mkollenstart",
+                    company: "TNO",
+
+                },
+                {
+                    name: "Paul Latzelsperger",
+                    url: "https://github.com/paullatzelsperger",
+                    company: "Metaform Systems",
+
+                },
+                {
+                    name: "Jim Marino",
+                    url: "https://github.com/jimmarino",
+                    company: "Metaform Systems",
+
+                },
+                {
+                    name: "Julia Pampus",
+                    url: "https://github.com/juliapampus",
+                    company: "Fraunhofer ISST",
+
+                },
+                {
+                    name: "Rajiv Rajani",
+                    url: "https://github.com/rajiv-ishare",
+                    company: "iSHARE Foundation",
+
+                },
+                {
+                    name: "Enrico Risa",
+                    url: "https://github.com/wolf4ood",
+                    company: "Metaform Systems",
+
+                },
+                {
+                    name: "Marcel Ruland",
+                    url: "https://github.com/marcelruland",
+                    company: "Cofinity-X",
+
+                },
+                {
+                    name: "Benjamin Scholtes",
+                    url: "https://github.com/bscholtes1A",
+                    company: "Amadeus",
+
+                },
+                {
+                    name: "Niklas Schulte",
+                    url: "https://github.com/nikschul",
+                    company: "Fraunhofer ISST",
+
+                },
+                {
+                    name: "Markus Spiekermann",
+                    url: "https://github.com/mspiekermann",
+                    company: "Huawei",
+
+                },
+                {
+                    name: "Sebastian Steinbuss",
+                    url: "https://github.com/ssteinbuss",
+                    company: "IDSA",
+
+                },
+                {
+                    name: "Arno Weiß",
+                    url: "https://github.com/arnoweiss",
+                    company: "SAP",
+
+                },
+                {
+                    name: "Hakan Yildiz",
+                    url: "https://github.com/hkny",
+                    company: "Accenture",
+
+                }
+            ],
+            github: {
+                branch: "main",
+                repoURL: "eclipse-dataspace-dcp/decentralized-claims-protocol",
+            },
+            xref: "web-platform",
+            lint: {"no-unused-dfns": false},
+            format: "markdown",
+            maxTocLevel: 3,
+            localBiblio: {
+                "dsp-base": {
+                    title: "Dataspace Protocol 2024-1",
+                    href: "https://eclipse-dataspace-protocol-base.github.io/DataspaceProtocol/",
+                    status: "unofficial",
+                    publisher: "Eclipse Dataspace Working Group",
+                },
+                "presentation-ex": {
+                    title: "Presentation Exchange 2.1.1",
+                    href: "https://identity.foundation/presentation-exchange/spec/v2.1.1/",
+                    status: "unofficial",
+                    publisher: "Decentralized Identity Foundation",
+                },
+            },
         };
     </script>
     <title>Eclipse Decentralized Claims Protocol</title>
 </head>
 <body>
 <p class="copyright">
-    This document is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">The Apache License, Version 2.0</a>.
+    This document is licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">The Apache License,
+    Version 2.0</a>.
 </p>
 <h1 id="title">Eclipse Decentralized Claims Protocol</h1>
 <section id='abstract'>
