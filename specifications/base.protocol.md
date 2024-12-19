@@ -101,12 +101,11 @@ contexts that facilitate this approach to interoperability.
 
 ## The Decentralized Claims Protocol Context
 
-The [[[json-ld11]]] context URI for the specification is: `https://w3id.org/dspace-dcp/v[version]`. The `version`
-indicates a [Semantic Versioning](https://semver.org/) `MAJOR.MINOR` number. The current specifications use `0.8`
-version and the following context URI: `https://w3id.org/dspace-dcp/v0.8`.
+The [[[json-ld11]]] context URI for the specification is: `https://w3id.org/dspace-dcp/v1.0/dcp.jsonld`. Future
+specification releases shall reuse the versioning schema according to the [Semantic Versioning](https://semver.org/) 
+definitions, concatenated to a `vMAJOR.MINOR` number. The current specifications use `1.0` version.
 
 # The Base URL
 
 All endpoint URLs in this specification are relative. The base URL MUST use the HTTPS scheme. The base URL is
 implementation-specific and may include additional context information such as a sub-path that disambiguates a holder.
-
