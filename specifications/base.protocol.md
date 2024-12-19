@@ -66,7 +66,7 @@ authorization request parameter set to a list of space-delimited scopes the `tok
 `bearer_access_scope` parameter is present, the `token` claim should not be included.
 
 <aside class="note">
-A non-normative OpenAPI spec of an [=STS=] implementing client credentials flow is provided [here](identity-trust-sts-api.yaml)
+A non-normative OpenAPI spec of an [=STS=] implementing client credentials flow is provided [here](specifications/identity-trust-sts-api.yaml)
 </aside>
 
 ### Validating Self-Issued ID Tokens
