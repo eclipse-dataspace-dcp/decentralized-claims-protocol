@@ -167,6 +167,7 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 |              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
 |              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
 
+A `PresentationResponseMessage` SHOULD only include valid (non-expired, non-revoked, non-suspended) credentials.
 The following are non-normative examples of the JSON response body:
 
 <aside class="example" title="Presentation Response Message">
