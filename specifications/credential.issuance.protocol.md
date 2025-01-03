@@ -6,29 +6,27 @@ where a manual workflow is required.
 
 ## Issuance Flow
 
-The following sequence diagram depicts a non-normative flow where a client interacts with a [=Credential Issuer=] to
-issue a [=Verifiable Credential=]:
+The following sequence diagram depicts a normative flow where a client interacts with a [=Credential Issuer=] to issue a [=Verifiable Credential=]. 
+This flow MUST be followed to ensure interoperability and compliance with the specification:
 
 ![Issuance Flow](specifications/issuance.flow.png "Issuance Flow")
 
-1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
-   request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
-   the client wants the [=Issuer Service=] to provide. This set of scopes is determined out of band and may be derived
-   from metadata the [=Credential Issuer=] has previously made available to the client.
-2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
-   an access token. The access token can be used by the [=Issuer Service=] to write requested [=Verifiable Credentials=]
-   to the client's [=Credential Service=].
-3. The client makes a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=] and includes
-   the [=Self-Issued ID Token=].
-4. The [=Issuer Service=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
-5. The [=DID Service=] returns the DID Document. The [=Issuer Service=] validates the [=Self-Issued ID Token=] following
-   Section [[[#validating-self-issued-id-tokens]]].
-6. The [=Issuer Service=] rejects the request or acknowledges receipt.
-7. At a later point in time, if the [=Verifiable Credential=] request is approved, the [=Issuer Service=] uses the
-   resolved DID Document to obtain the client's [=Credential Service=] endpoint as described in
-   Section [[[#credential-service-endpoint-discovery]]] and sends the [=Verifiable Credentials=] to
-   the [=Credential Service=]. The send operation is performed asynchronously from the client request.
-8. The [=Credential Service=] validates the access token and stores the [=Verifiable Credentials=].
+1. **Client → Secure Token Service (STS):** The client MUST send a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. 
+   The request MUST include any relevant scope values that define the [=Verifiable Credentials=] the client wants the [=Issuer Service=] to provide. 
+   These scope values MUST be determined out of band and may be derived from metadata provided by the [=Credential Issuer=].
+2. **STS → Client:** The [=Secure Token Service=] MUST respond with a Self-Issued ID token containing a token claim, which MUST include an access token. 
+   This access token MUST later be used by the [=Issuer Service=] to write the requested [=Verifiable Credentials=] to the client's [=Credential Service=].
+3. **Client → Issuer Service:** The client MUST send a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=], 
+   including the [=Self-Issued ID Token=] in the request.
+4. **Issuer Service → DID Resolution:** Upon receiving the request, the [=Issuer Service=] MUST resolve the client's [=DID=] using the sub claim in the Self-Issued ID Token.
+5. **DID Service → Issuer Service:** The [=DID Service=] MUST return the client's DID Document. The [=Issuer Service=] MUST validate the Self-Issued ID Token 
+   according to Section [[[#validating-self-issued-id-tokens]]].
+6. **Issuer Service → Client:** The [=Issuer Service=] MUST either reject the request or acknowledge receipt of it.
+7. **Issuer Service → Credential Service:** If the Verifiable Credential request is approved, the [=Issuer Service=] MUST use information from the resolved 
+   DID Document to obtain the client's [=Credential Service=] endpoint as described in Section [[[#credential-service-endpoint-discovery]]]. 
+   The [=Issuer Service=] then sends the requested Verifiable Credentials to the client's Credential Service asynchronously.
+8. **Credential Service → Issuer Service:** The client's [=Credential Service=] MUST validate the access token provided by the 
+   Issuer Service before storing any Verifiable Credentials.
 
 ## Issuer Service Endpoint Discovery
 
