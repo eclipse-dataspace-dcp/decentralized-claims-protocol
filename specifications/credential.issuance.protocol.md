@@ -287,19 +287,23 @@ The following is a non-normative example of a `CredentialStatus` response object
 
 ## Key Rotation and Revocation
 
-[=Issuer Service=] implementations SHOULD support rotation and revocation of keys used to
-create [=Verifiable Credential=] proofs. Key rotation and revocation may be supported in the following way:
+[=Issuer Service=] implementations SHOULD support rotation and revocation of keys used to create [=Verifiable Credential=] proofs. To ensure continuity and security, key rotation and revocation MAY be supported overlapping primary and secondary keys during rotation in the following way:
 
-1. After a defined `cryptoperiod`, a rotation is initiated, a new key pair is generated and the public key is added
-   to a `verificationMethod` in the [=Credential Issuer=] DID document. The new private key is used to sign newly
-   issued [=Verifiable Credential=] proofs.
-2. The old private key is decommissioned (archived or destroyed). However, `verificationMethod` in
-   the [=Credential Issuer=] DID document are retained so existing issued [=Verifiable Credentials=] may be verified.
-3. At some point before existing [=Verifiable Credentials=] are set to expire, an [=Credential Issuer=] may make
-   credential offers for new [=Verifiable Credentials=] to [=Holders=].
-4. After a defined period, revocation will be performed where the public key's `verificationMethod` will be removed
-   from the [=Credential Issuer=] DID document. At this point, any existing [=Verifiable Credentials=] with proofs
-   signed by the revoked key will not verify.
+1. **Primary and Secondary Keys:**
+During a key rotation process, a new key pair (secondary key) is generated while the current key pair (primary key) remains active. The public key of the new pair is added to a verificationMethod in the [=Credential Issuer=] DID document, alongside the existing primary key. This ensures that both newly issued [=Verifiable Credentials=] and previously issued credentials can be verified during the transition period.
+2. **Transition Period:**
+The newly generated private key (secondary key) is used to sign proofs for all newly issued [=Verifiable Credentials=].
+The old private key (primary key) continues to verify existing credentials during this period but is no longer used for signing new ones.
+3. **Decommissioning Old Keys:**
+After a defined cryptoperiod, the old private key (primary key) is decommissioned (archived or securely destroyed). However, its corresponding public key remains in the verificationMethod of the [=Credential Issuer=] DID document so that previously issued credentials can still be verified.
+4. **Credential Refresh Offers:**
+Before existing [=Verifiable Credentials=] expire, the [=Credential Issuer=] SHOULD offer holders new credentials signed with the current private key. This process ensures that holders can maintain valid credentials without disruption.
+5. **Revocation of Public Keys:**
+After a defined period, once it is determined that most or all holders have refreshed their credentials, the public key associated with the old private key is removed from the verificationMethod in the [=Credential Issuer=] DID document. At this point:
+Any previously issued [=Verifiable Credentials=] signed with the revoked key will no longer verify.
+This step effectively completes the revocation process for the old key.
+6. **Key Rotation Schedule:**
+Implementers SHOULD set the expirationDate property of issued [=Verifiable Credentials=] to a duration shorter than or equal to the rotation period of the signing keys. This ensures that credentials naturally expire before their associated signing keys are revoked.
 
 Implementors following this sequence SHOULD set the `expirationDate` property of issued [=Verifiable Credentials=] to
 less than the rotation period of the keys used to sign their proofs.
