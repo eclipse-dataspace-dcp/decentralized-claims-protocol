@@ -24,7 +24,7 @@ The Issuer-Holder-Verifier model is mapped to the following architecture in this
   Section [[[#credential-issuance-protocol]]]. As part of this process, the [=Issuer Service=] will verify
   the [=Holder=]'s identifier using the [=Verifiable Data Registry=]. Since [=DID=]s are mandatory in this
   specification, the registry will be used to resolve the [=Holder=]'s DID document and cryptographic material.
-- The [=Holder=] runs four logical services: a [=Participant Agent=], an [=STS=], and a [=Credential Service=], and a [=DID Service=].
+- The [=Holder=] runs four logical services: a [=Participant Agent=], an [=STS=], a [=Credential Service=], and a [=DID Service=].
   The [=Participant Agent=] engages in dataspace communications with the [=Verifier=] agent [[dsp-base]]. As part of
   these interactions, the [=Participant Agent=] will include a Self-Issued ID Token as defined in
   Section [[[#self-issued-id-tokens]]]. This token will be obtained from the [=STS=] controlled by the [=Holder=].
