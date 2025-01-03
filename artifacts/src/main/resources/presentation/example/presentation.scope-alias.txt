@@ -1,0 +1,9 @@
+POST /token HTTP/1.1
+Host: sts.example.com
+Content-Type: application/x-www-form-urlencoded
+
+audience=https://verifier.example.com
+client_id=example-client-id
+client_secret=example-client-secret
+grant_type=client_credentials
+bearer_access_scope=org.eclipse.dspace.dcp.vc.type:Member org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d

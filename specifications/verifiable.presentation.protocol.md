@@ -140,6 +140,10 @@ A scope is a string value in the form:
 
 The `[alias]` value MAY be implementation-specific.
 
+<aside class="example" title="Requesting a Token with Scopes">
+    <pre class="text" data-include="./resources/presentation/example/presentation.scope-alias.txt"></pre>
+</aside>
+
 ##### The `org.eclipse.dspace.dcp.vc.type` Alias
 
 The `vc.type` alias value MUST be supported and is used to specify access to a verifiable credential by type. For
