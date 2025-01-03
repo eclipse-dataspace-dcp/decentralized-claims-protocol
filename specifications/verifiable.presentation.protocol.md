@@ -20,22 +20,22 @@ The following sequence diagram depicts a normative flow where a client interacts
 
 ![alt text 2](specifications/auth.flow.png "Presentation Flow")
 
-1. Client → STS: The client MUST send a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. 
+1. **Client → STS:** The client MUST send a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. 
    The client MUST include any relevant scope values—derived from metadata the [=Verifier=] provides out of band—to 
    indicate the set of [=Verifiable Credentials=] that the [=Verifier=] is authorized to request.
-2. STS → Client: The [=Secure Token Service=] MUST respond with a Self-Issued ID token that contains a token claim. 
+2. **STS → Client:** The [=Secure Token Service=] MUST respond with a Self-Issued ID token that contains a token claim. 
    This token claim MUST be set to an access token the [=Verifier=] can later use to request [=Verifiable Credentials=] 
    from the client’s [=Credential Service=].
-3. Client → Verifier: The client MUST make a request to the [=Verifier=] for a protected resource and MUST include 
+3. **Client → Verifier:** The client MUST make a request to the [=Verifier=] for a protected resource and MUST include 
    the [=Self-Issued ID Token=].
-4. Verifier → DID Resolution: Upon receiving the [=Self-Issued ID Token=], the [=Verifier=] MUST resolve the 
+4. **Verifier → DID Resolution:** Upon receiving the [=Self-Issued ID Token=], the [=Verifier=] MUST resolve the 
    client’s [=DID=] by reading the sub claim in the ID token and performing a DID resolution process through a [=DID Service=].
-5. DID Service → Verifier: The [=DID Service=] MUST return the DID Document to the [=Verifier=]. The [=Verifier=] MUST validate 
+5. **DID Service → Verifier:** The [=DID Service=] MUST return the DID Document to the [=Verifier=]. The [=Verifier=] MUST validate 
    the [=Self-Issued ID Token=] according to [Section [[[#validating-self-issued-id-tokens]]]].
-6. Verifier → Credential Service: The [=Verifier=] MUST obtain the client’s [=Credential Service=] endpoint address from the DID Document, 
+6. **Verifier → Credential Service:** The [=Verifier=] MUST obtain the client’s [=Credential Service=] endpoint address from the DID Document, 
    per [Section [[[#credential-service-endpoint-discovery]]]]. The [=Verifier=] MUST then make a request to the [=Credential Service=] 
    using the access token to retrieve the needed [=Verifiable Credentials=].
-7. Credential Service → Verifier: The [=Credential Service=] MUST validate the access token. If valid, it MUST return a [=Verifiable Presentation=] 
+7. **Credential Service → Verifier:** The [=Credential Service=] MUST validate the access token. If valid, it MUST return a [=Verifiable Presentation=] 
    containing the requested [=Verifiable Credentials=].
 
 
