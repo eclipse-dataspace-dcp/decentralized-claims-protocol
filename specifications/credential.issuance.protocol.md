@@ -309,7 +309,7 @@ Key rotation may be supported in the following way:
    credential offers for new [=Verifiable Credentials=] to [=Holders=] with the `offerReason = reissue` property.
 4. After a defined period, the rotated key's `verificationMethod` will be removed from the [=Credential Issuer=] DID
    document. This period must at least extend to the expiration date of the last issued credential. At this point, any
-   existing [=Verifiable Credentials=] with proofs signed by the revoked key will become invalid.
+   existing [=Verifiable Credentials=] with proofs signed by the old (now rotated) key will become invalid.
 
 Implementors following this sequence SHOULD set the `expirationDate`/`validUntil` property of
 issued [=Verifiable Credentials=] to less than the rotation period of the keys used to sign their proofs. Rotated keys
