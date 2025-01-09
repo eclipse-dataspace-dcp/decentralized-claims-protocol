@@ -42,6 +42,10 @@ following is a non-normative example of a `Issuer Service` entry:
 <aside class="example" title="Credential Service Entry in DID document">
     <pre class="json">
 {
+  "@context": [
+      "https://www.w3.org/ns/did/v1",
+      "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
+    ],
   "service": [
     {
       "id":"did:example:123#issuer-service",

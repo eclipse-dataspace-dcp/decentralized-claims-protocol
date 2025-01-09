@@ -50,7 +50,7 @@ the [=Credential Service=]. The following is a non-normative example of a `Crede
 {
   "@context": [
     "https://www.w3.org/ns/did/v1",
-    "https://w3id.org/dspace-dcp/v1.0"
+    "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
   ],
   "service": [
     {
