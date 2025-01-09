@@ -290,21 +290,40 @@ The following is a non-normative example of a `CredentialStatus` response object
 ## Key Rotation and Revocation
 
 [=Issuer Service=] implementations SHOULD support rotation and revocation of keys used to
-create [=Verifiable Credential=] proofs. Key rotation and revocation may be supported in the following way:
+create [=Verifiable Credential=] proofs.
+
+### Key rotation
+
+Key rotation may be supported in the following way:
 
 1. After a defined `cryptoperiod`, a rotation is initiated, a new key pair is generated and the public key is added
    to a `verificationMethod` in the [=Credential Issuer=] DID document. The new private key is used to sign newly
    issued [=Verifiable Credential=] proofs.
-2. The old private key is decommissioned (archived or destroyed). However, `verificationMethod` in
+2. The old private key is decommissioned (archived or destroyed). However, the `verificationMethod` in
    the [=Credential Issuer=] DID document are retained so existing issued [=Verifiable Credentials=] may be verified.
 3. At some point before existing [=Verifiable Credentials=] are set to expire, an [=Credential Issuer=] may make
-   credential offers for new [=Verifiable Credentials=] to [=Holders=].
-4. After a defined period, revocation will be performed where the public key's `verificationMethod` will be removed
-   from the [=Credential Issuer=] DID document. At this point, any existing [=Verifiable Credentials=] with proofs
-   signed by the revoked key will not verify.
+   credential offers for new [=Verifiable Credentials=] to [=Holders=] with the `offerReason = reissue` property.
+4. After a defined period, the rotated key's `verificationMethod` will be removed from the [=Credential Issuer=] DID
+   document. This period must at least extend to the expiration date of the last issued credential. At this point, any
+   existing [=Verifiable Credentials=] with proofs signed by the revoked key will become invalid.
 
-Implementors following this sequence SHOULD set the `expirationDate` property of issued [=Verifiable Credentials=] to
-less than the rotation period of the keys used to sign their proofs.
+Implementors following this sequence SHOULD set the `expirationDate`/`validUntil` property of
+issued [=Verifiable Credentials=] to less than the rotation period of the keys used to sign their proofs. Rotated keys
+SHOULD not be decommissioned until all credentials, that were signed with it, have expired.
+
+### Key revocation
+
+Key revocation may be supported in the following way:
+
+1. After revocation is initiated, a new key pair is generated and the public key is added to a `verificationMethod` in
+   the [=Credential Issuer=] DID document. The new private key is used to sign newly issued [=Verifiable Credential=]
+   proofs.
+2. The old private key is decommissioned (archived or destroyed) and the `verificationMethod` in
+   the [=Credential Issuer=] DID document is removed.
+3. The [=Credential Issuer=] may make credential offers for new [=Verifiable Credentials=] to [=Holders=] with the
+   `offerReason = proof-key-revocation` property.
+
+Upon revocation of a key pair, all credentials that were issued and proofed with that key, immediately become invalid.
 
 ## Verifiable Credential Revocation
 
