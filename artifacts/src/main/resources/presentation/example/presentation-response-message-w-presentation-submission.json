@@ -1,0 +1,25 @@
+{
+  "@context": [
+    "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
+  ],
+  "type": "PresentationResponseMessage",
+  "presentation": [
+    "jwtPresentation"
+  ],
+  "presentationSubmission": {
+    "id": "Presentation example 2",
+    "definition_id": "Example with multiple VPs",
+    "descriptor_map": [
+      {
+        "id": "id_credential",
+        "format": "jwt_vp",
+        "path": "$.presentation[0]",
+        "path_nested": {
+          "id": "id_nested_credential",
+          "format": "jwt_vc",
+          "path": "$.vp.verifiableCredential[0]"
+        }
+      }
+    ]
+  }
+}

@@ -24,6 +24,9 @@
             ]
           }
         },
+        "presentationSubmission": {
+          "$ref": "https://identity.foundation/presentation-exchange/schemas/presentation-submission.json#/properties/presentation_submission"
+        },
         "type": {
           "type": "string",
           "const": "PresentationResponseMessage"
