@@ -1,7 +1,7 @@
 ## Profiles of the Decentralized Claims Protocol
 
-Many different variations of the Verifiable Credentials data model, the revocation system and the proof stack exist
-which makes it almost impossible to reach a sufficient level of interoperability. Profiles of the DCP specification help
+Different variations of the Verifiable Credentials Data Model, the revocation system, and proof stack
+complicate interoperability. Profiles of the DCP specification help
 narrow down those possibilities.
 
 This specification defines two profiles, which are referenced by an alias.
@@ -19,13 +19,13 @@ model [conflicts](https://www.w3.org/TR/vc-bitstring-status-list/#bitstringstatu
 
 ### Homogeneity requirement
 
-Both profiles defined here require that verifiable presentations and verifiable credentials be _homogenous_. That means the
-same data model version and proof mechanism has to be used for both credentials and presentations. For example, a
+Verifiable Credentials MUST be _homogenous_. This means the
+same data model version and proof mechanism must be used for both credentials and presentations. For example, a
 verifiable credential secured with an _enveloped proof_ using
-JOSE ([VC Data Model 2.0](https://www.w3.org/TR/vc-jose-cose/#with-jose)) MUST be enclosed in a verifiable presentation 
+JOSE ([VC Data Model 2.0](https://www.w3.org/TR/vc-jose-cose/#with-jose)) is enclosed in a verifiable presentation 
 that is also secured with JWT/JOSE.
 
-Heterogeneous sets of credentials must be enclosed in multiple presentations in such a way, that each presentation only 
+Heterogeneous sets of credentials MUST be enclosed in multiple presentations in such that each presentation only 
 contains credentials of the same data model and proof mechanism.
 
 ## Profile Authoring Recommendations
@@ -41,4 +41,4 @@ For a usable profile, at least the following aspects must be defined:
 In addition, it is possible to further constrain the profile, for example by limiting the number of acceptable
 cryptographic algorithms.
 
-It is recommended for profile authors to also specify the homogeneity constraint.
+Profile authors are recommended, when possible, to use a single credential format.
