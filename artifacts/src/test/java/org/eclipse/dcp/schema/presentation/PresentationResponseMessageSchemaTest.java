@@ -37,6 +37,18 @@ public class PresentationResponseMessageSchemaTest extends AbstractSchemaTest {
               "presentation": ["presentation1", {"@id": "presentation2"}]
             }""";
 
+    private static final String PRESENTATION_RESPONSE_MESSAGE_WITH_PRESENTATION_SUBMISSION = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "PresentationResponseMessage",
+              "presentation": ["presentation1"],
+              "presentationSubmission": {
+                "id": "id",
+                "definition_id": "definition_id",
+                "descriptor_map": []
+              }
+            }""";
+
     private static final String INVALID_PRESENTATION_RESPONSE_MESSAGE_NO_PRESENTATION = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
@@ -48,10 +60,21 @@ public class PresentationResponseMessageSchemaTest extends AbstractSchemaTest {
               "presentation": ["presentation1", "presentation2"]
             }""";
 
+    private static final String INVALID_PRESENTATION_RESPONSE_MESSAGE_EMPTY_PRESENTATION_SUBMISSION = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "PresentationResponseMessage",
+              "presentation": ["presentation1"],
+              "presentationSubmission": {
+            
+              }
+            }""";
+
     @Test
     void verifySchema() {
         assertThat(schema.validate(PRESENTATION_RESPONSE_MESSAGE, JSON)).isEmpty();
         assertThat(schema.validate(PRESENTATION_RESPONSE_MESSAGE_WITH_OBJECT, JSON)).isEmpty();
+        assertThat(schema.validate(PRESENTATION_RESPONSE_MESSAGE_WITH_PRESENTATION_SUBMISSION, JSON)).isEmpty();
         assertThat(schema.validate(INVALID_PRESENTATION_RESPONSE_MESSAGE_NO_PRESENTATION, JSON))
                 .extracting(this::errorExtractor)
                 .containsExactly(error("presentation", REQUIRED));
@@ -60,6 +83,12 @@ public class PresentationResponseMessageSchemaTest extends AbstractSchemaTest {
                 .hasSize(2)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@context", REQUIRED));
+
+        assertThat(schema.validate(INVALID_PRESENTATION_RESPONSE_MESSAGE_EMPTY_PRESENTATION_SUBMISSION, JSON))
+                .hasSize(3)
+                .extracting(this::errorExtractor)
+                .contains(error("id", REQUIRED), error("definition_id", REQUIRED), error("descriptor_map", REQUIRED));
+
     }
 
     @BeforeEach

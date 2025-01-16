@@ -166,6 +166,7 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
 |              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
 |              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
+| **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                   |
 
 A `PresentationResponseMessage` SHOULD only include valid (non-expired, non-revoked, non-suspended) credentials.
 The following are non-normative examples of the JSON response body:
@@ -174,3 +175,14 @@ The following are non-normative examples of the JSON response body:
     <pre class="json" data-include="./resources/presentation/example/presentation-response-message.json">
     </pre>
 </aside>
+
+<aside class="example" title="Presentation Response Message with Presentation Submission">
+    <pre class="json" data-include="./resources/presentation/example/presentation-response-message-w-presentation-submission.json">
+    </pre>
+</aside>
+
+
+#### Presentation Submissions
+
+Implementations that support the `presentationDefinition` parameter MUST include the `presentationSubmission` parameter in the [[[#presentation-response-message]]] with a valid [Presentation Submission](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-submission) when a `presentationDefinition` 
+is provided in the [[[#presentation-query-message]]].

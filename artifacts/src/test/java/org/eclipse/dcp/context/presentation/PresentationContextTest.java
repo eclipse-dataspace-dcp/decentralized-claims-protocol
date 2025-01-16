@@ -34,4 +34,8 @@ public class PresentationContextTest extends AbstractJsonLdTest {
         verifyRoundTrip("/presentation/example/presentation-response-message.json", "/presentation/presentation-response-message-schema.json");
     }
 
+    @Test
+    void verifyPresentationResponseMessage_withPresentationSubmission() {
+        verifyRoundTrip("/presentation/example/presentation-response-message-w-presentation-submission.json", "/presentation/presentation-response-message-schema.json");
+    }
 }

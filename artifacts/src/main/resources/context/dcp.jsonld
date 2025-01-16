@@ -124,6 +124,7 @@
       "@context": {
         "presentation": {
           "@id": "dcp:presentation",
+          "@container": "@set",
           "@type": "@json"
         },
         "presentationSubmission": {
