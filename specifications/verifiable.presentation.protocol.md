@@ -19,7 +19,7 @@ resolve credential-related resources. The protocol also provides a mechanism for
 The following sequence diagram depicts a non-normative flow where a client interacts with a [=Verifier=] to present a
 [=Verifiable Credential=]:
 
-![alt text 2](specifications/auth.flow.png "Presentation Flow")
+![alt text 2](./specifications/auth.flow.png "Presentation Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
    request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
