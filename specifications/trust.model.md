@@ -53,7 +53,7 @@ defined in this specification establish consent in the following way:
 Consent is handled by first mapping Dataspace Protocol Offer and Agreement policies [[dsp-base]] to a set of
 required [=Verifiable Credentials=]. The exact mappings are dataspace-specific as policies
 and [=Verifiable Credentials=] are typically defined for a particular domain. The expectation is that these mappings are
-made available by the [=Dataspace Authority=] to [=Participant Agents=] via
+made available by the [=Dataspace Governance Authority=] to [=Participant Agents=] via
 the [=Verifiable Data Registry=]. [=Verifiable Credential=] mapping is done by both the [=Holder=]
 and [=Verifier=] [=Participant Agent=] when a Dataspace Protocol message is sent and received.
 
@@ -97,9 +97,9 @@ The [=Issuer=] expects:
 
 The [=Holder=] expects:
 
-- The [=Dataspace Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
+- The [=Dataspace Governance Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
   of scope of the current specification but may be part of the [=Verifiable Data Registry=].
-- The [=Dataspace Authority=] to provide a secure list of participant [=DIDs=]. How this list is provided is out
+- The [=Dataspace Governance Authority=] to provide a secure list of participant [=DIDs=]. How this list is provided is out
   of scope of the current specification but may be part of the [=Verifiable Data Registry=].
 - The [=Credential Service=] to maintain integrity and not release data to unauthorized parties.
 - The [=Issuer=] to issue credentials correctly, including binding them to the holder in a tamper-proof way, and
@@ -110,7 +110,7 @@ The [=Holder=] expects:
 
 The [=Verifier=] expects:
 
-- The [=Dataspace Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
+- The [=Dataspace Governance Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
   of scope of the current specification but may be part of the [=Verifiable Data Registry=]. [=Verifiers=] can
   recognize several [=Dataspace Authorities=].
 
