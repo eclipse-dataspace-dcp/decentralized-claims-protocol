@@ -160,13 +160,13 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 
 ### Presentation Response Message
 
-|              |                                                                                                                                                                                   |
-|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                 |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
-|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
-|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
-| **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                   |
+|              |                                                                                                                                                                                                                                                                     |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                                                                                                   |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                                                         |
+|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                                                                                                               |
+|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format. For queries, that yield no results, an empty array must be returned, never `null`</br> |
+| **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                                                                                                     |
 
 A `PresentationResponseMessage` SHOULD only include valid (non-expired, non-revoked, non-suspended) credentials.
 The following are non-normative examples of the JSON response body:
