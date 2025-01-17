@@ -4,7 +4,7 @@ This section describes the core actors and systems in a dataspace ecosystem that
 adheres to the model defined by the Dataspace Protocol [[dsp-base]]:
 
 - A <dfn>Dataspace</dfn> is a policy-based data sharing context between two or more entities.
-- The <dfn>Dataspace Authority</dfn> is responsible for operational management of a [=dataspace=],
+- The <dfn>Dataspace Governance Authority</dfn> is responsible for operational management of a [=dataspace=],
   including [=participant=] registration and designation of trust credential issuers.
 - A <dfn>Participant</dfn> is a member of the [=dataspace=]. Members may take on different roles, which are attested to
   by verifiable credentials.
@@ -18,12 +18,12 @@ adheres to the model defined by the Dataspace Protocol [[dsp-base]]:
 
 ## Systems
 
-### Dataspace Authority Systems
+### Dataspace Governance Authority Systems
 
 <dfn data-lt="rs | Registration System">Registration System</dfn>
 
 The registration system is responsible for [=participant=] registration, onboarding, and management in a dataspace.
-The registration system is run by the [=Dataspace Authority=] and is outside the scope of this specification.
+The registration system is run by the [=Dataspace Governance Authority=] and is outside the scope of this specification.
 
 ### Participant Agent Systems
 
