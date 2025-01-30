@@ -14,12 +14,12 @@
 
 package org.eclipse.dcp.schema.issuance;
 
-import static com.networknt.schema.InputFormat.JSON;
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.eclipse.dcp.schema.fixtures.AbstractSchemaTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static com.networknt.schema.InputFormat.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
 
