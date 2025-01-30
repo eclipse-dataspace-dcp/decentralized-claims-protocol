@@ -111,7 +111,7 @@ public abstract class AbstractJsonLdTest {
 
             var schema = schemaFactory.getSchema(SchemaLocation.of(DCP_PREFIX + schemaFile));
             var result = schema.validate(mapper.convertValue(compacted, JsonNode.class));
-            assertThat(result.isEmpty()).isTrue();
+            assertThat(result.isEmpty()).describedAs(String.join(", ",result.stream().map(Object::toString).toList())).isTrue();
             assertThat(compacted).isEqualTo(message);
         } catch (JsonLdError e) {
             throw new RuntimeException(e);

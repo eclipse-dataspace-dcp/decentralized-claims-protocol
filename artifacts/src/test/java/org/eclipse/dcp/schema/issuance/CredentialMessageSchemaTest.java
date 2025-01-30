@@ -25,18 +25,24 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String CREDENTIAL_MESSAGE_MESSAGE = """
             {
-               "@context": [
-                 "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
-               ],
-               "type": "CredentialMessage",
-               "credentials": [
-                 {
-                   "type": "CredentialContainer",
-                   "payload": "jwt"
-                 }
-               ],
-               "requestId": "requestId"
-             }""";
+              "@context": [
+                "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
+              ],
+              "type": "CredentialMessage",
+              "credentials": [
+                {
+                  "credentialType": "MembershipCredential",
+                  "payload": "<JWT-STRING>",
+                  "format": "jwt"
+                },
+                {
+                  "credentialType": "OrganizationCredential",
+                  "payload": "<LD-Object>",
+                  "format": "json-ld"
+                }
+              ],
+              "requestId": "requestId"
+            }""";
 
     private static final String INVALID_CREDENTIAL_MESSAGE = """
             {
@@ -49,10 +55,11 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialMessage",
               "credentials": [
-                 {
-                   "type": "CredentialContainer"
-                 }
-               ],
+                  {
+                    "credentialType": "MembershipCredential",
+                    "format": "jwt"
+                  }
+              ],
               "requestId": "requestId"
             }""";
 
@@ -60,10 +67,11 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_CREDENTIAL_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
               "credentials": [
-                 {
-                   "type": "CredentialContainer",
-                   "payload": "jwt"
-                 }
+                   {
+                     "credentialType": "MembershipCredential",
+                     "payload": "<JWT-STRING>",
+                     "format": "jwt"
+                   }
               ],
               "requestId": "requestId"
             }""";

@@ -14,12 +14,12 @@
 
 package org.eclipse.dcp.schema.issuance;
 
+import static com.networknt.schema.InputFormat.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.eclipse.dcp.schema.fixtures.AbstractSchemaTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static com.networknt.schema.InputFormat.JSON;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
 
@@ -27,28 +27,60 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
-              "format": "jwt",
-              "credentialType": ["VerifiableCredential"]
+              "credentials": [
+                 {
+                   "credentialType": "MembershipCredential",
+                   "format": "vcdm11_jwt"
+                 },
+                 {
+                   "credentialType": "OrganizationCredential",
+                   "format": "vcdm11_ld"
+                 },
+                 {
+                   "credentialType": "Iso9001Credential",
+                   "format": "vcdm20_jose"
+                 }
+              ]
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
-              "credentialType": ["VerifiableCredential"]
+              "credentials": [
+                 {
+                   "credentialType": "MembershipCredential"
+                 },
+                 {
+                   "credentialType": "OrganizationCredential",
+                   "format": "vcdm11_ld"
+                 },
+                 {
+                   "credentialType": "Iso9001Credential",
+                   "format": "vcdm20_jose"
+                 }
+              ]
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_TYPE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
-              "format": "jwt"
+              "credentials": [
+                 {
+                   "format": "vcdm11_ld"
+                 }
+              ]
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
-              "format": "jwt",
-              "credentialType": ["VerifiableCredential"]
+              "credentials": [
+                 {
+                   "credentialType": "MembershipCredential",
+                   "format": "vcdm11_jwt"
+                 }
+              ]
             }""";
 
 
