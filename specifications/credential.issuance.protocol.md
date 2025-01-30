@@ -93,13 +93,12 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 
 ### Credential Request Message
 
-|              |                                                                                     |
-|--------------|-------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)          |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).         |
-|              | - `type`: A string specifying the `CredentialRequestMessage` type                   |
-|              | - `format`:  A JSON string that describes the format of the credential to be issued |
-|              | - `type`: A JSON array of strings that specifies the VC type being requested        |
+|              |                                                                                                                                                                                                                                                  |
+|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)                                                                                                                                                                       |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                                      |
+|              | - `type`: A string specifying the `CredentialRequestMessage` type                                                                                                                                                                                |
+|              | - `credentials`: a JSON array of objects, each containing a `format`, which is A JSON string <br/>that describes the format of the credential to be issued <br/>and a `type`: A JSON array of strings that specifies the VC type being requested |
 
 The following is a non-normative example of a `CredentialRequestMessage`:
 
@@ -107,6 +106,9 @@ The following is a non-normative example of a `CredentialRequestMessage`:
     <pre class="json" data-include="./resources/issuance/example/credential-request-message.json">
     </pre>
 </aside> 
+
+the `credentials.format` string SHOULD clearly identify the data format and proof mechanism of the credential, for
+example `"vcdm11_jwt"` or `"vcdm20_jose"`. The set of allowed values is implementation-specific.
 
 On successful receipt of the request, the [=Issuer Service=] MUST respond with a `201 CREATED` and the `Location`
 header set to the location of the request status ([[[#credential-request-status-api]]])
