@@ -16,13 +16,13 @@ box "Verifier Entity"
 participant "Verifier" as V
 end box
 
-C -> STS: SI token request
-STS -> C: Token response w/ access token
+C -> STS: request
+STS -> C: response incl. access token
 
-C -> V: Request w/ Self-Issued ID token containing an access token
-DS <- V: Resolve DID
+C -> V: request w/ self-issued id token incl. access token
+DS <- V: resolve DID
 DS -> V: DID document response
-CS <- V: request w/ access token
+CS <- V: request w/ self-issued id token incl. access token
 CS ->V: VP response
-C <- V: Response
+C <- V: response
 @enduml
