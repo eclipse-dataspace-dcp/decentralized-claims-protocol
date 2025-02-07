@@ -16,14 +16,13 @@ box "Issuer Entity"
 participant "Issuer Service" as IS
 end box
 
-C -> STS: Self-Issued ID token request
-STS -> C: Token response w/ access token
-C -> IS: Request credential(s) using Self-Issued ID token
-DS <- IS: Resolve DID
+C -> STS: request
+STS -> C: response incl. access token
+C -> IS: request credential(s) w/ self-issued ID token incl. access token
+DS <- IS: resolve DID
 DS -> IS: DID document response
-C <- IS: Ack
-CS <- IS: (async) Write credential(s)\n w/ access token
+C <- IS: ack
+CS <- IS: (async) write credential(s)\n w/ self-issued ID token access token
 CS -> CS: Validate token and\n store credentials
-
 
 @enduml

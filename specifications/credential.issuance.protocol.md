@@ -9,17 +9,18 @@ where a manual workflow is required.
 The following sequence diagram depicts a non-normative flow where a client interacts with a [=Credential Issuer=] to
 issue a [=Verifiable Credential=]:
 
-![Issuance Flow](specifications/issuance.flow.png "Issuance Flow")
+![Issuance Flow](specifications/issuance.flow.svg "Issuance Flow")
 
-1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
-   request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
-   the client wants the [=Issuer Service=] to provide. This set of scopes is determined out of band and may be derived
-   from metadata the [=Credential Issuer=] has previously made available to the client.
-2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
-   an access token. The access token can be used by the [=Issuer Service=] to write requested [=Verifiable Credentials=]
+1. The client sends a request to its [=Secure Token Service=] for a token including an access token. This could be a
+   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client may include a set
+   of scopes that define the [=Verifiable Credentials=] the client wants the [=Issuer Service=] to provide. This set of
+   scopes is determined out of band and may be derived from metadata the [=Credential Issuer=] has previously made
+   available to the client.
+2. The [=Secure Token Service=] responds with an access token a that may be in `token` claim a [=Self-Issued ID Token=].
+   The access token can be used by the [=Issuer Service=] to write requested [=Verifiable Credentials=]
    to the client's [=Credential Service=].
 3. The client makes a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=] and includes
-   the [=Self-Issued ID Token=].
+   a [=Self-Issued ID Token=] containing the access token.
 4. The [=Issuer Service=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
 5. The [=DID Service=] returns the DID Document. The [=Issuer Service=] validates the [=Self-Issued ID Token=] following
    Section [[[#validating-self-issued-id-tokens]]].

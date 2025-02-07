@@ -19,16 +19,18 @@ resolve credential-related resources. The protocol also provides a mechanism for
 The following sequence diagram depicts a non-normative flow where a client interacts with a [=Verifier=] to present a
 [=Verifiable Credential=]:
 
-![alt text 2](specifications/auth.flow.png "Presentation Flow")
+![Presentation Flow](specifications/auth.flow.svg "Presentation Flow")
 
-1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=]. The API used to make this
-   request is implementation specific. The client may include a set of scopes that define the [=Verifiable Credentials=]
-   the client wants the [=Verifier=] to have access to. This set of scopes is determined out of band and may be derived
-   from metadata the [=verifier=] has previously made available to the client.
-2. The [=Secure Token Service=] responds with the Self-Signed ID token containing a `token` claim with the value set to
-   an access token. The access token can be used by the verifier to request [=Verifiable Credentials=] from the client's
+1. The client sends a request to its [=Secure Token Service=] for a token including an access token. This could be a
+   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client may include a set
+   of scopes that define the [=Verifiable Credentials=] the client wants the [=Verifier=] to have access to. This set of
+   scopes is determined out of band and may be derived from metadata the [=verifier=] has previously made available to
+   the client.
+2. The [=Secure Token Service=] responds with an access token a that may be in `token` claim a [=Self-Issued ID Token=].
+   The access token can be used by the verifier to request [=Verifiable Credentials=] from the client's
    [=Credential Service=].
-3. The client makes a request to the [=Verifier=] for a protected resource and includes the [=Self-Issued ID Token=].
+3. The client makes a request to the [=Verifier=] for a protected resource and includes a [=Self-Issued ID Token=]
+   containing the access token.
 4. The [=Verifier=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
 5. The [=DID Service=] returns the DID Document. The [=Verifier=] validates the [=Self-Issued ID Token=] following
    Section [[[#validating-self-issued-id-tokens]]].
@@ -148,15 +150,25 @@ example:
 
 denotes read-only access to the VC type `Member` and may be used to request a VC or VP.
 
+##### The `org.eclipse.dspace.dcp.vc.id` Alias
+
+The `org.eclipse.dspace.dcp.vc.id` alias value must be supported and is used to specify access to a verifiable
+credential by id. For example:
+
+`org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d`
+
+denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a
+[=Verifiable Credential=].
+
 ### Presentation Response Message
 
-|              |                                                                                                                                                                                                                                                                     |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                                                                                                   |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                                                         |
-|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                                                                                                               |
-|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format. For queries, that yield no results, an empty array MUST be returned.</br> |
-| **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                                                                                                     |
+|              |                                                                                                                                                                                   |
+|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                 |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
+|              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
+|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
+| **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                   |
 
 A `PresentationResponseMessage` SHOULD only include valid (non-expired, non-revoked, non-suspended) credentials.
 The following are non-normative examples of the JSON response body:
@@ -171,8 +183,10 @@ The following are non-normative examples of the JSON response body:
     </pre>
 </aside>
 
-
 #### Presentation Submissions
 
-Implementations that support the `presentationDefinition` parameter MUST include the `presentationSubmission` parameter in the [[[#presentation-response-message]]] with a valid [Presentation Submission](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-submission) when a `presentationDefinition` 
+Implementations that support the `presentationDefinition` parameter MUST include the `presentationSubmission` parameter
+in the [[[#presentation-response-message]]] with a
+valid [Presentation Submission](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-submission)
+when a `presentationDefinition`
 is provided in the [[[#presentation-query-message]]].
