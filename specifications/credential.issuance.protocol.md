@@ -99,6 +99,7 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 | **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)                                                                                                                                                                       |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                                      |
 |              | - `type`: A string specifying the `CredentialRequestMessage` type                                                                                                                                                                                |
+|              | - `holderPid`: A string corresponding to the request id on the Holder side type                                                                                                                                                                                |
 |              | - `credentials`: a JSON array of objects, each containing a `format`, which is A JSON string <br/>that describes the format of the credential to be issued <br/>and a `type`: A JSON array of strings that specifies the VC type being requested |
 
 The following is a non-normative example of a `CredentialRequestMessage`:
@@ -145,7 +146,8 @@ exact error code is implementation-specific.
 | **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                   |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
 |              | - `type`: A string specifying the `Credential Message` type.                                                         |
-|              | - `requestId`: A string corresponding to the issuance request id.                                                    |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                           |
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                           |
 |              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following. |
 
 The following is a non-normative example of the [Credential Message](#credential-message) JSON body:
@@ -279,13 +281,14 @@ with `Bearer` of the request.
 
 ### CredentialStatus
 
-|              |                                                                             |
-|--------------|-----------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)           |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
-|              | - `type`: A string specifying the `CredentialStatus` type                   |
-|              | - `requestId`: A string corresponding to the request id                     |
-|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`    |
+|              |                                                                                     |
+|--------------|-------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)                   |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).         |
+|              | - `type`: A string specifying the `CredentialStatus` type                           |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side    |
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side    |
+|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`            |
 
 The following is a non-normative example of a `CredentialStatus` response object:
 

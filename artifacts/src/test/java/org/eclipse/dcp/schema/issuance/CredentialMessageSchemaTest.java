@@ -41,7 +41,8 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                   "format": "json-ld"
                 }
               ],
-              "requestId": "requestId"
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
             }""";
 
     private static final String INVALID_CREDENTIAL_MESSAGE = """
@@ -60,7 +61,8 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                     "format": "jwt"
                   }
               ],
-              "requestId": "requestId"
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
             }""";
 
 
@@ -73,7 +75,8 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                      "format": "jwt"
                    }
               ],
-              "requestId": "requestId"
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
             }""";
 
     @Test
@@ -81,7 +84,7 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
         assertThat(schema.validate(CREDENTIAL_MESSAGE_MESSAGE, JSON)).isEmpty();
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("credentials", REQUIRED), error("requestId", REQUIRED));
+                .containsExactly(error("credentials", REQUIRED), error("issuerPid", REQUIRED), error("holderPid", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE_INVALID_CREDENTIAL_CONTAINER, JSON))
                 .extracting(this::errorExtractor)
