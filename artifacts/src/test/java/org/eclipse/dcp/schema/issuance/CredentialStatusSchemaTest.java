@@ -29,7 +29,8 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
             {
                 "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
                 "type": "CredentialStatus",
-                "requestId": "requestId",
+                "issuerPid": "issuerPid",
+                "holderPid": "holderPid",
                 "status": "%s"
             }""";
 
@@ -41,7 +42,8 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_STATUS_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
-                "requestId": "requestId",
+                "issuerPid": "issuerPid",
+                "holderPid": "holderPid",
                 "status": "RECEIVED"
             }""";
 
@@ -52,7 +54,7 @@ public class CredentialStatusSchemaTest extends AbstractSchemaTest {
                 .containsExactly(error(null, ENUM));
         assertThat(schema.validate(INVALID_CREDENTIAL_STATUS, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("requestId", REQUIRED), error("status", REQUIRED));
+                .containsExactly(error("issuerPid", REQUIRED), error("holderPid", REQUIRED), error("status", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_STATUS_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
                 .hasSize(2)

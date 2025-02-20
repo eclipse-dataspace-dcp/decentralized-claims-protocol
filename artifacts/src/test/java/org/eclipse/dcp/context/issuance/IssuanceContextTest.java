@@ -30,6 +30,11 @@ public class IssuanceContextTest extends AbstractJsonLdTest {
     }
 
     @Test
+    void verifyCredentialMessage() {
+        verifyRoundTrip("/issuance/example/credential-message.json", "/issuance/credential-message-schema.json");
+    }
+
+    @Test
     void verifyCredentialOfferMessage() {
         verifyRoundTrip("/issuance/example/credential-offer-message.json", "/issuance/credential-offer-message-schema.json");
     }
@@ -56,7 +61,8 @@ public class IssuanceContextTest extends AbstractJsonLdTest {
                 {
                     "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
                     "type": "CredentialStatus",
-                    "requestId": "requestId",
+                    "issuerPid": "issuerPid",
+                    "holderPid": "holderPid",
                     "status": "%s"
                 }""".formatted(status);
 

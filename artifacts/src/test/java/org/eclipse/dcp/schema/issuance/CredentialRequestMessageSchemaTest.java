@@ -27,6 +27,27 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
+              "holderPid": "holderPid",
+              "credentials": [
+                 {
+                   "credentialType": "MembershipCredential",
+                   "format": "vcdm11_jwt"
+                 },
+                 {
+                   "credentialType": "OrganizationCredential",
+                   "format": "vcdm11_ld"
+                 },
+                 {
+                   "credentialType": "Iso9001Credential",
+                   "format": "vcdm20_jose"
+                 }
+              ]
+            }""";
+
+    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_HOLDER_REQUEST_ID = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "CredentialRequestMessage",
               "credentials": [
                  {
                    "credentialType": "MembershipCredential",
@@ -47,6 +68,7 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
+              "holderPid": "holderPid",
               "credentials": [
                  {
                    "credentialType": "MembershipCredential"
@@ -66,6 +88,7 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
+              "holderPid": "holderPid",
               "credentials": [
                  {
                    "format": "vcdm11_ld"
@@ -75,6 +98,7 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
+              "holderPid": "holderPid",
               "credentials": [
                  {
                    "credentialType": "MembershipCredential",
@@ -87,6 +111,11 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_REQUEST_MESSAGE, JSON)).isEmpty();
+
+        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_HOLDER_REQUEST_ID, JSON))
+                .extracting(this::errorExtractor)
+                .containsExactly(error("holderPid", REQUIRED));
+
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT, JSON))
                 .extracting(this::errorExtractor)
                 .containsExactly(error("format", REQUIRED));
