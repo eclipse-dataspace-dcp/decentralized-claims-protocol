@@ -240,11 +240,8 @@ supported by the [=Credential Issuer=].
 |-----------------|----------------------------------|
 | **Sent by**     | A client                         |
 | **HTTP Method** | `GET`                            |
-| **URL Path**    | `/.well-known/vci`               |
-| **Response**    | [[[#issuermetadata]]] `HTTP 200` |                                                    
-
-A credential issuer MUST support the Issuer Metadata endpoint using the HTTPS scheme and the `GET method`. The URL of
-the endpoint is the base issuer url with the appended path `/.well-known/vci`.
+| **URL Path**    | `/metadata`                      |
+| **Response**    | [[[#issuermetadata]]] `HTTP 200` |
 
 ### IssuerMetadata
 
