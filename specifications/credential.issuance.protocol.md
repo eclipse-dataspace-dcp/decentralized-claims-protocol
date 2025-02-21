@@ -146,16 +146,27 @@ exact error code is implementation-specific.
 | **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                   |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
 |              | - `type`: A string specifying the `Credential Message` type.                                                         |
-|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                           |
-|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                           |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                                         |
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                                         |
+|              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`)                  |
 |              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following. |
+|              | - `rejectionReason`: a String containing additional information why a request was rejected. Can be `null`.           |
 
-The following is a non-normative example of the [Credential Message](#credential-message) JSON body:
+The following is a non-normative example of a [Credential Message](#credential-message) JSON body:
 
-<aside class="example" title="Credential Message">
+<aside class="example" title="Credential Message (issued)">
     <pre class="json" data-include="./resources/issuance/example/credential-message.json">
     </pre>
 </aside>
+
+The following example shows a rejected credential request JSON body:
+<aside class="example" title="Credential Message (rejected)">
+    <pre class="json" data-include="./resources/issuance/example/credential-message-rejected.json">
+    </pre>
+</aside>
+
+Note that the `status` applies to the entire request, i.e. a request is considered _rejected_ if at least one credential could not be issued. 
+Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` field is optional and should not disclose any confidential information.
 
 ### Credential Container
 

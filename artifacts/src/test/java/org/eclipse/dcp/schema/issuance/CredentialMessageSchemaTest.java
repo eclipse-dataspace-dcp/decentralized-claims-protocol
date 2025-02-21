@@ -41,6 +41,42 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                   "format": "json-ld"
                 }
               ],
+              "status": "ISSUED",
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
+            }""";
+
+    private static final String CREDENTIAL_MESSAGE_MESSAGE_WRONG_STATUS = """
+            {
+              "@context": [
+                "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
+              ],
+              "type": "CredentialMessage",
+              "credentials": [
+                {
+                  "credentialType": "MembershipCredential",
+                  "payload": "<JWT-STRING>",
+                  "format": "jwt"
+                },
+                {
+                  "credentialType": "OrganizationCredential",
+                  "payload": "<LD-Object>",
+                  "format": "json-ld"
+                }
+              ],
+              "status": "INVALID",
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
+            }""";
+
+    private static final String CREDENTIAL_MESSAGE_MESSAGE_REJECTION = """
+            {
+              "@context": [
+                "https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"
+              ],
+              "type": "CredentialMessage",
+              "status": "REJECTED",
+              "rejectionReason": "some rejection reason",
               "issuerPid": "issuerPid",
               "holderPid": "holderPid"
             }""";
@@ -48,7 +84,8 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
     private static final String INVALID_CREDENTIAL_MESSAGE = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
-              "type": "CredentialMessage"
+              "type": "CredentialMessage",
+              "status": "ISSUED"
             }""";
 
     private static final String INVALID_CREDENTIAL_MESSAGE_INVALID_CREDENTIAL_CONTAINER = """
@@ -60,6 +97,22 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                     "credentialType": "MembershipCredential",
                     "format": "jwt"
                   }
+              ],
+              "status": "ISSUED",
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
+            }""";
+
+    private static final String INVALID_CREDENTIAL_MESSAGE_NO_STATUS = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "CredentialMessage",
+              "credentials": [
+                 {
+                  "credentialType": "OrganizationCredential",
+                  "payload": "<LD-Object>",
+                  "format": "json-ld"
+                }
               ],
               "issuerPid": "issuerPid",
               "holderPid": "holderPid"
@@ -75,6 +128,7 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                      "format": "jwt"
                    }
               ],
+              "status": "ISSUED",
               "issuerPid": "issuerPid",
               "holderPid": "holderPid"
             }""";
@@ -82,9 +136,10 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_MESSAGE_MESSAGE, JSON)).isEmpty();
+        assertThat(schema.validate(CREDENTIAL_MESSAGE_MESSAGE_REJECTION, JSON)).isEmpty();
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("credentials", REQUIRED), error("issuerPid", REQUIRED), error("holderPid", REQUIRED));
+                .containsExactly(error("issuerPid", REQUIRED), error("holderPid", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE_INVALID_CREDENTIAL_CONTAINER, JSON))
                 .extracting(this::errorExtractor)
@@ -94,6 +149,16 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                 .hasSize(2)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@context", REQUIRED));
+
+        assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE_NO_STATUS, JSON))
+                .hasSize(1)
+                .extracting(this::errorExtractor)
+                .contains(error("status", REQUIRED));
+
+        assertThat(schema.validate(CREDENTIAL_MESSAGE_MESSAGE_WRONG_STATUS, JSON))
+                .hasSize(1)
+                .extracting(this::errorExtractor)
+                .contains(error(null, ENUM)); // for some reason the property is `null` on enum validation errors
     }
 
     @BeforeEach
