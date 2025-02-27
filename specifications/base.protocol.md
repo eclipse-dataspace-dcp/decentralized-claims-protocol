@@ -77,10 +77,13 @@ The [=Verifier=] MUST validate the Self-Issued ID Token using the following step
 2. The [=Verifier=] MUST assert that the `aud` claim is set to the [=Verifier=] [=DID=].
 3. The [=Verifier=] MUST validate the signature of the Self-Issued ID token by using a key obtained from the resolved
    `sub` DID Document. [=DID=] resolution is performed according to the [=DID=] Method specified by the `sub` claim. The
-   resolved DID document is processed to retrieve the value of the `verificationMethod` property. If no `kid` token
-   header is specified and the `verificationMethod` property contains one entry, the verification method is used. If a
-   `kid` token header is specified, the verification material from the entry corresponding the `kid` token header is
-   used. If no matching entry is found, the token is rejected.
+   resolved DID document is processed to retrieve the value of the `verificationMethod` property. 
+   - The signing key MUST have `capabilityInvocation` verification relationship with the DID. 
+   - If no `kid` token header is specified and the `verificationMethod` property contains one entry and the entry has the `capabilityInvocation` verification relationship, the verification method is used. 
+   - If no `kid` token header is specified and the `verificationMethod` property contains more than one entry, the token is rejected. 
+   - If a `kid` token header is specified, the verification material from the entry corresponding the `kid` token header is
+   used. Furthermore, this verification material MUST have `capabilityInvocation` verification relationship. 
+   - If no matching entry is found, the token is rejected.
 4. The [=Verifier=] MUST assert that the `sub` claim value equals the `id` property in the DID Document.
 5. The [=Verifier=] MUST assert the `nbf` claim if present. The [=Verifier=] MAY allow for some leeway to account for
    clock skew.
