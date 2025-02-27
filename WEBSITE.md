@@ -45,13 +45,12 @@ When wanting to pin and publish a snapshot in time via a separate url-path, foll
 
 When the content is finished, a release requires a first commit with
 
-1. Increase the version in the title of the spec in `index.html`
-2. a tag with the exact version string (like `v1.0-RC1`) on the release commit
-3. to change the redirect in `.github/scripts/index.html` to point to latest release candidate
-4. specifically put in the release date
-5. set the `respecConfig.specStatus` in `index.html` to `base`
+1. a tag with the exact version string (like `v1.0-RC1`) on the release commit
+2. to change the redirect in `.github/scripts/index.html` to point to latest release candidate
+3. set the `respecConfig.publishDate` in `index.html` to a string like `"2025-02-27"`,`
+4. set the `respecConfig.specStatus` in `index.html` to `base`
 
-In case of non major versions with a new namespace, additionally:
+In case of versions with a new namespace, additionally:
 
 5. adjust the textual description of the context URI in the base spec
 6. appended w3id referrals
