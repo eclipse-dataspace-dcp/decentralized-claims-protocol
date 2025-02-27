@@ -105,8 +105,8 @@ exact error code is implementation-specific.
 | **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                           |
 |              | - `presentationDefinition`: A valid `Presentation Definition` according to [[presentation-ex]]. |
 
-A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. It is an error to
-contain both.
+A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. If both parameters 
+are present it is an error and the client MUST return an `HTTP 400 BAD REQUEST` response.
 
 The following are non-normative examples of the JSON body:
 
