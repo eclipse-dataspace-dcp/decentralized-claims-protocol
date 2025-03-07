@@ -99,7 +99,7 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 | **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)                                                                                                                                                                       |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                                                                                      |
 |              | - `type`: A string specifying the `CredentialRequestMessage` type                                                                                                                                                                                |
-|              | - `holderPid`: A string corresponding to the request id on the Holder side type                                                                                                                                                                                |
+|              | - `holderPid`: A string corresponding to the request id on the Holder side type                                                                                                                                                                  |
 |              | - `credentials`: a JSON array of objects, each containing a `format`, which is A JSON string <br/>that describes the format of the credential to be issued <br/>and a `type`: A JSON array of strings that specifies the VC type being requested |
 
 The following is a non-normative example of a `CredentialRequestMessage`:
@@ -165,8 +165,10 @@ The following example shows a rejected credential request JSON body:
     </pre>
 </aside>
 
-Note that the `status` applies to the entire request, i.e. a request is considered _rejected_ if at least one credential could not be issued. 
-Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` field is optional and should not disclose any confidential information.
+Note that the `status` applies to the entire request, i.e. a request is considered _rejected_ if at least one credential
+could not be issued.
+Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` field is optional and should not
+disclose any confidential information.
 
 ### Credential Container
 
@@ -174,11 +176,12 @@ The [Credential Message](#credential-message)'s `credentials` property contains 
 objects.
 The  [Credential Container](#credential-container) object contains the following properties:
 
-|              |                                                                                                                                 |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                              |
-| **Required** | - `type`: A string specifying the `CredentialContainer` type.                                                                   |
-|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]). |
+|              |                                                                                                                                                                                                                            |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                                                                                                                         |
+| **Required** | - `credentialType`: A single string specifying type of credential. See [VC DataModel 1.1](https://www.w3.org/TR/vc-data-model/#types) or [VC DataModel 2.0](https://www.w3.org/TR/vc-data-model-2.0/#types), respectively. |
+|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]).                                                                                            |
+|              | - `format`:  a JSON string that describes the format of the credential to be issued                                                                                                                                        |
 
 ## Credential Offer API
 
@@ -289,14 +292,14 @@ with `Bearer` of the request.
 
 ### CredentialStatus
 
-|              |                                                                                     |
-|--------------|-------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)                   |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).         |
-|              | - `type`: A string specifying the `CredentialStatus` type                           |
-|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side    |
-|              | - `holderPid`: A string corresponding to the issuance id on the Holder side    |
-|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`            |
+|              |                                                                             |
+|--------------|-----------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)           |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
+|              | - `type`: A string specifying the `CredentialStatus` type                   |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side |
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side |
+|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`    |
 
 The following is a non-normative example of a `CredentialStatus` response object:
 
