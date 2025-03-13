@@ -190,3 +190,16 @@ in the [[[#presentation-response-message]]] with a
 valid [Presentation Submission](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-submission)
 when a `presentationDefinition`
 is provided in the [[[#presentation-query-message]]].
+
+### Presentation Validation
+[=Verifier=] SHOULD validate the [=Verifiable-Presentation=] (VP) token in the following manner:
+
+1. The [=Verifier=] MUST assert that the VP token is created either according to the `scope` or `presentationDefinition`
+2. The [=Verifier=] MUST validate the signature of the VP token by using the key obtained from the resolved `VerificationMethod` of the VP. DID resolution is performed according to the DID Method specified in the DID part of the `VerificationMethod` of the VP.
+3. The [=Verifier=] MUST validate that the `VerificationMethod` of the VP token has the `Authentication` [Verification Relationship](https://www.w3.org/TR/did-1.0/#authentication)
+4. If cryptographic holder binding is required for the VC, the [=Verifier=] MUST assert that the `credentialSubject.id` in the VC and the [=DID=] part of the `VerificationMethod` of the VP have the same value
+5. The [=Verifier=] MUST assert that the DID in the `VerificationMethod` of the VC has the same value as the `issuer` of the VC. 
+6. The [=Verifier=] MUST validate the signature of the VC by using the key obtained from the resolved `VerificationMethod` of the VC. DID resolution is performed according to the DID Method specified in the DID part of the `VerificationMethod` of the VP.
+7. If the VC contains a revocation mechanism, such as `StatusList2021`, the [=Verifier=] MUST validate the status of the VC according to the revocation mechanism. 
+8. If the VP token contains any claims regarding its `expiryDate` or `validity`, the [=Verifier=] MUST validate those claims.
+9. If any of the steps fail, the [=Verifier=] MUST consider the VP token invalid. 
