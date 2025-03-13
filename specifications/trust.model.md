@@ -116,3 +116,7 @@ The [=Verifier=] expects:
 
 - The [=Issuer=] to issue credentials correctly, including binding them to the holder in a tamper-proof way, and
   maintaining credential integrity.
+
+## Transport Security
+
+All participants MUST communicate via HTTPS [[rfc9110]].
