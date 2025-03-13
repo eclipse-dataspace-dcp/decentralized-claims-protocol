@@ -34,9 +34,9 @@ This non-normative section is intended to provide guidance to authors who aim at
 
 For a usable profile, at least the following aspects must be defined:
 
-- Verifiable Credential Data Model
-- Revocation System: specifies how the validity and expiration of Verifiable Credentials is checked
-- Proof stack: how data integrity of the VC is to be provided
+- **Verifiable Credential Data Model**: defines structure, format, and required attributes, including claims and verification methods.
+- **Revocation System**: specifies how the validity and expiration of Verifiable Credentials is checked.
+- **Proof stack**: how data integrity of the VC is to be provided.
 
 In addition, it is possible to further constrain the profile, for example by limiting the number of acceptable
 cryptographic algorithms.
