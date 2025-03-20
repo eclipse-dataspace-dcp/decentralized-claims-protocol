@@ -28,7 +28,7 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialOfferMessage",
-              "credentialIssuer": "issuer",
+              "issuer": "issuer",
               "credentials": [%s]
             }""";
 
@@ -43,12 +43,12 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialOfferMessage",
-              "credentialIssuer": "issuer"
+              "issuer": "issuer"
             }""";
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
-              "credentialIssuer": "issuer",
+              "issuer": "issuer",
               "credentials": [%s]
             }""";
 
@@ -58,7 +58,7 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_ISSUER.formatted(CREDENTIAL_OBJECT), JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("credentialIssuer", REQUIRED));
+                .containsExactly(error("issuer", REQUIRED));
 
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIALS, JSON))
