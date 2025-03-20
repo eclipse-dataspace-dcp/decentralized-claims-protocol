@@ -71,7 +71,10 @@
     "CredentialOfferMessage": {
       "@id": "dcp:CredentialOfferMessage",
       "@context": {
-        "credentialIssuer": "cred:issuer",
+        "issuer": {
+          "@id": "cred:issuer",
+          "@type": "@id"
+        },
         "credentials": {
           "@id": "dcp:credentials",
           "@container": "@set"
@@ -115,7 +118,10 @@
     "IssuerMetadata": {
       "@id": "dcp:IssuerMetadata",
       "@context": {
-        "credentialIssuer": "cred:issuer",
+        "issuer": {
+          "@id": "cred:issuer",
+          "@type": "@id"
+        },
         "credentialsSupported": {
           "@id": "dcp:credentialsSupported",
           "@container": "@set"

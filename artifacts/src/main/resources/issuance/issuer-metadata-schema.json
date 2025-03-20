@@ -21,6 +21,9 @@
             "$ref": "https://w3id.org/dspace-dcp/v1.0/issuance/credential-object-schema.json#/definitions/CredentialObject"
           }
         },
+        "issuer": {
+          "type": "string"
+        },
         "type": {
           "type": "string",
           "const": "IssuerMetadata"
@@ -28,7 +31,7 @@
       },
       "required": [
         "@context",
-        "credentialIssuer",
+        "issuer",
         "credentialsSupported",
         "type"
       ]

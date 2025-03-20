@@ -28,7 +28,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
             {
                 "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
                 "type": "IssuerMetadata",
-                "credentialIssuer": "did:web:issuer-url",
+                "issuer": "did:web:issuer-url",
                 "credentialsSupported": [%s]
             }""";
 
@@ -40,7 +40,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
-              "credentialIssuer": "did:web:issuer-url",
+              "issuer": "did:web:issuer-url",
               "credentialsSupported": [%s]
             }""";
 
@@ -49,7 +49,7 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
         assertThat(schema.validate(ISSUER_METADATA.formatted(CREDENTIAL_OBJECT), JSON)).isEmpty();
         assertThat(schema.validate(INVALID_ISSUER_METADATA, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("credentialIssuer", REQUIRED), error("credentialsSupported", REQUIRED));
+                .containsExactly(error("issuer", REQUIRED), error("credentialsSupported", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT.formatted(CREDENTIAL_OBJECT), JSON))
                 .hasSize(2)
