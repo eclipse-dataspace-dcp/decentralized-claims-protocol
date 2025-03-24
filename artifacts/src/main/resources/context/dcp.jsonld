@@ -45,8 +45,7 @@
       "@id": "dcp:CredentialObject",
       "@context": {
         "credentialType": {
-          "@id": "dcp:credentialType",
-          "@container": "@set"
+          "@id": "dcp:credentialType"
         },
         "offerReason": {
           "@id": "dcp:offerReason",
