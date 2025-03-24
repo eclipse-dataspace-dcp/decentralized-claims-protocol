@@ -3,7 +3,7 @@
     "@version": 1.1,
     "@protected": true,
     "dcp": "https://w3id.org/dspace-dcp/v1.0/",
-    "cred": "https://www.w3.org/2018/credentials/",
+    "cred": "https://www.w3.org/2018/credentials#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "id": "@id",
     "type": "@type",
