@@ -27,6 +27,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
             {
                 "type": "CredentialObject",
                 "credentialType": "VerifiableCredential",
+                "credentialSchema": "https://example.com/credentials/credentialSchema",
                 "offerReason": "reissue",
                 "bindingMethods": [
                   "did:web"
