@@ -53,9 +53,7 @@ public abstract class AbstractJsonLdTest {
     private static final String CONTEXT_REFERENCE = format("{\"@context\": [\"%s\"]}", DCP_CONTEXT);
     private final Map<String, String> contextMap = Map.of(
             DCP_CONTEXT, "/context/dcp.jsonld",
-            "https://www.w3.org/ns/odrl.jsonld", "/context/odrl.jsonld",
-            "https://www.w3.org/2018/credentials/v1", "/context/credentials.jsonld",
-            "https://www.w3.org/2018/credentials/examples/v1", "/context/credentials-examples.jsonld"
+            "https://www.w3.org/ns/odrl.jsonld", "/context/odrl.jsonld"
     );
     protected ObjectMapper mapper;
     protected JsonStructure compactionContext;

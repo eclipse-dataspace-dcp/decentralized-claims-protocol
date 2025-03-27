@@ -26,7 +26,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
     public static final String CREDENTIAL_OBJECT = """
             {
                 "type": "CredentialObject",
-                "credentialType": ["VerifiableCredential"],
+                "credentialType": "VerifiableCredential",
                 "offerReason": "reissue",
                 "bindingMethods": [
                   "did:web"
@@ -65,7 +65,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
              {
-                "credentialType": ["VerifiableCredential"],
+                "credentialType": "VerifiableCredential",
                 "offerReason": "reissue",
                 "bindingMethods": [
                   "did:web"
