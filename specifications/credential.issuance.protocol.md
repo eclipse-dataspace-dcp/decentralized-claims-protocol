@@ -76,7 +76,7 @@ the client's [=DID=] to obtain cryptographic material for validation and credent
 
 The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
 requested [=Verifiable Credentials=] into the client's `Credential Service` as defined
-by[[[#verifiable-presentation-protocol]]]
+by [[[#verifiable-presentation-protocol]]]
 
 The bearer token MAY also be used by the [=Issuer Service=] to resolve [=Verifiable Presentations=] the client is
 required to hold for issuance of the requested [=Verifiable Credentials=].
