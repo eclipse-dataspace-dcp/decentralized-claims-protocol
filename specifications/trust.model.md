@@ -79,9 +79,6 @@ All entities expect:
 
 - The [=Verifiable Data Registry=] to be tamper-evident and correctly reflect data controlled by all entities. This may
   be done through the use of cryptographic resources.
-- The [=Holder=] and [=Subject=] of all [=Verifiable Credentials=] to be the same. While some ecosystems may support
-  use-cases where the [=Holder=] and [=Subject=] are not the same, Dataspace Protocol exchanges are always between two
-  parties.
 - All [=Verifiable Credentials=] and [=Verifiable Presentations=] to be tamper-proof and support revocation.
 - Dataspace Protocol interactions and those defined in this specification to be secure and use Transport Level
   Security.
