@@ -9,6 +9,7 @@
       "type": "CredentialObject",
       "credentialType": "CompanyCredential",
       "offerReason": "reissue",
+      "clientSupply": "allowed",
       "bindingMethods": [
         "did:web"
       ],

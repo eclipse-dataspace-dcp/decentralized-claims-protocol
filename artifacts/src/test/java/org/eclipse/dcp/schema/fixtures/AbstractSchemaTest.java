@@ -19,6 +19,8 @@ import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaLocation;
 import com.networknt.schema.ValidationMessage;
 
+import java.util.Optional;
+
 import static com.networknt.schema.SpecVersion.VersionFlag.V202012;
 import static org.eclipse.dcp.schema.SchemaConstants.DCP_PREFIX;
 
@@ -46,7 +48,8 @@ public abstract class AbstractSchemaTest {
     }
 
     protected SchemaError errorExtractor(ValidationMessage validationMessage) {
-        return new SchemaError(validationMessage.getProperty(), validationMessage.getType());
+        return Optional.ofNullable(validationMessage.getProperty()).map(p->new SchemaError(p, validationMessage.getType()))
+                .orElseGet(() -> new SchemaError(validationMessage.getInstanceLocation().toString(), validationMessage.getType()));
     }
 
     protected SchemaError error(String property, String type) {

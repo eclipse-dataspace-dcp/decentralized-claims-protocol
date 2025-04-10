@@ -130,7 +130,7 @@ Credential according to the client-supplied data in the `credentialSubject` prop
 If the request is approved, the issuer endpoint will send an acknowledgement to the client. The [=Issuer Service=] MAY
 still reject a request after initial acknowledgement and signify this via the [[[#credential-request-status-api]]].
 the [=Verifiable Credentials=] are ready, the [=Issuer Service=] will respond asynchronously with a write-request to the
-client's `Credential Service` using the Storage API defined in Section [[[#storage-api]]]. 
+client's `Credential Service` using the Storage API defined in Section [[[#storage-api]]].
 
 ## Storage API
 
@@ -237,17 +237,18 @@ The following is a non-normative example of a credential offer request:
 
 ### CredentialObject
 
-|              |                                                                                                                                                                                                                               |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-object-schema.json)                                                                                                                                                             |
-| **Required** | - `type`: A string specifying the `CredentialObject` type                                                                                                                                                                     |
-|              | - `credentialType`: A single string specifying type of credential being offered                                                                                                                                               |
-| **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
-|              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
-|              | - `credentialSchema`: A URL pointing to the credential schema of the object in a VC's `credentialSubject` property.                                                                                                           |
-|              | - `profiles`: An array of strings containing the aliases of the [profiles](#profiles-of-the-decentralized-claims-protocol), e.g. `"vc20-bssl/jwt"`                                                                            |
-|              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
-|              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                            |
+|              |                                                                                                                                                                                                                                     |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-object-schema.json)                                                                                                                                                                   |
+| **Required** | - `type`: A string specifying the `CredentialObject` type                                                                                                                                                                           |
+|              | - `credentialType`: A single string specifying type of credential being offered                                                                                                                                                     |
+| **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                        |
+|              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                             |
+|              | - `credentialSchema`: A URL pointing to the credential schema of the object in a VC's `credentialSubject` property.                                                                                                                 |
+|              | - `clientSupply`: An enum indicating if an [=Issuer Service=] accepts client-supplied data in the `CredentialRequestMessage`'s `credentials.credentialSubject` property. Possible values are `required`, `allowed` and `forbidden`. |
+|              | - `profiles`: An array of strings containing the aliases of the [profiles](#profiles-of-the-decentralized-claims-protocol), e.g. `"vc20-bssl/jwt"`                                                                                  |
+|              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance.       |
+|              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                                  |
 
 The following is a non-normative example of a `CredentialObject`:
 

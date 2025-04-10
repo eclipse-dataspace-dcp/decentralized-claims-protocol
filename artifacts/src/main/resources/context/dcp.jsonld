@@ -54,6 +54,10 @@
           "@id": "dcp:offerReason",
           "@type": "xsd:string"
         },
+        "clientSupply": {
+          "@id": "dcp:clientSupply",
+          "@type": "xsd:string"
+        },
         "bindingMethods": {
           "@id": "dcp:bindingMethods",
           "@type": "xsd:string",

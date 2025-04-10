@@ -97,6 +97,41 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                  }
             }""";
 
+    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_INVALID_ENUMS = """
+             {
+                "type": "CredentialObject",
+                "credentialType": "VerifiableCredential",
+                "offerReason": "issue",
+                "clientSupply": "something",
+                "bindingMethods": [
+                  "did:web"
+                ],
+                "profiles": [
+                  "vc20-bssl/jwt", "vc10-sl2021/jwt"
+                ],
+                "issuancePolicy": {
+                   "id": "Scalable trust example",
+                   "input_descriptors": [
+                     {
+                       "id": "pd-id",
+                       "constraints": {
+                         "fields": [
+                           {
+                             "path": [
+                               "$.vc.type"
+                             ],
+                             "filter": {
+                               "type": "string",
+                               "pattern": "^AttestationCredential$"
+                             }
+                           }
+                         ]
+                       }
+                     }
+                   ]
+                 }
+            }""";
+
     @Test
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_OBJECT, JSON)).isEmpty();
@@ -112,6 +147,11 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
                 .hasSize(1)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED));
+
+        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_INVALID_ENUMS, JSON))
+                .hasSize(1)
+                .extracting(this::errorExtractor)
+                .contains(error("$.clientSupply", ENUM));
 
     }
 
