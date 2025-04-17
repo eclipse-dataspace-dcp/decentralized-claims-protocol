@@ -19,7 +19,7 @@ adheres to the model defined by the Dataspace Protocol [[dsp-base]]:
 ## Interrelation to the Dataspace Protocol
 
 The Dataspace Protocol (DSP) [[dsp-base]] is designed as a layered protocol, which is independent of the 
-identity and trust systems used. The Decentralized Claims Protocol fills this gap by providing such an orthogonal 
+identity and trust system used. The Decentralized Claims Protocol fills this gap by providing such an orthogonal 
 overlay for identity and trust in a decentralized manner.
 
 ## Systems
