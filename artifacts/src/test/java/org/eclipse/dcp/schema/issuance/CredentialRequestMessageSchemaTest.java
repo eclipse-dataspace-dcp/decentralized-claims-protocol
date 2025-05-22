@@ -29,18 +29,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                 {
-                   "credentialType": "MembershipCredential",
-                   "format": "vcdm11_jwt"
-                 },
-                 {
-                   "credentialType": "OrganizationCredential",
-                   "format": "vcdm11_ld"
-                 },
-                 {
-                   "credentialType": "Iso9001Credential",
-                   "format": "vcdm20_jose"
-                 }
+                 "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
+                 "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"
               ]
             }""";
 
@@ -49,50 +39,29 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
               "credentials": [
-                 {
-                   "credentialType": "MembershipCredential",
-                   "format": "vcdm11_jwt"
-                 },
-                 {
-                   "credentialType": "OrganizationCredential",
-                   "format": "vcdm11_ld"
-                 },
-                 {
-                   "credentialType": "Iso9001Credential",
-                   "format": "vcdm20_jose"
-                 }
+                  "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
+                  "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"
               ]
             }""";
 
-    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT = """
+    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_ID_NOT_STRING = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                 {
-                   "credentialType": "MembershipCredential"
-                 },
-                 {
-                   "credentialType": "OrganizationCredential",
-                   "format": "vcdm11_ld"
-                 },
-                 {
-                   "credentialType": "Iso9001Credential",
-                   "format": "vcdm20_jose"
-                 }
+                  42069,
+                  4711
               ]
             }""";
 
-    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_TYPE = """
+
+    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_EMPTY_ARRAY = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                 {
-                   "format": "vcdm11_ld"
-                 }
               ]
             }""";
 
@@ -100,10 +69,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "holderPid": "holderPid",
               "credentials": [
-                 {
-                   "credentialType": "MembershipCredential",
-                   "format": "vcdm11_jwt"
-                 }
+                  "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
+                  "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"
               ]
             }""";
 
@@ -111,18 +78,16 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_REQUEST_MESSAGE, JSON)).isEmpty();
+        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_EMPTY_ARRAY, JSON))
+                .isEmpty();
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_HOLDER_REQUEST_ID, JSON))
                 .extracting(this::errorExtractor)
                 .containsExactly(error("holderPid", REQUIRED));
 
-        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT, JSON))
+        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_ID_NOT_STRING, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("format", REQUIRED));
-
-        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_TYPE, JSON))
-                .extracting(this::errorExtractor)
-                .containsExactly(error("credentialType", REQUIRED));
+                .containsExactly(error(null, TYPE), error(null, TYPE));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
                 .hasSize(2)
