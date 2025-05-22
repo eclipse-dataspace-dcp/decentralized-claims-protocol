@@ -25,6 +25,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
 
     public static final String CREDENTIAL_OBJECT = """
             {
+                "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
                 "type": "CredentialObject",
                 "credentialType": "VerifiableCredential",
                 "credentialSchema": "https://example.com/credentials/credentialSchema",
@@ -66,6 +67,7 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
 
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
              {
+                "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
                 "credentialType": "VerifiableCredential",
                 "offerReason": "reissue",
                 "bindingMethods": [
@@ -102,7 +104,9 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
         assertThat(schema.validate(CREDENTIAL_OBJECT, JSON)).isEmpty();
         assertThat(schema.validate(INVALID_CREDENTIAL_OBJECT, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("credentialType", REQUIRED),
+                .containsExactly(
+                        error("id", REQUIRED),
+                        error("credentialType", REQUIRED),
                         error("offerReason", REQUIRED),
                         error("bindingMethods", REQUIRED),
                         error("profiles", REQUIRED),
