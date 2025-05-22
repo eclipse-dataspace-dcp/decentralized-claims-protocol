@@ -236,7 +236,7 @@ The following is a non-normative example of a credential offer request:
 |              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
 |              | - `credentialSchema`: A URL pointing to the credential schema of the object in a VC's `credentialSubject` property.                                                                                                           |
 |              | - `profiles`: An array of strings containing the aliases of the [profiles](#profiles-of-the-decentralized-claims-protocol), e.g. `"vc20-bssl/jwt"`                                                                            |
-|              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
+|              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.1.1/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
 |              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                            |
 
 The following is a non-normative example of a `CredentialObject`:
