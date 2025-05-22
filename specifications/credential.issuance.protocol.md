@@ -211,7 +211,7 @@ a [=Verifiable Credential=] offer.
 | **Schema**   | [JSON Schema](./resources/issuance/credential-offer-message-schema.json)                                           |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                         |
 |              | - `type`: A string specifying the `CredentialOfferMessage` type                                                    |
-|              | - `issuer`:  The [=Credential Issuer=] DID                                                               |
+|              | - `issuer`:  The [=Credential Issuer=] DID                                                                         |
 |              | - `credentials`: A JSON array, where every entry is a JSON object of type [[[#credentialobject]]] or a JSON string |
 
 If the `credentials` property entries are type string, the value MUST be one of the `id` values of an object in the
@@ -225,6 +225,11 @@ The following is a non-normative example of a credential offer request:
     </pre>
 </aside>   
 
+<aside class="example" title="CredentialOfferMessage with IDs">
+    <pre class="json" data-include="./resources/issuance/example/credential-offer-message-ids.json">
+    </pre>
+</aside>
+
 ### CredentialObject
 
 |              |                                                                                                                                                                                                                               |
@@ -232,6 +237,7 @@ The following is a non-normative example of a credential offer request:
 | **Schema**   | [JSON Schema](./resources/issuance/credential-object-schema.json)                                                                                                                                                             |
 | **Required** | - `type`: A string specifying the `CredentialObject` type                                                                                                                                                                     |
 |              | - `credentialType`: A single string specifying type of credential being offered                                                                                                                                               |
+|              | - `id`: a string defining a unique, stable identifier for this `CredentialObject`                                                                                                                                             |
 | **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
 |              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
 |              | - `credentialSchema`: A URL pointing to the credential schema of the object in a VC's `credentialSubject` property.                                                                                                           |
@@ -265,7 +271,7 @@ supported by the [=Credential Issuer=].
 | **Schema**   | [JSON Schema](./resources/issuance/issuer-metadata-schema.json)             |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
 |              | - `type`: A string specifying the `IssuerMetadata` type                     |
-|              | - `issuer`: A string containing the [=Credential Issuer=] DID     |
+|              | - `issuer`: A string containing the [=Credential Issuer=] DID               |
 | **Optional** | - `credentialsSupported`: A JSON array of [[[#credentialobject]]] elements  |
 
 The following is a non-normative example of a `IssuerMetadata` response object:
