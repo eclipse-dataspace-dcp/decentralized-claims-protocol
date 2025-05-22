@@ -122,7 +122,7 @@ The following are non-normative examples of the JSON body:
 
 #### Presentation Definitions
 
-An implementations MAY support the `presentationDefinition` parameter. If it does not, it MUST return
+An implementation MAY support the `presentationDefinition` parameter. If it does not, it MUST return
 `501 Not Implemented`. The `presentationDefinition` parameter contains a valid `Presentation Definition`
 according to
 the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.1.1/#presentation-definition).
