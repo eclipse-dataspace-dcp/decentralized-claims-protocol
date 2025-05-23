@@ -29,8 +29,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                 "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
-                 "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"
+                 {"credentialObjectId": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"},
+                 {"credentialObjectId": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"}
               ]
             }""";
 
@@ -39,8 +39,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
               "credentials": [
-                  "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
-                  "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"
+                 {"credentialObjectId": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"},
+                 {"credentialObjectId": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"}
               ]
             }""";
 
@@ -50,8 +50,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                  42069,
-                  4711
+                  { "credentialObjectId": 42069 },
+                  { "credentialObjectId": 4711 }
               ]
             }""";
 
@@ -69,8 +69,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "holderPid": "holderPid",
               "credentials": [
-                  "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
-                  "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"
+                 {"credentialObjectId": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"},
+                 {"credentialObjectId": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"}
               ]
             }""";
 
