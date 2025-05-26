@@ -122,10 +122,10 @@ The following are non-normative examples of the JSON body:
 
 #### Presentation Definitions
 
-An implementations MAY support the `presentationDefinition` parameter. If it does not, it MUST return
+An implementation MAY support the `presentationDefinition` parameter. If it does not, it MUST return
 `501 Not Implemented`. The `presentationDefinition` parameter contains a valid `Presentation Definition`
 according to
-the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-definition).
+the [Presentation Exchange Specification](https://identity.foundation/presentation-exchange/spec/v2.1.1/#presentation-definition).
 The [=Credential Service=] will use the presentation definition to return a set of matching VPs in the format specified
 by the definition.
 
@@ -187,7 +187,7 @@ The following are non-normative examples of the JSON response body:
 
 Implementations that support the `presentationDefinition` parameter MUST include the `presentationSubmission` parameter
 in the [[[#presentation-response-message]]] with a
-valid [Presentation Submission](https://identity.foundation/presentation-exchange/spec/v2.0.0/#presentation-submission)
+valid [Presentation Submission](https://identity.foundation/presentation-exchange/spec/v2.1.1/#presentation-submission)
 when a `presentationDefinition`
 is provided in the [[[#presentation-query-message]]].
 
