@@ -6,6 +6,7 @@
   "issuer": "did:web:issuer-url",
   "credentialsSupported": [
     {
+      "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
       "type": "CredentialObject",
       "credentialType": "CompanyCredential",
       "offerReason": "reissue",
