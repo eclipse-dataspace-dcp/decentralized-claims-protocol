@@ -22,7 +22,7 @@ import static com.networknt.schema.InputFormat.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.eclipse.dcp.schema.issuance.CredentialObjectSchemaTest.CREDENTIAL_OBJECT;
 
-public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
+public class  CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String CREDENTIAL_OFFER_MESSAGE = """
             {
