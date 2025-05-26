@@ -29,8 +29,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"},
-                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"}
+                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1", "format": "vcdm20_jose"},
+                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c", "format": "vcdm11_jwt"}
               ]
             }""";
 
@@ -39,8 +39,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "CredentialRequestMessage",
               "credentials": [
-                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"},
-                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"}
+                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1", "format": "vcdm20_jose"},
+                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c", "format": "vcdm11_jwt"}
               ]
             }""";
 
@@ -50,8 +50,8 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
               "type": "CredentialRequestMessage",
               "holderPid": "holderPid",
               "credentials": [
-                  { "id": 42069 },
-                  { "id": 4711 }
+                  { "id": 42069, "format": "vcdm20_jose" },
+                  { "id": 4711, "format": "vcdm11_jwt" }
               ]
             }""";
 
@@ -69,8 +69,19 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
             {
               "holderPid": "holderPid",
               "credentials": [
-                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"},
-                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c"}
+                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1", "format": "vcdm20_jose"},
+                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c", "format": "vcdm11_jwt"}
+              ]
+            }""";
+
+    private static final String CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "CredentialRequestMessage",
+              "holderPid": "holderPid",
+              "credentials": [
+                 {"id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1" },
+                 {"id": "c0f81e68-6d35-4f9d-bc04-51e511b2e46c", "format": "vcdm11_jwt"}
               ]
             }""";
 
@@ -94,6 +105,10 @@ public class CredentialRequestMessageSchemaTest extends AbstractSchemaTest {
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@context", REQUIRED));
 
+        assertThat(schema.validate(CREDENTIAL_REQUEST_MESSAGE_NO_FORMAT, JSON))
+                .hasSize(1)
+                .extracting(this::errorExtractor)
+                .contains(error("format", REQUIRED));
 
     }
 
