@@ -16,9 +16,9 @@ issue a [=Verifiable Credential=]:
    of scopes that define the [=Verifiable Credentials=] the client wants the [=Issuer Service=] to provide. This set of
    scopes is determined out of band and may be derived from metadata the [=Credential Issuer=] has previously made
    available to the client.
-2. The [=Secure Token Service=] responds with an access token a that may be in `token` claim a [=Self-Issued ID Token=].
-   The access token can be used by the [=Issuer Service=] to write requested [=Verifiable Credentials=]
-   to the client's [=Credential Service=].
+2. The [=Secure Token Service=] responds with an access token, which may be included in the `token` claim of the
+   [=Self-Issued ID Token=]. The access token can be used by the [=Issuer Service=] to write requested 
+   [=Verifiable Credentials=] to the client's [=Credential Service=].
 3. The client makes a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=] and includes
    a [=Self-Issued ID Token=] containing the access token.
 4. The [=Issuer Service=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
