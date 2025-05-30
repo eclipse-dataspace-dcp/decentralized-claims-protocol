@@ -94,13 +94,13 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 
 ### Credential Request Message
 
-|              |                                                                                  |
-|--------------|----------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)       |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).      |
-|              | - `type`: A string specifying the `CredentialRequestMessage` type                |
-|              | - `holderPid`: A string corresponding to the request id on the Holder side type  |
-|              | - `credentials`: an array of strings, each referencing a [[[#credentialobject]]] |
+|              |                                                                                   |
+|--------------|-----------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)        |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).       |
+|              | - `type`: A string specifying the `CredentialRequestMessage` type.                |
+|              | - `holderPid`: A string corresponding to the request id on the Holder side.       |
+|              | - `credentials`: an array of strings, each referencing a [[[#credentialobject]]]. |
 
 The following is a non-normative example of a `CredentialRequestMessage`:
 
@@ -141,16 +141,16 @@ exact error code is implementation-specific.
 
 ### Credential Message
 
-|              |                                                                                                                      |
-|--------------|----------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                   |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
-|              | - `type`: A string specifying the `Credential Message` type.                                                         |
-|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                                         |
-|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                                         |
-|              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`)                  |
-|              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following. |
-|              | - `rejectionReason`: a String containing additional information why a request was rejected. Can be `null`.           |
+|              |                                                                                                                                  |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                               |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                      |
+|              | - `type`: A string specifying the `CredentialMessage` type.                                                                      |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                                                     |
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                                                     |
+|              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`)                              |
+| **Optional** | - `credentials`: An array of [Credential Container](#credential-container) Json objects, as defined in the following subsection. |
+|              | - `rejectionReason`: a String containing additional information why a request was rejected.                                      |
 
 The following is a non-normative example of a [Credential Message](#credential-message) JSON body:
 
@@ -167,7 +167,7 @@ The following example shows a rejected credential request JSON body:
 
 Note that the `status` applies to the entire request, i.e. a request is considered _rejected_ if at least one credential
 could not be issued.
-Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` field is optional and should not
+Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` should not
 disclose any confidential information.
 
 ### Credential Container
@@ -181,7 +181,7 @@ The  [Credential Container](#credential-container) object contains the following
 | **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                                                                                                                         |
 | **Required** | - `credentialType`: A single string specifying type of credential. See [VC DataModel 1.1](https://www.w3.org/TR/vc-data-model/#types) or [VC DataModel 2.0](https://www.w3.org/TR/vc-data-model-2.0/#types), respectively. |
 |              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]).                                                                                            |
-|              | - `format`:  a JSON string that describes the format of the credential to be issued                                                                                                                                        |
+|              | - `format`:  a JSON string that describes the format of the issued credential.                                                                                                                                             |
 
 ## Credential Offer API
 
