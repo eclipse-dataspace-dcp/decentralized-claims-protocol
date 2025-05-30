@@ -37,7 +37,7 @@ paths:
                   description: Secret of the client requesting an SI token
                 grant_type:
                   type: string
-                  description: "Type of grant: must be set to client_credentials"
+                  description: "Type of grant: MUST be set to client_credentials"
               required:
               - audience
               - client_id

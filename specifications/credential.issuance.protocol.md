@@ -12,11 +12,11 @@ issue a [=Verifiable Credential=]:
 ![Issuance Flow](specifications/issuance.flow.svg "Issuance Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a token including an access token. This could be a
-   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client may include a set
+   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client MAY include a set
    of scopes that define the [=Verifiable Credentials=] the client wants the [=Issuer Service=] to provide. This set of
-   scopes is determined out of band and may be derived from metadata the [=Credential Issuer=] has previously made
+   scopes is determined out of band and MAY be derived from metadata the [=Credential Issuer=] has previously made
    available to the client.
-2. The [=Secure Token Service=] responds with an access token, which may be included in the `token` claim of the
+2. The [=Secure Token Service=] responds with an access token, which MAY be included in the `token` claim of the
    [=Self-Issued ID Token=]. The access token can be used by the [=Issuer Service=] to write requested 
    [=Verifiable Credentials=] to the client's [=Credential Service=].
 3. The client makes a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=] and includes
@@ -167,7 +167,7 @@ The following example shows a rejected credential request JSON body:
 
 Note that the `status` applies to the entire request, i.e. a request is considered _rejected_ if at least one credential
 could not be issued.
-Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` should not
+Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` SHOULD NOT
 disclose any confidential information.
 
 ### Credential Container
@@ -185,9 +185,9 @@ The  [Credential Container](#credential-container) object contains the following
 
 ## Credential Offer API
 
-Some scenarios involve the [=Credential Issuer=] making an initial offer. For example, an out-of-band process may result
+Some scenarios involve the [=Credential Issuer=] making an initial offer. For example, an out-of-band process MAY result
 in
-a credential offer. Or, a [=Credential Issuer=] may start a key rotation process which requires
+a credential offer. Or, a [=Credential Issuer=] MAY start a key rotation process which requires
 a [=Verifiable Credential=] to be
 reissued. In this case, the [=Credential Issuer=] can proactively prompt a [=Holder=] to request a
 new [=Verifiable Credential=]
@@ -206,13 +206,13 @@ a [=Verifiable Credential=] offer.
 
 ### Credential Offer Message
 
-|              |                                                                                                                    |
-|--------------|--------------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-offer-message-schema.json)                                           |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                         |
-|              | - `type`: A string specifying the `CredentialOfferMessage` type                                                    |
-|              | - `issuer`:  The [=Credential Issuer=] DID                                                                         |
-|              | - `credentials`: A JSON array, where every entry is a JSON object of type [[[#credentialobject]]] or a JSON string |
+|              |                                                                                                                     |
+|--------------|---------------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-offer-message-schema.json)                                            |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                         |
+|              | - `type`: A string specifying the `CredentialOfferMessage` type.                                                    |
+|              | - `issuer`:  The [=Credential Issuer=] DID.                                                                         |
+|              | - `credentials`: A JSON array, where every entry is a JSON object of type [[[#credentialobject]]] or a JSON string. |
 
 If the `credentials` property entries are type string, the value MUST be one of the `id` values of an object in the
 `credentialsSupported` returned from the [[[#issuer-metadata-api]]]. When processing, the [=Credential Service=]
@@ -235,15 +235,15 @@ The following is a non-normative example of a credential offer request:
 |              |                                                                                                                                                                                                                               |
 |--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/issuance/credential-object-schema.json)                                                                                                                                                             |
-| **Required** | - `type`: A string specifying the `CredentialObject` type                                                                                                                                                                     |
-|              | - `credentialType`: A single string specifying type of credential being offered                                                                                                                                               |
-|              | - `id`: a string defining a unique, stable identifier for this `CredentialObject`                                                                                                                                             |
+| **Required** | - `type`: A string specifying the `CredentialObject` type.                                                                                                                                                                    |
+|              | - `credentialType`: A single string specifying type of credential being offered.                                                                                                                                              |
+|              | - `id`: a string defining a unique, stable identifier for this `CredentialObject`.                                                                                                                                            |
 | **Optional** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
-|              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to                                                                                                                       |
+|              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to.                                                                                                                      |
 |              | - `credentialSchema`: A URL pointing to the credential schema of the object in a VC's `credentialSubject` property.                                                                                                           |
-|              | - `profile`: An string containing the alias of the [profiles](#profiles-of-the-decentralized-claims-protocol), e.g. `"vc20-bssl/jwt"`                                                                                         |
+|              | - `profile`: An string containing the alias of the [profiles](#profiles-of-the-decentralized-claims-protocol), e.g. `"vc20-bssl/jwt"`.                                                                                        |
 |              | - `issuancePolicy`: A [presentation definition](https://identity.foundation/presentation-exchange/spec/v2.1.1/#presentation-definition) [[presentation-ex]] signifying the required [=Verifiable Presentation=] for issuance. |
-|              | - `offerReason`: A reason for the offer as a string. Valid values may include `reissue` and `proof-key-revocation`                                                                                                            |
+|              | - `offerReason`: A reason for the offer as a string. Valid values MAY include `reissue` and `proof-key-revocation`.                                                                                                           |
 
 The following is a non-normative example of a `CredentialObject`:
 
@@ -270,9 +270,9 @@ supported by the [=Credential Issuer=].
 |--------------|-----------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/issuance/issuer-metadata-schema.json)             |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
-|              | - `type`: A string specifying the `IssuerMetadata` type                     |
-|              | - `issuer`: A string containing the [=Credential Issuer=] DID               |
-| **Optional** | - `credentialsSupported`: A JSON array of [[[#credentialobject]]] elements  |
+|              | - `type`: A string specifying the `IssuerMetadata` type.                    |
+|              | - `issuer`: A string containing the [=Credential Issuer=] DID.              |
+| **Optional** | - `credentialsSupported`: A JSON array of [[[#credentialobject]]] elements. |
 
 The following is a non-normative example of a `IssuerMetadata` response object:
 
@@ -293,20 +293,20 @@ The Credential Request Status API defines the REQUIRED [=Issuer Service=] endpoi
 | **URL Path**    | `/requests/<request id>`  where the request id corresponds to the ID identified by the location header returned for a [[[#credential-request-message]]] |
 | **Response**    | [[[#credentialstatus]]] `HTTP 200`                                                                                                                      |     
 
-The [=Issuer Service=] MUST implement access control such that only the client that made the request may access a
+The [=Issuer Service=] MUST implement access control such that only the client that made the request MAY access a
 particular request status. A [=Self-Issued ID Token=] MUST be submitted in the HTTP `Authorization` header prefixed
 with `Bearer` of the request.
 
 ### CredentialStatus
 
-|              |                                                                             |
-|--------------|-----------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)           |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). |
-|              | - `type`: A string specifying the `CredentialStatus` type                   |
-|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side |
-|              | - `holderPid`: A string corresponding to the issuance id on the Holder side |
-|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`    |
+|              |                                                                              |
+|--------------|------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-status-schema.json)            |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).  |
+|              | - `type`: A string specifying the `CredentialStatus` type.                   |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side. |
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side. |
+|              | - `status`: A string with a value of `RECEIVED`, `REJECTED`, or `ISSUED`.    |
 
 The following is a non-normative example of a `CredentialStatus` response object:
 
@@ -322,17 +322,17 @@ create [=Verifiable Credential=] proofs.
 
 ### Key rotation
 
-Key rotation may be supported in the following way:
+Key rotation MAY be supported in the following way:
 
 1. After a defined `cryptoperiod`, a rotation is initiated, a new key pair is generated and the public key is added
    to a `verificationMethod` in the [=Credential Issuer=] DID document. The new private key is used to sign newly
    issued [=Verifiable Credential=] proofs.
 2. The old private key is decommissioned (archived or destroyed). However, the `verificationMethod` in
-   the [=Credential Issuer=] DID document are retained so existing issued [=Verifiable Credentials=] may be verified.
-3. At some point before existing [=Verifiable Credentials=] are set to expire, an [=Credential Issuer=] may make
+   the [=Credential Issuer=] DID document are retained so existing issued [=Verifiable Credentials=] MAY be verified.
+3. At some point before existing [=Verifiable Credentials=] are set to expire, an [=Credential Issuer=] MAY make
    credential offers for new [=Verifiable Credentials=] to [=Holders=] with the `offerReason = reissue` property.
 4. After a defined period, the rotated key's `verificationMethod` will be removed from the [=Credential Issuer=] DID
-   document. This period must at least extend to the expiration date of the last issued credential. At this point, any
+   document. This period MUST at least extend to the expiration date of the last issued credential. At this point, any
    existing [=Verifiable Credentials=] with proofs signed by the old (now rotated) key will become invalid.
 
 Implementors following this sequence SHOULD set the `expirationDate`/`validUntil` property of
@@ -341,14 +341,14 @@ SHOULD not be decommissioned until all credentials, that were signed with it, ha
 
 ### Key revocation
 
-Key revocation may be supported in the following way:
+Key revocation MAY be supported in the following way:
 
 1. After revocation is initiated, a new key pair is generated and the public key is added to a `verificationMethod` in
    the [=Credential Issuer=] DID document. The new private key is used to sign newly issued [=Verifiable Credential=]
    proofs.
 2. The old private key is decommissioned (archived or destroyed) and the `verificationMethod` in
    the [=Credential Issuer=] DID document is removed.
-3. The [=Credential Issuer=] may make credential offers for new [=Verifiable Credentials=] to [=Holders=] with the
+3. The [=Credential Issuer=] MAY make credential offers for new [=Verifiable Credentials=] to [=Holders=] with the
    `offerReason = proof-key-revocation` property.
 
 Upon revocation of a key pair, all credentials that were issued and proofed with that key, immediately become invalid.

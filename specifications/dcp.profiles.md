@@ -20,7 +20,7 @@ model [conflicts](https://www.w3.org/TR/vc-bitstring-status-list/#bitstringstatu
 ### Homogeneity requirement
 
 Verifiable Credentials MUST be _homogenous_. This means the
-same data model version and proof mechanism must be used for both credentials and presentations. For example, a
+same data model version and proof mechanism MUST be used for both credentials and presentations. For example, a
 verifiable credential secured with an _enveloped proof_ using
 JOSE ([VC Data Model 2.0](https://www.w3.org/TR/vc-jose-cose/#with-jose)) is enclosed in a verifiable presentation 
 that is also secured with JWT/JOSE.
@@ -32,7 +32,7 @@ contains credentials of the same data model and proof mechanism.
 
 This non-normative section is intended to provide guidance to authors who aim at defining their own profile definition.
 
-For a usable profile, at least the following aspects must be defined:
+For a usable profile, at least the following aspects MUST be defined:
 
 - Verifiable Credential Data Model
 - Revocation System: specifies how the validity and expiration of Verifiable Credentials is checked
