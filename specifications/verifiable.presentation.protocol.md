@@ -22,11 +22,11 @@ The following sequence diagram depicts a non-normative flow where a client inter
 ![Presentation Flow](specifications/auth.flow.svg "Presentation Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a token including an access token. This could be a
-   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client may include a set
+   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client MAY include a set
    of scopes that define the [=Verifiable Credentials=] the client wants the [=Verifier=] to have access to. This set of
-   scopes is determined out of band and may be derived from metadata the [=verifier=] has previously made available to
+   scopes is determined out of band and MAY be derived from metadata the [=verifier=] has previously made available to
    the client.
-2. The [=Secure Token Service=] responds with an access token, which may be included in the `token` claim of the
+2. The [=Secure Token Service=] responds with an access token, which MAY be included in the `token` claim of the
    [=Self-Issued ID Token=]. The access token can be used by the verifier to request [=Verifiable Credentials=] from the
    client's [=Credential Service=].
 3. The client makes a request to the [=Verifier=] for a protected resource and includes a [=Self-Issued ID Token=]
@@ -67,9 +67,9 @@ the [=Credential Service=]. The following is a non-normative example of a `Crede
 
 ## Credential Service Security
 
-As described in the previous presentation flow, a [=Credential Service=] may require an access token when processing a
+As described in the previous presentation flow, a [=Credential Service=] MAY require an access token when processing a
 request from a [=Verifier=]. The format of the access token is not defined. How access control is defined in
-a [=Credential Service=] is implementation-specific. For example, implementations may provide the ability to selectively
+a [=Credential Service=] is implementation-specific. For example, implementations MAY provide the ability to selectively
 restrict access to resources.
 
 ### Submitting an Access Token
@@ -100,7 +100,7 @@ exact error code is implementation-specific.
 |              |                                                                                                 |
 |--------------|-------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/presentation/presentation-query-message-schema.json)                  |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                      |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                     |
 |              | - `type`: A string specifying the `PresentationQueryMessage` type.                              |
 | **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                           |
 |              | - `presentationDefinition`: A valid `Presentation Definition` according to [[presentation-ex]]. |
@@ -148,16 +148,16 @@ example:
 
 `org.eclipse.dspace.dcp.vc.type:Member`
 
-denotes read-only access to the VC type `Member` and may be used to request a VC or VP.
+denotes read-only access to the VC type `Member` and MAY be used to request a VC or VP.
 
 ##### The `org.eclipse.dspace.dcp.vc.id` Alias
 
-The `org.eclipse.dspace.dcp.vc.id` alias value must be supported and is used to specify access to a verifiable
+The `org.eclipse.dspace.dcp.vc.id` alias value MUST be supported and is used to specify access to a verifiable
 credential by id. For example:
 
 `org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d`
 
-denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a
+denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and MAY be used to request a
 [=Verifiable Credential=].
 
 ### Presentation Response Message
@@ -167,7 +167,7 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 | **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                 |
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
 |              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
-|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
+|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] MAY be strings, JSON objects, or a combination of both depending on the format.</br> |
 | **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                   |
 
 A `PresentationResponseMessage` SHOULD only include valid (non-expired, non-revoked, non-suspended) credentials.

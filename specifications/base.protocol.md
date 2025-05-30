@@ -42,28 +42,28 @@ The following claims MUST be included in the Self-Issued ID Token:
 
 A Self-Issued ID Token MAY contain an access token as a `token` claim that can be used by the [=Verifier=] to
 obtain [=Verifiable Presentations=] from the participant's [=Credential Service=]. The format of the `token` is
-implementation-specific and therefore should be treated as an opaque string by the [=Verifier=].
+implementation-specific and therefore SHOULD be treated as an opaque string by the [=Verifier=].
 
 ### Obtaining Self-Issued ID Tokens
 
 _This section is non-normative._
 
-How a Self-Issued ID token is obtained from a [=Secure Token Service=] is implementation-specific. An [=STS=] may
+How a Self-Issued ID token is obtained from a [=Secure Token Service=] is implementation-specific. An [=STS=] MAY
 support a
 variety of APIs, including OAuth 2.
 
 #### Using the OAuth 2 Client Credential Grant
 
-A Self-Issued ID Token may be obtained by executing a Client Credential Grant as defined in [[[?rfc6749]]]
+A Self-Issued ID Token MAY be obtained by executing a Client Credential Grant as defined in [[[?rfc6749]]]
 against a [=Secure Token Service=] endpoint. How the [=participant agent=] obtains the [=STS=] endpoint address is
 implementation-specific and beyond the scope of this specification.
 
 If an `token` is required to be included in the Self Issued ID token, the [=participant agent=] will need to request
 scopes for the access token. This is dependent on the API used to obtain the Self-Issued ID Token. An [=STS=]
-implementation may use endpoint parameters as defined in the [[[?rfc6749]]] to convey metadata necessary for the
-creation of the `token` claim. In this case, the Self-Issued ID Token request may contain a `bearer_access_scope`
+implementation MAY use endpoint parameters as defined in the [[[?rfc6749]]] to convey metadata necessary for the
+creation of the `token` claim. In this case, the Self-Issued ID Token request MAY contain a `bearer_access_scope`
 authorization request parameter set to a list of space-delimited scopes the `token` claim will be enabled for. If no
-`bearer_access_scope` parameter is present, the `token` claim should not be included.
+`bearer_access_scope` parameter is present, the `token` claim SHOULD NOT be included.
 
 <aside class="note">
 A non-normative OpenAPI spec of an [=STS=] implementing client credentials flow is provided [here](specifications/identity-trust-sts-api.yaml)
@@ -111,4 +111,4 @@ definitions, concatenated to a `vMAJOR.MINOR` number. The current specifications
 # The Base URL
 
 All endpoint URLs in this specification are relative. The base URL MUST use the HTTPS scheme. The base URL is
-implementation-specific and may include additional context information such as a sub-path that disambiguates a holder.
+implementation-specific and MAY include additional context information such as a sub-path that disambiguates a holder.
