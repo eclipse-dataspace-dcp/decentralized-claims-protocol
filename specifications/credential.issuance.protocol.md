@@ -62,7 +62,7 @@ following is a non-normative example of a `Issuer Service` entry:
 
 All endpoint addresses are defined relative to the base URL of the [=Issuer Service=]. The [=Credential Issuer=] will
 use the base URL for the `issuer` field in all [=Verifiable Credentials=] it issues as defined by the `issuer`
-property ([[vc-data-model]]).
+property ([[vc-data-model-2.0]]).
 
 No assumptions are made about the base URL, for example, if it is a domain, subdomain, or contains a path.
 
