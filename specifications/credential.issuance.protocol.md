@@ -62,7 +62,7 @@ following is a non-normative example of a `Issuer Service` entry:
 
 All endpoint addresses are defined relative to the base URL of the [=Issuer Service=]. The [=Credential Issuer=] will
 use the base URL for the `issuer` field in all [=Verifiable Credentials=] it issues as defined by the `issuer`
-property ([[vc-data-model]]).
+property of the [VC DataModel version of the selected profile](#profiles-of-the-decentralized-claims-protocol).
 
 No assumptions are made about the base URL, for example, if it is a domain, subdomain, or contains a path.
 
@@ -180,7 +180,7 @@ The  [Credential Container](#credential-container) object contains the following
 |--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                                                                                                                         |
 | **Required** | - `credentialType`: A single string specifying type of credential. See [VC DataModel 1.1](https://www.w3.org/TR/vc-data-model/#types) or [VC DataModel 2.0](https://www.w3.org/TR/vc-data-model-2.0/#types), respectively. |
-|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by ([[vc-data-model]]).                                                                                            |
+|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by [VC DataModel version of the selected profile](#profiles-of-the-decentralized-claims-protocol).                                                                                            |
 |              | - `format`:  a JSON string that describes the format of the credential to be issued                                                                                                                                        |
 
 ## Credential Offer API
