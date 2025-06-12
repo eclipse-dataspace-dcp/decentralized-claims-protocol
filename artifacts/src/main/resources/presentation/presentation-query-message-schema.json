@@ -18,37 +18,22 @@
         "type": {
           "type": "string",
           "const": "PresentationQueryMessage"
+        },
+        "scope": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "presentationDefinition": {
+          "type": "object",
+          "$ref": "https://identity.foundation/presentation-exchange/schemas/presentation-definition.json"
         }
       },
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "properties": {
-                "scope": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              },
-              "required": [
-                "scope"
-              ]
-            },
-            {
-              "properties": {
-                "presentationDefinition": {
-                  "type": "object",
-                  "$ref": "https://identity.foundation/presentation-exchange/schemas/presentation-definition.json"
-                }
-              },
-              "required": [
-                "presentationDefinition"
-              ]
-            }
-          ]
-        }
+      "anyOf": [
+        { "required": ["scope"] },
+        { "required": ["presentationDefinition"] }
       ],
       "required": [
         "@context",

@@ -97,15 +97,15 @@ exact error code is implementation-specific.
 
 ### Presentation Query Message
 
-|              |                                                                                                 |
-|--------------|-------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/presentation/presentation-query-message-schema.json)                  |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                      |
-|              | - `type`: A string specifying the `PresentationQueryMessage` type.                              |
-| **Optional** | - `scope`: An array of scopes corresponding to Section [[[#scopes]]].                           |
-|              | - `presentationDefinition`: A valid `Presentation Definition` according to [[presentation-ex]]. |
+|              |                                                                                                            |
+|--------------|------------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/presentation/presentation-query-message-schema.json)                             |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                 |
+|              | - `type`: A string specifying the `PresentationQueryMessage` type.                                         |
+| **Optional** | - `scope`: A non-empty array of scopes corresponding to Section [[[#scopes]]].                             |
+|              | - `presentationDefinition`: A non-empty, valid `Presentation Definition` according to [[presentation-ex]]. |
 
-A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. If both parameters 
+A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. If both parameters
 are present it is an error and the client MUST return an `HTTP 400 BAD REQUEST` response.
 
 The following are non-normative examples of the JSON body:
@@ -132,8 +132,9 @@ by the definition.
 #### Scopes
 
 Implementations MAY support requesting presentation of [=Verifiable Credentials=] using a set of scope values.
-A scope is an alias for a well-defined Presentation Definition. The specific scope value, and the
-mapping between it and the respective Presentation Definition is out of scope of this specification.
+A scope is an alias for a well-defined Presentation Definition. The specific scope value and the
+mapping between it and the respective Presentation Definition are out of the scope of this specification. The array must 
+contain at least one value. If the array is empty, the [=Credential Service=] MUST return `HTTP 4xx`.
 
 A scope is a string value in the form:
 
@@ -192,15 +193,27 @@ when a `presentationDefinition`
 is provided in the [[[#presentation-query-message]]].
 
 ### Presentation Validation
+
 [=Verifier=] SHOULD validate the [=Verifiable Presentation=] in the following manner:
 
-1. The [=Verifier=] MUST assert that the [=Verifiable Presentation=] is created either according to the `scope` or `presentationDefinition`
-2. The [=Verifier=] MUST validate the signature of the [=Verifiable Presentation=] by using the key obtained from the resolved `VerificationMethod` of the [=Verifiable Presentation=]. [=DID=] resolution is performed according to the [=DID=] Method specified in the [=DID=] part of the `VerificationMethod` of the [=Verifiable Presentation=].
-3. The [=Verifier=] MUST validate that the `VerificationMethod` of the [=Verifiable Presentation=] has the `Authentication` [Verification Relationship](https://www.w3.org/TR/did-1.0/#authentication)
-4. The [=Verifier=] MUST assert that the [=DID=] in the `VerificationMethod` of the [=Verifiable Credential=] has the same value as the `issuer` of the [=Verifiable Credential=]. 
-5. The [=Verifier=] MUST validate the signature of the [=Verifiable Credential=] by using the key obtained from the resolved `VerificationMethod` of the [=Verifiable Credential=]. [=DID=] resolution is performed according to the [=DID=] Method specified in the [=DID=] part of the `VerificationMethod` of the [=Verifiable Presentation=].
-6. If the [=Verifiable Credential=] contains a revocation mechanism, such as `StatusList2021`, the [=Verifier=] MUST validate the status of the [=Verifiable Credential=] according to the revocation mechanism. 
-7. If the [=Verifiable Presentation=] contains any claims regarding its `expiryDate` or `validity`, the [=Verifier=] MUST validate those claims.
-8. If any of the steps fail, the [=Verifier=] MUST consider the [=Verifiable Presentation=] invalid. 
+1. The [=Verifier=] MUST assert that the [=Verifiable Presentation=] is created either according to the `scope` or
+   `presentationDefinition`
+2. The [=Verifier=] MUST validate the signature of the [=Verifiable Presentation=] by using the key obtained from the
+   resolved `VerificationMethod` of the [=Verifiable Presentation=]. [=DID=] resolution is performed according to
+   the [=DID=] Method specified in the [=DID=] part of the `VerificationMethod` of the [=Verifiable Presentation=].
+3. The [=Verifier=] MUST validate that the `VerificationMethod` of the [=Verifiable Presentation=] has the
+   `Authentication` [Verification Relationship](https://www.w3.org/TR/did-1.0/#authentication)
+4. The [=Verifier=] MUST assert that the [=DID=] in the `VerificationMethod` of the [=Verifiable Credential=] has the
+   same value as the `issuer` of the [=Verifiable Credential=].
+5. The [=Verifier=] MUST validate the signature of the [=Verifiable Credential=] by using the key obtained from the
+   resolved `VerificationMethod` of the [=Verifiable Credential=]. [=DID=] resolution is performed according to
+   the [=DID=] Method specified in the [=DID=] part of the `VerificationMethod` of the [=Verifiable Presentation=].
+6. If the [=Verifiable Credential=] contains a revocation mechanism, such as `StatusList2021`, the [=Verifier=] MUST
+   validate the status of the [=Verifiable Credential=] according to the revocation mechanism.
+7. If the [=Verifiable Presentation=] contains any claims regarding its `expiryDate` or `validity`, the [=Verifier=]
+   MUST validate those claims.
+8. If any of the steps fail, the [=Verifier=] MUST consider the [=Verifiable Presentation=] invalid.
 
-Additionally, if the specific semantics of a data space and credentials require cryptographic holder binding, the [=Verifier=] MUST assert that the `credentialSubject.id` in the [=Verifiable Credential=] and the [=DID=] part of the `VerificationMethod` of the [=Verifiable Presentation=] have the same value.
+Additionally, if the specific semantics of a data space and credentials require cryptographic holder binding,
+the [=Verifier=] MUST assert that the `credentialSubject.id` in the [=Verifiable Credential=] and the [=DID=] part of
+the `VerificationMethod` of the [=Verifiable Presentation=] have the same value.
