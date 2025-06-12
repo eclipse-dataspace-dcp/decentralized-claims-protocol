@@ -1,6 +1,6 @@
 # Trust Model and Information Flow Architecture
 
-This specification is based on the Issuer-Holder-Verifier model as described in the [[[vc-data-model-2.0]]]:
+This specification is based on the Issuer-Holder-Verifier model as described in the [VC DataModel version of the selected profile](#profiles-of-the-decentralized-claims-protocol):
 
 ![alt text 2](specifications/issuer-holder-verifier-model.svg "The Issuer-Holder-Verifier Model")
 
