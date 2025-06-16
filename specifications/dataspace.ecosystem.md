@@ -49,13 +49,13 @@ and [=Verifiable Credentials=].
 
 <dfn data-lt="dids | DID Service">DID Service (DIDS).</dfn>
 
-The DIDS creates, signs and publishes DID documents.
+The DIDS creates, signs, and publishes DID documents.
 
 ### Credential Issuer Systems
 
 <dfn data-lt="is | Issuer Service">Issuer Service (IS)</dfn>
 
-The Issuer Service is run by trust anchor and manages the lifecycle of [=Verifiable Credentials=] in a dataspace. A
+The Issuer Service is run by a trust anchor and manages the lifecycle of [=Verifiable Credentials=] in a dataspace. A
 dataspace may contain multiple Issuer Services run by different trust anchors. The Issuer Service:
 
 - Issues  [=Verifiable Credentials=] for dataspace [=participants=].

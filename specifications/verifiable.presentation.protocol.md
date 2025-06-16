@@ -153,7 +153,7 @@ denotes read-only access to the VC type `Member` and may be used to request a VC
 
 ##### The `org.eclipse.dspace.dcp.vc.id` Alias
 
-The `org.eclipse.dspace.dcp.vc.id` alias value must be supported and is used to specify access to a verifiable
+The `org.eclipse.dspace.dcp.vc.id` alias value MUST be supported and is used to specify access to a verifiable
 credential by id. For example:
 
 `org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d`
