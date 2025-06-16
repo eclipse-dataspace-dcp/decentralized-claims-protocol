@@ -139,7 +139,7 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
         assertThat(schema.validate(CREDENTIAL_MESSAGE_MESSAGE_REJECTION, JSON)).isEmpty();
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE, JSON))
                 .extracting(this::errorExtractor)
-                .containsExactly(error("issuerPid", REQUIRED), error("holderPid", REQUIRED));
+                .containsExactly(error("issuerPid", REQUIRED));
 
         assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE_INVALID_CREDENTIAL_CONTAINER, JSON))
                 .extracting(this::errorExtractor)

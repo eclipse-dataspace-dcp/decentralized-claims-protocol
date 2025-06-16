@@ -74,10 +74,6 @@ The request MUST include an ID Token in the HTTP `Authorization` header prefixed
 the [[[#verifiable-presentation-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve
 the client's [=DID=] to obtain cryptographic material for validation and credential binding.
 
-The ID Token MUST contain a `token` claim that is a bearer token granting write privileges for the
-requested [=Verifiable Credentials=] into the client's `Credential Service` as defined
-by [[[#verifiable-presentation-protocol]]]
-
 The bearer token MAY also be used by the [=Issuer Service=] to resolve [=Verifiable Presentations=] the client is
 required to hold for issuance of the requested [=Verifiable Credentials=].
 
@@ -147,10 +143,10 @@ exact error code is implementation-specific.
 | **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                           |
 |              | - `type`: A string specifying the `Credential Message` type.                                                         |
 |              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                                         |
-|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                                         |
 |              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`)                  |
-|              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following. |
+|              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following.                   |
 |              | - `rejectionReason`: a String containing additional information why a request was rejected. Can be `null`.           |
+| **Optional** | - `holderPid`: A string corresponding to the issuance id on the Holder side.                                         | 
 
 The following is a non-normative example of a [Credential Message](#credential-message) JSON body:
 
