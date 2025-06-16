@@ -70,6 +70,13 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
               "type": "PresentationQueryMessage"
             }""";
 
+    private static final String INVALID_PRESENTATION_QUERY_MESSAGE_EMPTY_SCOPE = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "PresentationQueryMessage",
+              "scope": []
+            }""";
+
 
     private static final String INVALID_PRESENTATION_QUERY_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
@@ -79,17 +86,34 @@ public class PresentationQueryMessageSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(PRESENTATION_QUERY_MESSAGE, JSON)).isEmpty();
+    }
+
+    @Test
+    void verifySchemaWithPresentationDefinition() {
         assertThat(schema.validate(PRESENTATION_QUERY_MESSAGE_WITH_PRESENTATION_DEF, JSON)).isEmpty();
+    }
 
-        assertThat(schema.validate(INVALID_PRESENTATION_QUERY_MESSAGE_NO_SCOPE, JSON))
-                .extracting(this::errorExtractor)
-                .contains(error("scope", REQUIRED), error("presentationDefinition", REQUIRED));
-
-
+    @Test
+    void verifySchema_withNoTypeAndContext() {
         assertThat(schema.validate(INVALID_PRESENTATION_QUERY_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
                 .hasSize(2)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@context", REQUIRED));
+    }
+
+    @Test
+    void verifySchema_withEmptyScope() {
+        assertThat(schema.validate(INVALID_PRESENTATION_QUERY_MESSAGE_EMPTY_SCOPE, JSON))
+                .hasSize(1)
+                .anyMatch(msg -> msg.getInstanceLocation().toString().endsWith("scope") &&
+                        msg.getType().equalsIgnoreCase("minItems"));
+    }
+
+    @Test
+    void verifySchema_withNoScope() {
+        assertThat(schema.validate(INVALID_PRESENTATION_QUERY_MESSAGE_NO_SCOPE, JSON))
+                .extracting(this::errorExtractor)
+                .contains(error("scope", REQUIRED), error("presentationDefinition", REQUIRED));
     }
 
     @BeforeEach
