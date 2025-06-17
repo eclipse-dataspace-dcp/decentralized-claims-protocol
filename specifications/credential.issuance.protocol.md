@@ -17,7 +17,7 @@ issue a [=Verifiable Credential=]:
    scopes is determined out of band and may be derived from metadata the [=Credential Issuer=] has previously made
    available to the client.
 2. The [=Secure Token Service=] responds with an access token, which may be included in the `token` claim of the
-   [=Self-Issued ID Token=]. The access token can be used by the [=Issuer Service=] to write requested 
+   [=Self-Issued ID Token=]. The access token can be used by the [=Issuer Service=] to write requested
    [=Verifiable Credentials=] to the client's [=Credential Service=].
 3. The client makes a request to the [=Issuer Service=] for one or more [=Verifiable Credentials=] and includes
    a [=Self-Issued ID Token=] containing the access token.
@@ -74,6 +74,10 @@ The request MUST include an ID Token in the HTTP `Authorization` header prefixed
 the [[[#verifiable-presentation-access-token]]]. The `issuer` claim can be used by the [=Credential Service=] to resolve
 the client's [=DID=] to obtain cryptographic material for validation and credential binding.
 
+The ID Token MAY contain a `token` claim that is a bearer token granting write privileges for the
+requested [=Verifiable Credentials=] into the client's `Credential Service` as defined
+by [[[#verifiable-presentation-protocol]]]. If the `token` claim is present, it MUST be used by the [=Issuer Service=].
+
 The bearer token MAY also be used by the [=Issuer Service=] to resolve [=Verifiable Presentations=] the client is
 required to hold for issuance of the requested [=Verifiable Credentials=].
 
@@ -105,8 +109,10 @@ The following is a non-normative example of a `CredentialRequestMessage`:
     </pre>
 </aside> 
 
-Each IDs in the `credentials` array MUST be one of the `id` values of an object in the `credentialsSupported` returned from the 
-[[[#issuer-metadata-api]]]. When processing, the [=Issuer Service=] MUST resolve this string value to the respective object.
+Each IDs in the `credentials` array MUST be one of the `id` values of an object in the `credentialsSupported` returned
+from the
+[[[#issuer-metadata-api]]]. When processing, the [=Issuer Service=] MUST resolve this string value to the respective
+object.
 
 On successful receipt of the request, the [=Issuer Service=] MUST respond with a `201 CREATED` and the `Location`
 header set to the location of the request status ([[[#credential-request-status-api]]])
@@ -144,7 +150,7 @@ exact error code is implementation-specific.
 |              | - `type`: A string specifying the `Credential Message` type.                                                         |
 |              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                                         |
 |              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`)                  |
-|              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following.                   |
+|              | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined in the following. |
 |              | - `rejectionReason`: a String containing additional information why a request was rejected. Can be `null`.           |
 | **Optional** | - `holderPid`: A string corresponding to the issuance id on the Holder side.                                         | 
 
@@ -176,7 +182,7 @@ The  [Credential Container](#credential-container) object contains the following
 |--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                                                                                                                                         |
 | **Required** | - `credentialType`: A single string specifying type of credential. See [VC DataModel 1.1](https://www.w3.org/TR/vc-data-model/#types) or [VC DataModel 2.0](https://www.w3.org/TR/vc-data-model-2.0/#types), respectively. |
-|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by [VC DataModel version of the selected profile](#profiles-of-the-decentralized-claims-protocol).                                                                                            |
+|              | - `payload`: A Json Literal ([[json-ld11]], sect. 4.2.2) containing a [=Verifiable Credential=] defined by [VC DataModel version of the selected profile](#profiles-of-the-decentralized-claims-protocol).                 |
 |              | - `format`:  a JSON string that describes the format of the credential to be issued                                                                                                                                        |
 
 ## Credential Offer API
