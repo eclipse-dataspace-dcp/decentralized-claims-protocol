@@ -35,6 +35,11 @@ public class IssuanceContextTest extends AbstractJsonLdTest {
     }
 
     @Test
+    void verifyCredentialMessageRejected() {
+        verifyRoundTrip("/issuance/example/credential-message-rejected.json", "/issuance/credential-message-schema.json");
+    }
+
+    @Test
     void verifyCredentialOfferMessage() {
         verifyRoundTrip("/issuance/example/credential-offer-message.json", "/issuance/credential-offer-message-schema.json");
     }

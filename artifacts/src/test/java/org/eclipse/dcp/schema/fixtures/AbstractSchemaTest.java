@@ -19,10 +19,6 @@ import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaLocation;
 import com.networknt.schema.ValidationMessage;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-
 import static com.networknt.schema.SpecVersion.VersionFlag.V202012;
 import static org.eclipse.dcp.schema.SchemaConstants.DCP_PREFIX;
 
