@@ -22,7 +22,7 @@ import static com.networknt.schema.InputFormat.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.eclipse.dcp.schema.issuance.CredentialObjectSchemaTest.CREDENTIAL_OBJECT;
 
-public class  CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
+public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
 
     private static final String CREDENTIAL_OFFER_MESSAGE = """
             {
@@ -56,10 +56,11 @@ public class  CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_OFFER_MESSAGE.formatted(CREDENTIAL_OBJECT), JSON)).isEmpty();
 
+        assertThat(schema.validate(example, JSON)).isEmpty();
+
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIAL_ISSUER.formatted(CREDENTIAL_OBJECT), JSON))
                 .extracting(this::errorExtractor)
                 .containsExactly(error("issuer", REQUIRED));
-
 
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_CREDENTIALS, JSON))
                 .extracting(this::errorExtractor)
@@ -69,13 +70,10 @@ public class  CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
                 .hasSize(2)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@context", REQUIRED));
-
     }
 
     @BeforeEach
     void setUp() {
         setUp("/issuance/credential-offer-message-schema.json");
     }
-
-
 }
