@@ -225,11 +225,6 @@ The following is a non-normative example of a credential offer request:
 <aside class="example" title="CredentialOfferMessage">
     <pre class="json" data-include="./resources/issuance/example/credential-offer-message.json">
     </pre>
-</aside>   
-
-<aside class="example" title="CredentialOfferMessage with IDs">
-    <pre class="json" data-include="./resources/issuance/example/credential-offer-message-ids.json">
-    </pre>
 </aside>
 
 ### CredentialObject
