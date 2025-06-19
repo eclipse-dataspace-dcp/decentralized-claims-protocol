@@ -38,7 +38,6 @@ public abstract class AbstractSchemaTest {
     protected static final String ENUM = "enum";
     private static final String CLASSPATH_SCHEMA = "classpath:/";
     protected JsonSchema schema;
-    protected String example;
 
     protected void setUp(String schemaFile) {
         var schemaFactory = JsonSchemaFactory.getInstance(V202012, builder ->
@@ -48,13 +47,6 @@ public abstract class AbstractSchemaTest {
         );
 
         schema = schemaFactory.getSchema(SchemaLocation.of(DCP_PREFIX + schemaFile));
-
-
-        var lastSlash = schemaFile.lastIndexOf('/');
-        var basePath = schemaFile.substring(0, lastSlash);
-        var fileName = schemaFile.substring(lastSlash + 1);
-        var examplePath = basePath + "/example/" + fileName.replace("-schema", "");
-        example = loadExample(examplePath);
     }
 
 
@@ -69,14 +61,5 @@ public abstract class AbstractSchemaTest {
 
     public record SchemaError(String property, String type) {
 
-    }
-
-    protected String loadExample(String path) {
-        InputStream stream = getClass().getResourceAsStream(path);
-        try {
-            return new String(stream.readAllBytes(), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

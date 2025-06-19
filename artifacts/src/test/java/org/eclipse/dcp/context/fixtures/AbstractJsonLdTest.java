@@ -97,19 +97,22 @@ public abstract class AbstractJsonLdTest {
 
     protected void verifyRoundTrip(JsonObject message, String schemaFile) {
         try {
+            var schemaFactory = JsonSchemaFactory.getInstance(V202012, builder ->
+                    builder.schemaMappers(schemaMappers -> schemaMappers.mapPrefix(DCP_PREFIX, CLASSPATH_SCHEMA)
+                            .mapPrefix(PRESENTATION_EXCHANGE_PREFIX, CLASSPATH_SCHEMA))
+            );
+            var schema = schemaFactory.getSchema(SchemaLocation.of(DCP_PREFIX + schemaFile));
+            var resultExAnte = schema.validate(mapper.convertValue(message, JsonNode.class));
+            assertThat(resultExAnte.isEmpty()).describedAs(String.join(", ", resultExAnte.stream().map(Object::toString).toList())).isTrue();
+
 
             var context = Json.createObjectBuilder().add(CONTEXT, message.get(CONTEXT)).build();
             var expanded = expand(JsonDocument.of(message)).options(options).get();
             var compacted = compact(JsonDocument.of(expanded), JsonDocument.of(context)).options(options).get();
 
-            var schemaFactory = JsonSchemaFactory.getInstance(V202012, builder ->
-                    builder.schemaMappers(schemaMappers -> schemaMappers.mapPrefix(DCP_PREFIX, CLASSPATH_SCHEMA)
-                            .mapPrefix(PRESENTATION_EXCHANGE_PREFIX, CLASSPATH_SCHEMA))
-            );
 
-            var schema = schemaFactory.getSchema(SchemaLocation.of(DCP_PREFIX + schemaFile));
-            var result = schema.validate(mapper.convertValue(compacted, JsonNode.class));
-            assertThat(result.isEmpty()).describedAs(String.join(", ", result.stream().map(Object::toString).toList())).isTrue();
+            var resultExPost = schema.validate(mapper.convertValue(compacted, JsonNode.class));
+            assertThat(resultExPost.isEmpty()).describedAs(String.join(", ", resultExPost.stream().map(Object::toString).toList())).isTrue();
             assertThat(compacted).isEqualTo(message);
         } catch (JsonLdError e) {
             throw new RuntimeException(e);
