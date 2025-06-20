@@ -98,16 +98,18 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_OBJECT, JSON)).isEmpty();
+    }
+
+    @Test
+    void verifySchema_missingRequiredFields() {
         assertThat(schema.validate(INVALID_CREDENTIAL_OBJECT, JSON))
                 .extracting(this::errorExtractor)
                 .containsExactly(
-                        error("id", REQUIRED),
-                        error("credentialType", REQUIRED),
-                        error("offerReason", REQUIRED),
-                        error("bindingMethods", REQUIRED),
-                        error("profile", REQUIRED),
-                        error("issuancePolicy", REQUIRED));
+                        error("id", REQUIRED));
+    }
 
+    @Test
+    void verifySchema_missingTypeAndContext() {
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
                 .hasSize(1)
                 .extracting(this::errorExtractor)
