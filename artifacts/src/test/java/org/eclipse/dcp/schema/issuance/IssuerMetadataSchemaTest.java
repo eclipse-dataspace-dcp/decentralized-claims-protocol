@@ -31,13 +31,22 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
                 "issuer": "did:web:issuer-url",
                 "credentialsSupported": [%s]
             }""";
-
+    public static final String CREDENTIAL_OBJECT_INCOMPLETE = """
+            {
+                "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
+                "type": "CredentialObject",
+                "credentialType": "VerifiableCredential",
+                "offerReason": "reissue",
+                "bindingMethods": [
+                  "did:web"
+                ]
+            }
+            """;
     private static final String INVALID_ISSUER_METADATA = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
               "type": "IssuerMetadata"
             }""";
-
     private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
             {
               "issuer": "did:web:issuer-url",
@@ -47,10 +56,25 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
     @Test
     void verifySchema() {
         assertThat(schema.validate(ISSUER_METADATA.formatted(CREDENTIAL_OBJECT), JSON)).isEmpty();
+    }
+
+    @Test
+    void verifySchema_missingIssuerAndCredentialsSupported() {
         assertThat(schema.validate(INVALID_ISSUER_METADATA, JSON))
                 .extracting(this::errorExtractor)
                 .containsExactly(error("issuer", REQUIRED), error("credentialsSupported", REQUIRED));
 
+    }
+
+    @Test
+    void verifySchema_credentialSupportedIsIncomplete() {
+        assertThat(schema.validate(ISSUER_METADATA.formatted(CREDENTIAL_OBJECT_INCOMPLETE), JSON))
+                .extracting(this::errorExtractor)
+                .containsExactlyInAnyOrder(error("credentialSchema", REQUIRED), error("profile", REQUIRED));
+    }
+
+    @Test
+    void verifySchema_missingTypeAndContext() {
         assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT.formatted(CREDENTIAL_OBJECT), JSON))
                 .hasSize(2)
                 .extracting(this::errorExtractor)

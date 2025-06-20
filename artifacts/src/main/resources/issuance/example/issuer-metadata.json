@@ -10,6 +10,7 @@
       "type": "CredentialObject",
       "credentialType": "CompanyCredential",
       "offerReason": "reissue",
+      "credentialSchema": "https://example.com/company-credential-schema.json",
       "bindingMethods": [
         "did:web"
       ],

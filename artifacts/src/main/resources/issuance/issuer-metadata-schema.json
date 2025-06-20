@@ -18,7 +18,21 @@
         "credentialsSupported": {
           "type": "array",
           "items": {
-            "$ref": "https://w3id.org/dspace-dcp/v1.0/issuance/credential-object-schema.json#/definitions/CredentialObject"
+            "allOf": [
+              {
+                "$ref": "https://w3id.org/dspace-dcp/v1.0/issuance/credential-object-schema.json#/definitions/CredentialObject"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "credentialType",
+                  "credentialSchema",
+                  "offerReason",
+                  "bindingMethods",
+                  "profile"
+                ]
+              }
+            ]
           }
         },
         "issuer": {
