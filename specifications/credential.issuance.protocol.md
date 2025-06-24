@@ -143,15 +143,15 @@ exact error code is implementation-specific.
 
 ### Credential Message
 
-|              |                                                                                                            |
-|--------------|------------------------------------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                         |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                |
-|              | - `type`: A string specifying the `Credential Message` type.                                               |
-|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                               |
-|              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`).       |
+|              |                                                                                                           |
+|--------------|-----------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-message-schema.json)                                        |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                               |
+|              | - `type`: A string specifying the `CredentialMessage` type.                                               |
+|              | - `issuerPid`: A string corresponding to the issuance id on the Issuer side.                              |
+|              | - `status`: A string stating whether the request was successful (`ISSUED`) or rejected (`REJECTED`).      |
 | **Optional** | - `credentials`: An array of [Credential Container](#credential-container) Json objects as defined bellow. |
-|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                               | 
+|              | - `holderPid`: A string corresponding to the issuance id on the Holder side.                              | 
 |              | - `rejectionReason`: a String containing additional information why a request was rejected. Can be `null`. |
 
 The following is a non-normative example of a [Credential Message](#credential-message) JSON body:
@@ -167,7 +167,7 @@ The following example shows a rejected credential request JSON body:
     </pre>
 </aside>
 
-Note that the `status` applies to the entire request, i.e. a request is considered _rejected_ if at least one credential
+Note that the `status` applies to the entire request, i.e., a request is considered _rejected_ if at least one credential
 could not be issued.
 Allowed values for the `status` are `"ISSUED"` and `"REJECTED"`. The `rejectionReason` field is optional and should not
 disclose any confidential information.
