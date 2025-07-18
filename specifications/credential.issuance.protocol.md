@@ -94,13 +94,13 @@ Self-Issued ID Token to provide the pre-authorization code to the issuer.
 
 ### Credential Request Message
 
-|              |                                                                                   |
-|--------------|-----------------------------------------------------------------------------------|
-| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)        |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).       |
-|              | - `type`: A string specifying the `CredentialRequestMessage` type.                |
-|              | - `holderPid`: A string corresponding to the request id on the Holder side.       |
-|              | - `credentials`: an array of strings, each referencing a [[[#credentialobject]]]. |
+|              |                                                                                                         |
+|--------------|---------------------------------------------------------------------------------------------------------|
+| **Schema**   | [JSON Schema](./resources/issuance/credential-request-message-schema.json)                              |
+| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                             |
+|              | - `type`: A string specifying the `CredentialRequestMessage` type.                                      |
+|              | - `holderPid`: A string corresponding to the request id on the Holder side.                             |
+|              | - `credentials`: an array of objects with an `id` property, each referencing a [[[#credentialobject]]]. |
 
 The following is a non-normative example of a `CredentialRequestMessage`:
 
