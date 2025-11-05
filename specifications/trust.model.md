@@ -19,7 +19,7 @@ The Issuer-Holder-Verifier model is mapped to the following architecture in this
 
 - Identity and claims information is exchanged between a [=Holder=] and a [=Verifier=] in the context of Dataspace
   Protocol message interactions [[dsp-base]]. These messages will contain metadata such as Offers and Agreements that
-  determine the [=Verifiable Credentials=] a [=Holder=] must present to a [=Verifier=].
+  determine the [=Verifiable Credentials=] a [=Holder=] MUST present to a [=Verifier=].
 - The [=Issuer Service=] issues credentials to a [=Holder=]'s [=Credential Service=] using the protocol defined in
   Section [[[#credential-issuance-protocol]]]. As part of this process, the [=Issuer Service=] will verify
   the [=Holder=]'s identifier using the [=Verifiable Data Registry=]. Since [=DID=]s are mandatory in this
@@ -28,7 +28,7 @@ The Issuer-Holder-Verifier model is mapped to the following architecture in this
   The [=Participant Agent=] engages in dataspace communications with the [=Verifier=] agent [[dsp-base]]. As part of
   these interactions, the [=Participant Agent=] will include a Self-Issued ID Token as defined in
   Section [[[#self-issued-id-tokens]]]. This token will be obtained from the [=STS=] controlled by the [=Holder=].
-  **Note that the [=STS=] is an internal system and therefore out of scope for the current specification. It may be a
+  **Note that the [=STS=] is an internal system and therefore out of scope for the current specification. It MAY be a
   standalone service or part of the [=Participant Agent=] or [=Credential Service=].** The Self-Issued ID Token will
   contain an access token bound to the [=Verifier=] that will be used to request a [=Verifiable Presentation=].
   The [=Holder=]'s [=Credential Service=] will verify the access token with the [=STS=].
@@ -51,13 +51,13 @@ defined in this specification establish consent in the following way:
 ![alt text 3](specifications/consent-model.svg "Consent in the Decentralized Claims Protocol")
 
 Consent is handled by first mapping Dataspace Protocol Offer and Agreement policies [[dsp-base]] to a set of
-required [=Verifiable Credentials=]. The exact mappings are dataspace-specific as policies
+REQUIRED [=Verifiable Credentials=]. The exact mappings are dataspace-specific as policies
 and [=Verifiable Credentials=] are typically defined for a particular domain. The expectation is that these mappings are
 made available by the [=Dataspace Governance Authority=] to [=Participant Agents=] via
 the [=Verifiable Data Registry=]. [=Verifiable Credential=] mapping is done by both the [=Holder=]
 and [=Verifier=] [=Participant Agent=] when a Dataspace Protocol message is sent and received.
 
-When sending a Dataspace Protocol message, the [=Holder=]'s [=Participant Agent=] will determine the required
+When sending a Dataspace Protocol message, the [=Holder=]'s [=Participant Agent=] will determine the REQUIRED
 [=Verifiable Credentials=] and issue a Self-Issued ID Token request to the [=STS=], including the list of credentials to
 allow the [=Verifier=] to access via the [=Credential Service=]. The returned Self-Issued ID token will contain an
 access token bound to the [=Verifier=] as described above. This access token serves as a verifiable mechanism
@@ -66,7 +66,7 @@ the [=Credential Service=] uses to determine consent and release credentials to 
 The [=Verifier=] establishes consent by performing the same mapping from metadata to a set
 of [=Verifiable Credentials=] during the initial Dataspace Protocol request. At that point,
 the [=Verifier=] [=Participant Agent=] can query the [=Credential Service=] for a [=Verifiable Presentation=]. If it
-matches the required credentials, the [=Verifier=] can consent and grant access to the associated protected resources.
+matches the REQUIRED credentials, the [=Verifier=] can consent and grant access to the associated protected resources.
 
 ## Trust Relationships
 
@@ -77,7 +77,7 @@ key aspects of those trust relationships.
 
 All entities expect:
 
-- The [=Verifiable Data Registry=] to be tamper-evident and correctly reflect data controlled by all entities. This may
+- The [=Verifiable Data Registry=] to be tamper-evident and correctly reflect data controlled by all entities. This MAY
   be done through the use of cryptographic resources.
 - All [=Verifiable Credentials=] and [=Verifiable Presentations=] to be tamper-proof and support revocation.
 - Dataspace Protocol interactions and those defined in this specification to be secure and use Transport Level
@@ -95,9 +95,9 @@ The [=Issuer=] expects:
 The [=Holder=] expects:
 
 - The [=Dataspace Governance Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
-  of scope of the current specification but may be part of the [=Verifiable Data Registry=].
+  of scope of the current specification but MAY be part of the [=Verifiable Data Registry=].
 - The [=Dataspace Governance Authority=] to provide a secure list of participant [=DIDs=]. How this list is provided is out
-  of scope of the current specification but may be part of the [=Verifiable Data Registry=].
+  of scope of the current specification but MAY be part of the [=Verifiable Data Registry=].
 - The [=Credential Service=] to maintain integrity and not release data to unauthorized parties.
 - The [=Issuer=] to issue credentials correctly, including binding them to the holder in a tamper-proof way, and
   maintaining credential integrity.
@@ -108,7 +108,7 @@ The [=Holder=] expects:
 The [=Verifier=] expects:
 
 - The [=Dataspace Governance Authority=] to provide a secure list of trusted [=Issuer=] [=DID=]s. How this list is provided is out
-  of scope of the current specification but may be part of the [=Verifiable Data Registry=]. [=Verifiers=] can
+  of scope of the current specification but MAY be part of the [=Verifiable Data Registry=]. [=Verifiers=] can
   recognize several [=Dataspace Governance Authorities=].
 
 - The [=Issuer=] to issue credentials correctly, including binding them to the holder in a tamper-proof way, and

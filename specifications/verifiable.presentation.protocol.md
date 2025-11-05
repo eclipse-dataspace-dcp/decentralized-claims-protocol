@@ -22,11 +22,11 @@ The following sequence diagram depicts a non-normative flow where a client inter
 ![Presentation Flow](specifications/auth.flow.svg "Presentation Flow")
 
 1. The client sends a request to its [=Secure Token Service=] for a token including an access token. This could be a
-   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client may include a set
+   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client MAY include a set
    of scopes that define the [=Verifiable Credentials=] the client wants the [=Verifier=] to have access to. This set of
-   scopes is determined out of band and may be derived from metadata the [=verifier=] has previously made available to
+   scopes is determined out of band and MAY be derived from metadata the [=verifier=] has previously made available to
    the client.
-2. The [=Secure Token Service=] responds with an access token, which may be included in the `token` claim of the
+2. The [=Secure Token Service=] responds with an access token, which MAY be included in the `token` claim of the
    [=Self-Issued ID Token=]. The access token can be used by the verifier to request [=Verifiable Credentials=] from the
    client's [=Credential Service=].
 3. The client makes a request to the [=Verifier=] for a protected resource and includes a [=Self-Issued ID Token=]
@@ -67,9 +67,9 @@ the [=Credential Service=]. The following is a non-normative example of a `Crede
 
 ## Credential Service Security
 
-As described in the previous presentation flow, a [=Credential Service=] may require an access token when processing a
+As described in the previous presentation flow, a [=Credential Service=] MAY REQUIRE an access token when processing a
 request from a [=Verifier=]. The format of the access token is not defined. How access control is defined in
-a [=Credential Service=] is implementation-specific. For example, implementations may provide the ability to selectively
+a [=Credential Service=] is implementation-specific. For example, implementations MAY provide the ability to selectively
 restrict access to resources.
 
 ### Submitting an Access Token
@@ -100,9 +100,9 @@ exact error code is implementation-specific.
 |              |                                                                                                            |
 |--------------|------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/presentation/presentation-query-message-schema.json)                             |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                 |
+| **REQUIRED** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1)                                 |
 |              | - `type`: A string specifying the `PresentationQueryMessage` type.                                         |
-| **Optional** | - `scope`: A non-empty array of scopes corresponding to Section [[[#scopes]]].                             |
+| **OPTIONAL** | - `scope`: A non-empty array of scopes corresponding to Section [[[#scopes]]].                             |
 |              | - `presentationDefinition`: A non-empty, valid `Presentation Definition` according to [[presentation-ex]]. |
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. If both parameters
@@ -133,7 +133,7 @@ by the definition.
 
 Implementations MAY support requesting presentation of [=Verifiable Credentials=] using a set of scope values.
 A scope is an alias for a well-defined Presentation Definition. The specific scope value and the
-mapping between it and the respective Presentation Definition are out of the scope of this specification. The array must 
+mapping between it and the respective Presentation Definition are out of the scope of this specification. The array MUST 
 contain at least one value. If the array is empty, the [=Credential Service=] MUST return `HTTP 4xx`.
 
 A scope is a string value in the form:
@@ -149,7 +149,7 @@ example:
 
 `org.eclipse.dspace.dcp.vc.type:Member`
 
-denotes read-only access to the VC type `Member` and may be used to request a VC or VP.
+denotes read-only access to the VC type `Member` and MAY be used to request a VC or VP.
 
 ##### The `org.eclipse.dspace.dcp.vc.id` Alias
 
@@ -158,7 +158,7 @@ credential by id. For example:
 
 `org.eclipse.dspace.dcp.vc.id:8247b87d-8d72-47e1-8128-9ce47e3d829d`
 
-denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and may be used to request a
+denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e3d829d` and MAY be used to request a
 [=Verifiable Credential=].
 
 ### Presentation Response Message
@@ -166,10 +166,10 @@ denotes read-only access to the VC identified by `8247b87d-8d72-47e1-8128-9ce47e
 |              |                                                                                                                                                                                   |
 |--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/presentation/presentation-response-message-schema.json)                                                                                                 |
-| **Required** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
+| **REQUIRED** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1).                                                                                                       |
 |              | - `type`: A string specifying the `PresentationResponseMessage` type.                                                                                                             |
-|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] may be strings, JSON objects, or a combination of both depending on the format.</br> |
-| **Optional** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                   |
+|              | - `presentation`: An array of [=Verifiable Presentations=]. The [=Verifiable Presentations=] MAY be strings, JSON objects, or a combination of both depending on the format.</br> |
+| **OPTIONAL** | - `presentationSubmission`: A valid `Presentation Submission` according to [[presentation-ex]].                                                                                   |
 
 A `PresentationResponseMessage` SHOULD only include valid (non-expired, non-revoked, non-suspended) credentials.
 The following are non-normative examples of the JSON response body:
