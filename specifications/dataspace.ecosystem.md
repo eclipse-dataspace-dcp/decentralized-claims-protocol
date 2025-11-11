@@ -6,7 +6,7 @@ adheres to the model defined by the Dataspace Protocol [[dsp-base]]:
 - A <dfn>Dataspace</dfn> is a policy-based data sharing context between two or more entities.
 - The <dfn>Dataspace Governance Authority</dfn> is responsible for operational management of a [=dataspace=],
   including [=participant=] registration and designation of trust credential issuers.
-- A <dfn>Participant</dfn> is a member of the [=dataspace=]. Members may take on different roles, which are attested to
+- A <dfn>Participant</dfn> is a member of the [=dataspace=]. Members MAY take on different roles, which are attested to
   by verifiable credentials.
 - A <dfn>Participant Agent</dfn> performs tasks such as publishing a catalog or engaging in data transfer. Note that a
   participant agent is a logical construct and does not necessarily correspond to a single runtime process.
@@ -33,9 +33,9 @@ The registration system is run by the [=Dataspace Governance Authority=] and is 
 
 ### Participant Agent Systems
 
-[=Participants=] will run one or more agent systems that interact in the dataspace. These systems may offer data
-catalogs, perform data transfers, or provide application functionality. A [=participant=] may run the following
-identity-related agents. Note that this is a logical description and may not represent an actual deployment topology.
+[=Participants=] will run one or more agent systems that interact in the dataspace. These systems MAY offer data
+catalogs, perform data transfers, or provide application functionality. A [=participant=] MAY run the following
+identity-related agents. Note that this is a logical description and MAY not represent an actual deployment topology.
 
 <dfn data-lt="sts | Secure Token Service">Security Token Service (STS).</dfn>
 
@@ -56,7 +56,7 @@ The DIDS creates, signs, and publishes DID documents.
 <dfn data-lt="is | Issuer Service">Issuer Service (IS)</dfn>
 
 The Issuer Service is run by a trust anchor and manages the lifecycle of [=Verifiable Credentials=] in a dataspace. A
-dataspace may contain multiple Issuer Services run by different trust anchors. The Issuer Service:
+dataspace MAY contain multiple Issuer Services run by different trust anchors. The Issuer Service:
 
 - Issues  [=Verifiable Credentials=] for dataspace [=participants=].
 - Manages revocation lists for  [=Verifiable Credentials=] types it issues based

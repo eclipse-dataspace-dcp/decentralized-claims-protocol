@@ -32,13 +32,13 @@ contains credentials of the same data model and proof mechanism.
 
 This non-normative section is intended to provide guidance to authors who want to define their own profile definition.
 
-At a minimum, the following profile aspects must be defined:
+At a minimum, the following profile aspects MUST be defined:
 
 - Verifiable Credential Data Model.
 - Revocation System. Specifies how the validity and expiration of Verifiable Credentials is checked.
 - Proof stack. Specifies how data integrity of the VC is to be provided.
 
-In addition, the profile may be further constrained, for example, by limiting the number of acceptable cryptographic 
+In addition, the profile MAY be further constrained, for example, by limiting the number of acceptable cryptographic 
 algorithms.
 
-If possible, a single credential format should be used when defining a profile.
+If possible, a single credential format SHOULD be used when defining a profile.
