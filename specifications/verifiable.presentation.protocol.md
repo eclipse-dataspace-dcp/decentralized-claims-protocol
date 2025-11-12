@@ -106,7 +106,7 @@ exact error code is implementation-specific.
 |              | - `presentationDefinition`: A non-empty, valid `Presentation Definition` according to [[presentation-ex]]. |
 
 A `PresentationQueryMessage` MUST contain either a `presentationDefinition` or a `scope` parameter. If both parameters
-are present it is an error and the client MUST return an `HTTP 400 BAD REQUEST` response.
+are present it is an error and the server MUST return an `HTTP 400 BAD REQUEST` response.
 
 The following are non-normative examples of the JSON body:
 
@@ -134,7 +134,9 @@ by the definition.
 Implementations MAY support requesting presentation of [=Verifiable Credentials=] using a set of scope values.
 A scope is an alias for a well-defined Presentation Definition. The specific scope value and the
 mapping between it and the respective Presentation Definition are out of the scope of this specification. The array MUST 
-contain at least one value. If the array is empty, the [=Credential Service=] MUST return `HTTP 4xx`.
+contain at least one value. If the array is empty, the [=Credential Service=] MUST return `HTTP 4xx`. If the array
+contains scopes that a client is not entitled to, the [=Credential Service=] MUST return `HTTP 2xx` with the 
+[PresentationResponseMessage](#presentation-response-message)'s `presentation` array holding less entries than requested.
 
 A scope is a string value in the form:
 
