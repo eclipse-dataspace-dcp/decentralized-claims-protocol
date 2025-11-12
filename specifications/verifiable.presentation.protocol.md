@@ -21,24 +21,25 @@ The following sequence diagram depicts a non-normative flow where a client inter
 
 ![Presentation Flow](specifications/auth.flow.svg "Presentation Flow")
 
-1. The client sends a request to its [=Secure Token Service=] for a token including an access token. This could be a
-   [=Self-Issued ID Token=]. The API used to make this request is implementation specific. The client MAY include a set
-   of scopes that define the [=Verifiable Credentials=] the client wants the [=Verifier=] to have access to. This set of
-   scopes is determined out of band and MAY be derived from metadata the [=verifier=] has previously made available to
+1. The client sends a request to its [=Secure Token Service=] for a [=Self-Issued ID Token=] including an access token.
+   The API used to make this request is implementation specific. The client MAY include a set
+   of scopes that define the [=Verifiable Presentations=] the client wants the [=Verifier=] to have access to. This set of
+   scopes is determined out of band and MAY be derived from metadata the [=Verifier=] has previously made available to
    the client.
-2. The [=Secure Token Service=] responds with an access token, which MAY be included in the `token` claim of the
-   [=Self-Issued ID Token=]. The access token can be used by the verifier to request [=Verifiable Credentials=] from the
-   client's [=Credential Service=].
+2. The [=Secure Token Service=] responds with a [=Self-Issued ID Token=] that MAY include an access token in the `token` 
+   claim.
 3. The client makes a request to the [=Verifier=] for a protected resource and includes a [=Self-Issued ID Token=]
    containing the access token.
 4. The [=Verifier=] resolves the client [=DID=] based on the value of the [=Self-Issued ID Token=] `sub` claim.
 5. The [=DID Service=] returns the DID Document. The [=Verifier=] validates the [=Self-Issued ID Token=] following
    Section [[[#validating-self-issued-id-tokens]]].
 6. The [=Verifier=] obtains the client's [=Credential Service=] endpoint address using the DID document as described in
-   Section [[[#credential-service-endpoint-discovery]]]. The [=Verifier=] then issues a request with the access token
-   to the [=Credential Service=] for a set of [=Verifiable Credentials=].
-7. The [=Credential Service=] validates the access token and returns a [=Verifiable Presentation=] containing the
-   requested credentials.
+   Section [[[#credential-service-endpoint-discovery]]]. The [=Verifier=] then issues a request bearing a 
+   [=Self-Issued ID Token=] of their own to the [=Credential Service=].If present in the client's initial
+   [=Self-Issued ID Token=], the access token MUST be contained in the [=Credential Issuer=]'s [=Self-Issued ID Token=]
+   `token` claim.
+7. The [=Credential Service=] validates the [=Self-Issued ID Token=] and, if present, the access token. 
+   It returns a [=Verifiable Presentation=] containing the requested credentials.
 
 ## Credential Service Endpoint Discovery
 
