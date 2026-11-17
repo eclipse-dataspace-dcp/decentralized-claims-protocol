@@ -133,6 +133,15 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
               "holderPid": "holderPid"
             }""";
 
+    private static final String INVALID_CREDENTIAL_MESSAGE_WRONG_TYPE = """
+            {
+              "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
+              "type": "CredentialOfferMessage",
+              "status": "REJECTED",
+              "issuerPid": "issuerPid",
+              "holderPid": "holderPid"
+            }""";
+
     @Test
     void verifySchema() {
         assertThat(schema.validate(CREDENTIAL_MESSAGE_MESSAGE, JSON)).isEmpty();
@@ -159,6 +168,11 @@ public class CredentialMessageSchemaTest extends AbstractSchemaTest {
                 .hasSize(1)
                 .extracting(this::errorExtractor)
                 .contains(error(null, ENUM)); // for some reason the property is `null` on enum validation errors
+
+        assertThat(schema.validate(INVALID_CREDENTIAL_MESSAGE_WRONG_TYPE, JSON))
+                .hasSize(1)
+                .extracting(this::errorExtractor)
+                .contains(error(null, "const")); // as with enum, the property is `null` on const validation errors
     }
 
     @BeforeEach
