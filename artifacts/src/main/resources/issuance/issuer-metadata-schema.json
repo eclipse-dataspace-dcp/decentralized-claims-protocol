@@ -25,6 +25,7 @@
               {
                 "type": "object",
                 "required": [
+                  "type",
                   "credentialType",
                   "credentialSchema",
                   "offerReason",

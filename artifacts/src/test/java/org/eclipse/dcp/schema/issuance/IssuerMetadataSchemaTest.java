@@ -42,6 +42,18 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
                 ]
             }
             """;
+    public static final String CREDENTIAL_OBJECT_NO_TYPE = """
+            {
+                "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
+                "credentialType": "VerifiableCredential",
+                "credentialSchema": "https://example.com/credentials/credentialSchema",
+                "offerReason": "reissue",
+                "bindingMethods": [
+                  "did:web"
+                ],
+                "profile": "vc20-bssl/jwt"
+            }
+            """;
     private static final String INVALID_ISSUER_METADATA = """
             {
               "@context": ["https://w3id.org/dspace-dcp/v1.0/dcp.jsonld"],
@@ -71,6 +83,14 @@ public class IssuerMetadataSchemaTest extends AbstractSchemaTest {
         assertThat(schema.validate(ISSUER_METADATA.formatted(CREDENTIAL_OBJECT_INCOMPLETE), JSON))
                 .extracting(this::errorExtractor)
                 .containsExactlyInAnyOrder(error("credentialSchema", REQUIRED), error("profile", REQUIRED));
+    }
+
+    @Test
+    void verifySchema_credentialSupportedMissingType() {
+        // type is optional on a CredentialObject, but required for entries in credentialsSupported
+        assertThat(schema.validate(ISSUER_METADATA.formatted(CREDENTIAL_OBJECT_NO_TYPE), JSON))
+                .extracting(this::errorExtractor)
+                .containsExactly(error("type", REQUIRED));
     }
 
     @Test
