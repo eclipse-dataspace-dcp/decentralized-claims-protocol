@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import static com.networknt.schema.InputFormat.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.eclipse.dcp.schema.issuance.CredentialObjectSchemaTest.CREDENTIAL_OBJECT;
+import static org.eclipse.dcp.schema.issuance.CredentialObjectSchemaTest.SPARSE_CREDENTIAL_OBJECT;
 
 public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
 
@@ -68,6 +69,12 @@ public class CredentialOfferMessageSchemaTest extends AbstractSchemaTest {
                 .hasSize(2)
                 .extracting(this::errorExtractor)
                 .contains(error("type", REQUIRED), error("@context", REQUIRED));
+    }
+
+    @Test
+    void verifySchema_sparseCredentials() {
+        var credentials = SPARSE_CREDENTIAL_OBJECT + "," + SPARSE_CREDENTIAL_OBJECT.replace("d5c77b0e", "a1b2c3d4");
+        assertThat(schema.validate(CREDENTIAL_OFFER_MESSAGE.formatted(credentials), JSON)).isEmpty();
     }
 
     @BeforeEach
