@@ -222,8 +222,8 @@ a [=Verifiable Credential=] offer.
 
 If the entries in the `credentials` property are _sparse_, i.e., only contain an `id`, the values of all other properties
 of the [[[#credentialobject]]] MUST be taken from the `credentialsSupported` list returned from
-the [[[#issuer-metadata-api]]]. When processing, the [=Credential Service=] MUST resolve this string value to the
-respective object.
+the [[[#issuer-metadata-api]]]. When processing, the [=Credential Service=] MUST resolve each sparse entry to the
+object in `credentialsSupported` with the same `id`.
 
 The following is a non-normative example of a credential offer request:
 
@@ -237,9 +237,9 @@ The following is a non-normative example of a credential offer request:
 |              |                                                                                                                                                                                                                               |
 |--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Schema**   | [JSON Schema](./resources/issuance/credential-object-schema.json)                                                                                                                                                             |
-| **REQUIRED** | - `type`: A string specifying the `CredentialObject` type.                                                                                                                                                                    |
-|              | - `id`: a string defining a unique, stable identifier for this `CredentialObject`                                                                                                                                             |
-| **OPTIONAL** | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
+| **REQUIRED** | - `id`: a string defining a unique, stable identifier for this `CredentialObject`                                                                                                                                             |
+| **OPTIONAL** | - `type`: A string specifying the `CredentialObject` type.                                                                                                                                                                    |
+|              | - `@context`: Specifies a valid Json-Ld context ([[json-ld11]], sect. 3.1). As the `credentialObject` is usually embedded, its context is provided by the enveloping object.                                                  |
 |              | - `credentialType`: A single string specifying type of credential being offered.                                                                                                                                              |
 |              | - `bindingMethods`: An array of strings defining the key material that an issued credential is bound to.                                                                                                                      |
 |              | - `credentialSchema`: A URL pointing to the credential schema of the object in a VC's `credentialSubject` property.                                                                                                           |

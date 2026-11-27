@@ -63,7 +63,18 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
               "type": "CredentialObject"
             }""";
 
-    private static final String INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT = """
+    public static final String SPARSE_CREDENTIAL_OBJECT = """
+            {
+              "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1"
+            }""";
+
+    private static final String CREDENTIAL_OBJECT_WRONG_TYPE = """
+            {
+              "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
+              "type": "CredentialOfferMessage"
+            }""";
+
+    private static final String CREDENTIAL_OBJECT_NO_TYPE_AND_CONTEXT = """
              {
                 "id": "d5c77b0e-7f4e-4fd5-8c5f-28b5fc3f96d1",
                 "credentialType": "VerifiableCredential",
@@ -109,12 +120,21 @@ public class CredentialObjectSchemaTest extends AbstractSchemaTest {
     }
 
     @Test
-    void verifySchema_missingTypeAndContext() {
-        assertThat(schema.validate(INVALID_CREDENTIAL_REQUEST_MESSAGE_NO_TYPE_AND_CONTEXT, JSON))
-                .hasSize(1)
-                .extracting(this::errorExtractor)
-                .contains(error("type", REQUIRED));
+    void verifySchema_missingTypeAndContext_isValid() {
+        // type is optional, so that sparse entries in a CredentialOfferMessage (only an id) are valid
+        assertThat(schema.validate(CREDENTIAL_OBJECT_NO_TYPE_AND_CONTEXT, JSON)).isEmpty();
+    }
 
+    @Test
+    void verifySchema_sparse_isValid() {
+        assertThat(schema.validate(SPARSE_CREDENTIAL_OBJECT, JSON)).isEmpty();
+    }
+
+    @Test
+    void verifySchema_wrongType() {
+        assertThat(schema.validate(CREDENTIAL_OBJECT_WRONG_TYPE, JSON))
+                .extracting(this::errorExtractor)
+                .containsExactly(error(null, "const")); // the property is `null` on const validation errors
     }
 
     @BeforeEach
